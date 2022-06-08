@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.abhi41.jetfoodrecipeapp.navigation.SetupNavGraph
+import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.DashBoardScreen
 import com.abhi41.jetfoodrecipeapp.ui.theme.JetFoodRecipeAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,6 +28,7 @@ class MainActivity : ComponentActivity() {
             JetFoodRecipeAppTheme {
                 navController = rememberNavController()
                 SetupNavGraph(navController = navController)
+
             }
         }
     }
