@@ -1,5 +1,6 @@
 package com.abhi41.jetfoodrecipeapp.di
 
+import com.abhi41.jetfoodrecipeapp.data.network.FoodRecipesApi
 import com.abhi41.jetfoodrecipeapp.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -8,6 +9,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import java.sql.Time
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -16,8 +18,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    @Provides
     @Singleton
+    @Provides
     fun provideOkhttp(): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(10,TimeUnit.SECONDS)
@@ -26,15 +28,14 @@ object NetworkModule {
 
     }
 
-    @Provides
     @Singleton
+    @Provides
     fun provideGson(): GsonConverterFactory {
         return GsonConverterFactory.create()
     }
 
-
-    @Provides
     @Singleton
+    @Provides
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory
@@ -46,6 +47,13 @@ object NetworkModule {
             .build()
     }
 
+    @Singleton
+    @Provides
+    fun provideApiService(
+        retrofit: Retrofit
+    ): FoodRecipesApi{
+        return retrofit.create(FoodRecipesApi::class.java)
+    }
 
 
 }
