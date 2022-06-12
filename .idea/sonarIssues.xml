@@ -143,12 +143,27 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/abhi41/jetfoodrecipeapp/navigation/AuthNavGraph.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/abhi41/jetfoodrecipeapp/navigation/BottomNavGraph.kt">
           <value>
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/abhi41/jetfoodrecipeapp/navigation/DetailNavGraph.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/abhi41/jetfoodrecipeapp/navigation/NavGraph.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/abhi41/jetfoodrecipeapp/navigation/RootNavGraph.kt">
           <value>
             <set />
           </value>
@@ -174,6 +189,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/abhi41/jetfoodrecipeapp/presentation/screens/dashboardScreen/DashBoardViewModel.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/abhi41/jetfoodrecipeapp/presentation/screens/detailScreen/DetailScreen.kt">
           <value>
             <set />
           </value>
@@ -289,6 +309,26 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../NestedNavigationBottomBarDemo-master/app/src/main/java/com/example/nestednavigationbottombardemo/graphs/AuthNavGraph.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../NestedNavigationBottomBarDemo-master/app/src/main/java/com/example/nestednavigationbottombardemo/graphs/HomeNavGraph.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../NestedNavigationBottomBarDemo-master/app/src/main/java/com/example/nestednavigationbottombardemo/graphs/RootNavGraph.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../NestedNavigationBottomBarDemo-master/app/src/main/java/com/example/nestednavigationbottombardemo/screens/ScreenContent.kt">
           <value>
             <set />
           </value>

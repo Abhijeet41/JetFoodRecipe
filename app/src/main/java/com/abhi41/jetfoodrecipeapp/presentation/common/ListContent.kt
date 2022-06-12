@@ -1,5 +1,8 @@
+@file:OptIn(ExperimentalCoilApi::class)
+
 package com.abhi41.jetfoodrecipeapp.presentation.common
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -17,9 +20,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.abhi41.foodrecipe.model.Result
 import com.abhi41.jetfoodrecipeapp.R
+import com.abhi41.jetfoodrecipeapp.navigation.Screen
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
 
 
@@ -49,6 +54,7 @@ fun ListContent(
 
 }
 
+
 @Composable
 fun FoodItem(food: Result, navController: NavHostController) {
 
@@ -60,7 +66,9 @@ fun FoodItem(food: Result, navController: NavHostController) {
     Box(
         modifier = Modifier
             .height(FoodRecipe_ITEM_HEIGHT)
-            .clickable { }
+            .clickable {
+                navController.navigate(Screen.DetailPage.route)
+            }
     ) {
         Surface(
             shape = RoundedCornerShape(
@@ -114,57 +122,53 @@ fun FoodItem(food: Result, navController: NavHostController) {
 
 @Composable
 fun RowLikesAndCategory(food: Result) {
-    Column(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = SMALL_PADDING),
-        horizontalAlignment = Alignment.Start
+        horizontalArrangement = Arrangement.SpaceBetween
+
     ) {
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_heart),
-                contentDescription = "heart icon",
-                tint = Color.Red
-            )
-            Icon(
-                painter = painterResource(id = R.drawable.ic_clock),
-                contentDescription = "heart icon",
-                tint = Color.Yellow
-            )
-            Icon(
-                painter = painterResource(id = R.drawable.ic_leaf),
-                contentDescription = "heart icon",
-                tint = Color.Green
-            )
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "${food.aggregateLikes}",
-                textAlign = TextAlign.Center,
-                overflow = TextOverflow.Ellipsis,
-                color = Color.Red
-            )
-            Text(
-                text = "${food.readyInMinutes}",
-                textAlign = TextAlign.Center,
-                overflow = TextOverflow.Ellipsis,
-                color = Color.Yellow
-            )
-            Text(
-                text = if (food.vegan) "Vegan" else "",
-                textAlign = TextAlign.Center,
-                overflow = TextOverflow.Ellipsis,
-                color = if (food.vegan) Color.Green else Color.Red
-            )
-        }
+        InfoColumn(
+            R.drawable.ic_heart,
+            "${food.aggregateLikes}",
+            Color.Red
+        )
+        InfoColumn(
+            R.drawable.ic_clock,
+            "${food.readyInMinutes}",
+            Color.Yellow
+        )
+        InfoColumn(
+            R.drawable.ic_leaf,
+            if (food.vegan) "Vegan" else "Non vegan",
+            Color.Green
+        )
+
+    }
+}
+
+@Composable
+private fun InfoColumn(
+    @DrawableRes intResource: Int,
+    text: String,
+    color: Color
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Icon(
+            painter = painterResource(id = intResource),
+            contentDescription = "heart icon",
+            tint = if (text.equals("Non vegan")) Color.Red else color
+        )
+        Text(
+            text = "$text",
+            textAlign = TextAlign.Center,
+            overflow = TextOverflow.Ellipsis,
+            color = if (text.equals("Non vegan")) Color.Red else color
+        )
 
     }
 }

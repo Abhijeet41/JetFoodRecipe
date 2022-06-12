@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.abhi41.jetfoodrecipeapp.R
+import com.abhi41.jetfoodrecipeapp.navigation.Graph
 import com.abhi41.jetfoodrecipeapp.navigation.Screen
 import kotlinx.coroutines.delay
 
@@ -31,9 +32,9 @@ fun SplashScreen(navController: NavHostController) {
     )
     LaunchedEffect(key1 = true){
         startAnimation = true
-        delay(4000)
+        delay(3000)
         navController.popBackStack() //remove splash screen from stack
-        navController.navigate(Screen.DashBoard.route)
+        navController.navigate(Graph.DASHBOARD)
     }
     AnimatedSplashScreen(alpha = alphaAnim.value)
 }

@@ -4,33 +4,37 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.DashBoardScreen
+import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.DetailScreen
+import com.abhi41.jetfoodrecipeapp.presentation.screens.recipesScreen.RecipesScreen
 import com.abhi41.jetfoodrecipeapp.presentation.screens.searchScreen.SearchScreen
 import com.abhi41.jetfoodrecipeapp.presentation.screens.splashScreen.SplashScreen
-import com.abhi41.jetfoodrecipeapp.utils.Constants.ROOT_ROUTE
 
 @Composable
-fun SetupNavGraph(
+fun RootNavGraph(
     navController: NavHostController
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Splash.route,
-        route = ROOT_ROUTE
+        route = Graph.ROOT,
+        startDestination = Graph.AUTHENTICATION
+
     ) {
 
-        composable(route = Screen.Splash.route) {
-            SplashScreen(navController = navController)
-        }
-        composable(route = Screen.DashBoard.route) {
+
+        AuthNavGraph(navController = navController)
+
+        composable(route = Graph.DASHBOARD) {
             DashBoardScreen()
         }
-        composable(route = Screen.SearchPage.route) {
-            SearchScreen(navHostController = navController)
-        }
-        composable(route = Screen.DetailPage.route) {
-            //yet to impl
-        }
+
+
     }
+}
+
+object Graph {
+    const val ROOT = "root_graph"
+    const val AUTHENTICATION = "auth_graph"
+    const val DASHBOARD = "dashboard_graph"
+    const val DETAILS = "details_graph"
 }

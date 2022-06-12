@@ -12,8 +12,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import com.abhi41.foodrecipe.model.Result
-import com.abhi41.jetfoodrecipeapp.data.local.entities.RecipesEntity
+import com.abhi41.jetfoodrecipeapp.navigation.Graph
 import com.abhi41.jetfoodrecipeapp.navigation.Screen
 import com.abhi41.jetfoodrecipeapp.presentation.common.ListContent
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.DashBoardViewModel
@@ -62,7 +64,7 @@ fun RecipeDesign(
         topBar = {
             RecipesTopBar {
                 //onSearch icon clicked navigate to search screen
-                navController.navigate(Screen.SearchPage.route)
+                navController.navigate(Graph.DETAILS)
             }
         }
     ) {

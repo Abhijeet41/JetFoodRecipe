@@ -18,8 +18,8 @@ import com.abhi41.jetfoodrecipeapp.BottomBarScreen
 import com.abhi41.jetfoodrecipeapp.navigation.SetupBottomNavGraph
 
 @Composable
-fun DashBoardScreen() {
-    val navController = rememberNavController()
+fun DashBoardScreen(navController:NavHostController = rememberNavController()) {
+
 
     Scaffold(bottomBar = {
         BottomBar(navController = navController)
@@ -39,15 +39,21 @@ fun BottomBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    BottomNavigation {
-        screens.forEach { screen ->
-            AddItem(
-                screen = screen,
-                currentDestination = currentDestination,
-                navController = navController
-            )
+    val bottomBarDestination = screens.any { it.route == currentDestination?.route }
+
+    if(bottomBarDestination){
+        BottomNavigation {
+            screens.forEach { screen ->
+                AddItem(
+                    screen = screen,
+                    currentDestination = currentDestination,
+                    navController = navController
+                )
+            }
         }
     }
+
+
 
 }
 
