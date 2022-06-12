@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RecipesViewModel @Inject constructor() : ViewModel() {
-
+    //recipes queries
     fun applyQueries(): HashMap<String, String> {
 
         val quries: HashMap<String, String> = HashMap()
@@ -21,5 +21,7 @@ class RecipesViewModel @Inject constructor() : ViewModel() {
 
         return quries
     }
+
+
 
 }

@@ -7,6 +7,10 @@ object Constants {
     const val API_KEY = "4b1d5ec4278045d2a16c8bf467004700"
     //const val API_KEY = "4de00bcc444e489fb342b867ab400205"
 
+    //navigation
+    const val ROOT_ROUTE = "root"
+    const val BOTTOM_NAVIGATION_ROUTE = "bottom_navigation"
+
     //API Queries Keys
     const val QUERY_SEARCH = "query"
     const val QUERY_NUMBER = "50"

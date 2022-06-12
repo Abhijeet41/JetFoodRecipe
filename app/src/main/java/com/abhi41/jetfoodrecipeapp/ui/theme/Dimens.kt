@@ -11,4 +11,5 @@ val EXTRA_SMALL_PADDING = 6.dp
 
 val FoodRecipe_ITEM_HEIGHT = 200.dp
 
+val TOP_APP_BAR_HEIGHT = 56.dp
 
