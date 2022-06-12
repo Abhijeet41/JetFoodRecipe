@@ -64,7 +64,7 @@ fun RecipeDesign(
         topBar = {
             RecipesTopBar {
                 //onSearch icon clicked navigate to search screen
-                navController.navigate(Graph.DETAILS)
+                navController.navigate(Screen.SearchPage.route)
             }
         }
     ) {
