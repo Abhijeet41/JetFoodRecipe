@@ -60,6 +60,7 @@ fun FoodItem(food: Result, navController: NavHostController) {
 
     val painter = rememberImagePainter(data = "${food.image}") {
         placeholder(R.drawable.ic_placeholder)
+       // crossfade(600)
         error(R.drawable.ic_placeholder)
     }
 
@@ -67,7 +68,7 @@ fun FoodItem(food: Result, navController: NavHostController) {
         modifier = Modifier
             .height(FoodRecipe_ITEM_HEIGHT)
             .clickable {
-                navController.navigate(Screen.DetailPage.route)
+                navController.navigate(Screen.DetailPage.passRecipeId(recipeId = food.recipeId))
             }
     ) {
         Surface(

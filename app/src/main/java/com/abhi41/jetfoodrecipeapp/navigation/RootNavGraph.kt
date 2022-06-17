@@ -5,10 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.DashBoardScreen
-import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.DetailScreen
-import com.abhi41.jetfoodrecipeapp.presentation.screens.recipesScreen.RecipesScreen
-import com.abhi41.jetfoodrecipeapp.presentation.screens.searchScreen.SearchScreen
-import com.abhi41.jetfoodrecipeapp.presentation.screens.splashScreen.SplashScreen
+
 
 @Composable
 fun RootNavGraph(

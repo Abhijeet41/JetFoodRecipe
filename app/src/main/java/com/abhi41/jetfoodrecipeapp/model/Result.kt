@@ -2,12 +2,16 @@ package com.abhi41.foodrecipe.model
 
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.abhi41.jetfoodrecipeapp.utils.Constants
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
 
 @Parcelize
+@Entity(tableName = Constants.RECIPES_TABLE)
 data class Result(
     @SerializedName("aggregateLikes")
     val aggregateLikes: Int,
@@ -19,13 +23,15 @@ data class Result(
     val dairyFree: Boolean,
 
     @SerializedName("extendedIngredients")
-    val extendedIngredients: @RawValue List<ExtendedIngredient>?,
+    val extendedIngredients: @RawValue List<ExtendedIngredient>,
 
     @SerializedName("glutenFree")
     val glutenFree: Boolean,
 
+    @PrimaryKey(autoGenerate = false)
     @SerializedName("id")
     val recipeId: Int,
+
     @SerializedName("image")
     val image: String,
 

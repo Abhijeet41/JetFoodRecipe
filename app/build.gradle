@@ -24,8 +24,12 @@ android {
 
     buildTypes {
         release {
+            debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
         }
     }
     compileOptions {
@@ -107,5 +111,10 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
 
+    // Horizontal Pager and Indicators - Accompanist
+
+    implementation "com.google.accompanist:accompanist-pager:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-pager-indicators:$accompanist_version"
+    implementation("androidx.compose.foundation:foundation:1.1.1")
 
 }

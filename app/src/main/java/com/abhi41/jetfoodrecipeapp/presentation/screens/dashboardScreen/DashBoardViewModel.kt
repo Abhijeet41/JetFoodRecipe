@@ -3,6 +3,7 @@ package com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen
 import android.app.Application
 import androidx.lifecycle.*
 import com.abhi41.foodrecipe.model.FoodRecipe
+import com.abhi41.foodrecipe.model.Result
 import com.abhi41.jetfoodrecipeapp.data.local.entities.RecipesEntity
 import com.abhi41.jetfoodrecipeapp.data.repository.RecipesRepository
 import com.abhi41.jetfoodrecipeapp.presentation.common.HandleResponse
@@ -26,7 +27,7 @@ class DashBoardViewModel @Inject constructor(
     val searchedRecipesResponse = _searchedRecipesResponse
 
     //read data from database
-    val readRecipes: LiveData<List<RecipesEntity>> = repository.local.readRecipes().asLiveData()
+    val readRecipes: LiveData<List<Result>> = repository.local.readRecipes().asLiveData()
 
 
     fun getRecipes(quries: Map<String, String>) = viewModelScope.launch {
@@ -78,10 +79,10 @@ class DashBoardViewModel @Inject constructor(
 
     private fun offlineCacheRecipes(foodRecipe: FoodRecipe) {
         val recipesEntity = RecipesEntity(foodRecipe = foodRecipe)
-        insertRecipes(recipesEntity)
+        insertRecipes(recipesEntity.foodRecipe.results)
     }
 
-    private fun insertRecipes(recipesEntity: RecipesEntity) {
+    private fun insertRecipes(recipesEntity: List<Result>) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.local.insertRecipes(recipesEntity = recipesEntity)
         }

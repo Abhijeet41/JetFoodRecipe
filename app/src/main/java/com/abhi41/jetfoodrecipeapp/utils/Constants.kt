@@ -4,7 +4,7 @@ object Constants {
 
     const val BASE_URL = "https://api.spoonacular.com"
     const val BASE_IMAGE_URL = "https://spoonacular.com/cdn/ingredients_100x100/"
-    const val API_KEY = "4b1d5ec4278045d2a16c8bf467004700"
+    const val API_KEY = "c1689d647c944700b1ebc22ecb182710"
     //const val API_KEY = "4de00bcc444e489fb342b867ab400205"
 
     //navigation
@@ -40,6 +40,9 @@ object Constants {
     const val PREFERENCE_DIET_TYPE_ID = "dietTypeId"
     const val PREFERENCE_BACK_ONLINE = "backOnline"
 
+
+    //Navigation arguments
+    const val DETAILS_ARGUMENTS_KEY = "recipeId"
 
 
 }

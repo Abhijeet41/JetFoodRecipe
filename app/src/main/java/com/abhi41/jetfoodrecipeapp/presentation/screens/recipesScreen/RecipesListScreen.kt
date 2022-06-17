@@ -36,7 +36,7 @@ fun RecipesScreen(
     val readRecipes by dashBoardViewModel.readRecipes.observeAsState()
 
     if (!readRecipes.isNullOrEmpty()) {
-        foodRecipes = readRecipes?.get(0)!!.foodRecipe.results
+        foodRecipes = readRecipes as List<Result>
 
         RecipeDesign(
             foodRecipes = foodRecipes,
