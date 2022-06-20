@@ -12,6 +12,8 @@ val EXTRA_SMALL_PADDING = 6.dp
 
 val FoodRecipe_ITEM_HEIGHT = 200.dp
 val INGREDIENT_ITEM_HEIGHT = 150.dp
+val BOTTOMSHEET_HEIGHT = 325.dp
+
 
 val TOP_APP_BAR_HEIGHT = 56.dp
 
@@ -24,4 +26,7 @@ val TXT_SMALL_SIZE = 10.sp
 val TXT_MEDIUM_SIZE = 16.sp
 val TXT_LARGE_SIZE = 20.sp
 val TXT_TITLE_TEXT = 23.sp
+
+//chips
+val ELEVATION_CHIP = 8.dp
 

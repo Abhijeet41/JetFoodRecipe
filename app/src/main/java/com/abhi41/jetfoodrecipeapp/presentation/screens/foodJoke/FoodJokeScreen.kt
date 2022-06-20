@@ -90,7 +90,7 @@ fun foodJokeDesign(jokes: String) {
             Box(
                 modifier = Modifier
                     .padding(MEDIUM_PADDING)
-                    .verticalScroll(rememberScrollState(), enabled = true),
+                    .verticalScroll(rememberScrollState()),
                 contentAlignment = Alignment.Center
             ) {
                 Text(

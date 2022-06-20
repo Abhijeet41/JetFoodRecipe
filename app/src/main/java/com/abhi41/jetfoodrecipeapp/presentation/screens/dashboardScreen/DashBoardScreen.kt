@@ -1,13 +1,18 @@
 package com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -15,17 +20,24 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.abhi41.jetfoodrecipeapp.BottomBarScreen
+import com.abhi41.jetfoodrecipeapp.R
 import com.abhi41.jetfoodrecipeapp.navigation.SetupBottomNavGraph
+import com.abhi41.jetfoodrecipeapp.ui.theme.BOTTOMSHEET_HEIGHT
+import com.abhi41.jetfoodrecipeapp.ui.theme.TXT_MEDIUM_SIZE
+import kotlinx.coroutines.launch
 
+
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DashBoardScreen(navController:NavHostController = rememberNavController()) {
-
-
-    Scaffold(bottomBar = {
-        BottomBar(navController = navController)
-    }) {
-        SetupBottomNavGraph(navController = navController)
-    }
+fun DashBoardScreen(navController: NavHostController = rememberNavController()) {
+    Scaffold(
+        bottomBar = {
+            BottomBar(navController = navController)
+        },
+        content = {
+            SetupBottomNavGraph(navController = navController)
+        }
+    )
 }
 
 @Composable
@@ -41,7 +53,7 @@ fun BottomBar(navController: NavHostController) {
 
     val bottomBarDestination = screens.any { it.route == currentDestination?.route }
 
-    if(bottomBarDestination){
+    if (bottomBarDestination) {
         BottomNavigation {
             screens.forEach { screen ->
                 AddItem(
@@ -52,7 +64,6 @@ fun BottomBar(navController: NavHostController) {
             }
         }
     }
-
 
 
 }
@@ -81,10 +92,12 @@ fun RowScope.AddItem(
         selectedContentColor = Color.White,
         onClick = {
 
-            navController.navigate(route = screen.route){
+            navController.navigate(route = screen.route) {
                 popUpTo(navController.graph.findStartDestination().id)
                 launchSingleTop = true //to avoid creating copy of multiple start destination
             }
         }
     )
 }
+
+

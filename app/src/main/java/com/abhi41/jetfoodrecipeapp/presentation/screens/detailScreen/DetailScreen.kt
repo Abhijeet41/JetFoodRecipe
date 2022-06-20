@@ -7,12 +7,16 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.abhi41.foodrecipe.model.Result
+import com.abhi41.jetfoodrecipeapp.R
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs.IngredientScreen
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs.InstructionScreen
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs.OverViewScreen
@@ -40,6 +44,7 @@ fun DetailScreen(
 
             }
         },
+
         content = {
             Column(modifier = Modifier.fillMaxWidth()) {
                 TabRow(
