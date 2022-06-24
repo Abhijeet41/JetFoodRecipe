@@ -22,21 +22,21 @@ fun FavoriteScreenAppbar(
     navController: NavHostController,
     detailViewModel: DetailViewModel,
     isContextual: MutableState<Boolean>,
+    actionModeTitle: MutableState<String>,
     onDeleteClick: () -> Unit
 ) {
 
     val coroutineScope = rememberCoroutineScope()
-   // var isContextual: Boolean by remember { isContextual }
-
     val backgroundColor = if (isContextual.value) {
         Color.DarkGray
     } else {
         Color.Black
     }
+
     TopAppBar(
         backgroundColor = backgroundColor,
         title = {
-            Text(text = "Favorite", fontWeight = FontWeight.Bold, color = Color.White)
+            Text(text = "Favorite ${actionModeTitle.value}", fontWeight = FontWeight.Bold, color = Color.White)
         },
         navigationIcon = {
             AppBarIcon(R.drawable.ic_arrow_back) {
@@ -78,6 +78,7 @@ private fun NormalActionBarItems(
         DropdownMenuItem(onClick = {
             coroutineScope.launch {
                 detailViewModel.deleteAllFavoriteRecipes()
+                showMenu = false
             }
         }) {
             Text(

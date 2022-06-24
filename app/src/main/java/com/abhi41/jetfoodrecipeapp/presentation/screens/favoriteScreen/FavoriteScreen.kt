@@ -46,6 +46,7 @@ fun FavoriteScreen(
     }
     val coroutineScope = rememberCoroutineScope()
 
+    var actionModeTitle = remember { mutableStateOf("") }
 
     Scaffold(
         modifier = Modifier.padding(bottom = MEDIUM_PADDING),
@@ -54,6 +55,7 @@ fun FavoriteScreen(
                 navController = navController,
                 detailViewModel = detailViewModel,
                 isContextual = isContextual,
+                actionModeTitle = actionModeTitle
             ) {
                 //On delete Click
                 isContextual.value = false
@@ -80,7 +82,7 @@ fun FavoriteScreen(
                         foodItem.id
                     }
                 ) { foodItem ->
-                    FoodItem(foodItem, navController, isContextual)
+                    FoodItem(foodItem, navController, isContextual, actionModeTitle)
                 }
             }
 
@@ -94,6 +96,7 @@ fun FoodItem(
     foodItemEntity: FavoriteEntity,
     navController: NavHostController,
     isContextual: MutableState<Boolean>,
+    actionModeTitle: MutableState<String>,
 ) {
     val foodItem = foodItemEntity.result
 
@@ -121,7 +124,12 @@ fun FoodItem(
                 onClick = {
 
                     if (isContextual.value) {
-                        applicationSelection(foodItemEntity, selectedItem)
+                        applicationSelection(
+                            currentRecipe = foodItemEntity,
+                            selectedItem = selectedItem,
+                            actionModeTitle = actionModeTitle,
+                            isContextual = isContextual,
+                        )
                     } else {
                         navController.navigate(Screen.DetailPage.passRecipeId(recipeId = foodItem.recipeId))
                     }
@@ -133,7 +141,14 @@ fun FoodItem(
                         multiSelection = true
                         isContextual.value = true
                         selectedItem.value = true
-                        applicationSelection(foodItemEntity, selectedItem)
+
+                        applicationSelection(
+                            foodItemEntity,
+                            selectedItem,
+                            actionModeTitle,
+                            isContextual,
+                        )
+
                         true
                     } else {
                         multiSelection = false
@@ -247,16 +262,38 @@ fun InfoColumn(
 fun applicationSelection(
     currentRecipe: FavoriteEntity,
     selectedItem: MutableState<Boolean>,
+    actionModeTitle: MutableState<String>,
+    isContextual: MutableState<Boolean>,
 ) {
 
     if (selectedRecipes.contains(currentRecipe)) {
         selectedRecipes.remove(currentRecipe)
         selectedItem.value = false
+        applyActionModeTitle(actionModeTitle,isContextual)
     } else {
         selectedRecipes.add(currentRecipe)
         selectedItem.value = true
+        applyActionModeTitle(actionModeTitle,isContextual)
     }
 
+}
+
+fun applyActionModeTitle(
+    actionModeTitle: MutableState<String>,
+    isContextual: MutableState<Boolean>
+) {
+    when (selectedRecipes.size) {
+        0 -> {
+            isContextual.value = false
+            actionModeTitle.value = ""
+        }
+        1 -> {
+            actionModeTitle.value = "${selectedRecipes.size} item selected"
+        }
+        2 -> {
+            actionModeTitle.value = "${selectedRecipes.size} items selected"
+        }
+    }
 }
 
 private fun saveItemState(
