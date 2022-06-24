@@ -4,6 +4,7 @@ package com.abhi41.jetfoodrecipeapp.presentation.common
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,7 +30,7 @@ import com.abhi41.jetfoodrecipeapp.ui.theme.*
 
 
 @Composable
-fun ListContent(
+fun RecipesListContent(
     foodRecipes: List<Result>?,
     navController: NavHostController
 ) {
@@ -66,14 +67,19 @@ fun FoodItem(food: Result, navController: NavHostController) {
 
     Box(
         modifier = Modifier
+            .border(
+                1.dp, Color.White, shape = RoundedCornerShape(
+                    size = MEDIUM_PADDING
+                )
+            )
             .height(FoodRecipe_ITEM_HEIGHT)
             .clickable {
-                navController.navigate(Screen.DetailPage.passRecipeId(recipeId = food.recipeId))
+                navController.navigate(Screen.DetailPage.passRecipeId   (recipeId = food.recipeId))
             }
     ) {
         Surface(
             shape = RoundedCornerShape(
-                size = LARGE_PADDING
+                size = MEDIUM_PADDING
             )
         ) {
             Row(

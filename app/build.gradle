@@ -117,4 +117,7 @@ dependencies {
     implementation "com.google.accompanist:accompanist-pager-indicators:$accompanist_version"
     implementation("androidx.compose.foundation:foundation:1.1.1")
 
+    //Contextual app bar -Accompanist
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
+
 }

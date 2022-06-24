@@ -6,7 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.abhi41.jetfoodrecipeapp.presentation.common.ListContent
+import com.abhi41.jetfoodrecipeapp.presentation.common.RecipesListContent
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.DashBoardViewModel
 import com.abhi41.jetfoodrecipeapp.utils.NetworkResult
 
@@ -41,7 +41,7 @@ fun SearchScreen(
 
                 is NetworkResult.Success -> {
                     val recipes = response?.data?.results
-                    ListContent(foodRecipes = recipes, navController = navHostController)
+                    RecipesListContent(foodRecipes = recipes, navController = navHostController)
                 }
 
                 is NetworkResult.Error -> {

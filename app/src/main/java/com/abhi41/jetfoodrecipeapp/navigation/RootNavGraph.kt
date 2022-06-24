@@ -18,14 +18,11 @@ fun RootNavGraph(
 
     ) {
 
-
         AuthNavGraph(navController = navController)
 
         composable(route = Graph.DASHBOARD) {
             DashBoardScreen()
         }
-
-
     }
 }
 

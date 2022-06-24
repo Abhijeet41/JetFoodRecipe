@@ -24,7 +24,7 @@ import androidx.navigation.NavHostController
 import com.abhi41.foodrecipe.model.Result
 import com.abhi41.jetfoodrecipeapp.R
 import com.abhi41.jetfoodrecipeapp.navigation.Screen
-import com.abhi41.jetfoodrecipeapp.presentation.common.ListContent
+import com.abhi41.jetfoodrecipeapp.presentation.common.RecipesListContent
 import com.abhi41.jetfoodrecipeapp.presentation.common.chip.*
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.DashBoardViewModel
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
@@ -36,7 +36,7 @@ import kotlinx.coroutines.launch
 
 
 private const val TAG = "RecipesListScreen"
-var foodRecipes = emptyList<Result>()
+private var foodRecipes = emptyList<Result>()
 
 @Composable
 fun RecipesScreen(
@@ -190,7 +190,7 @@ fun BottomSheet(
     ) {
 
         if (!foodRecipes.isNullOrEmpty()) {
-            ListContent(foodRecipes, navController)
+            RecipesListContent(foodRecipes, navController)
         } else {
             //show error screen
         }

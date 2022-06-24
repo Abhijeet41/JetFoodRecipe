@@ -8,12 +8,12 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.abhi41.foodrecipe.model.Result
 import com.abhi41.jetfoodrecipeapp.data.local.dao.RecipesDao
 import com.abhi41.jetfoodrecipeapp.data.local.entities.FoodJokeEntity
-import com.abhi41.jetfoodrecipeapp.data.local.entities.RecipesEntity
 import com.abhi41.jetfoodrecipeapp.data.local.typeConverters.RecipesTypeConverter
+import com.abhi41.jetfoodrecipeapp.data.local.entities.FavoriteEntity
 
 @Database(
-    entities = [Result::class, FoodJokeEntity::class],
-    version = 2,
+    entities = [Result::class, FoodJokeEntity::class, FavoriteEntity::class],
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(RecipesTypeConverter::class)

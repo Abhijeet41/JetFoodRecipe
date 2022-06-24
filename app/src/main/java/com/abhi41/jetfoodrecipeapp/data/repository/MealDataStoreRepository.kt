@@ -9,8 +9,6 @@ import com.abhi41.jetfoodrecipeapp.utils.Constants.DEFAULT_DIET_TYPE
 import com.abhi41.jetfoodrecipeapp.utils.Constants.DEFAULT_MEAL_TYPE
 import com.abhi41.jetfoodrecipeapp.utils.Constants.PREFERENCES_DIET_TYPE
 import com.abhi41.jetfoodrecipeapp.utils.Constants.PREFERENCES_MEAL_TYPE
-import com.abhi41.jetfoodrecipeapp.utils.Constants.PREFERENCE_DIET_TYPE_ID
-import com.abhi41.jetfoodrecipeapp.utils.Constants.PREFERENCE_MEAL_TYPE_ID
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
