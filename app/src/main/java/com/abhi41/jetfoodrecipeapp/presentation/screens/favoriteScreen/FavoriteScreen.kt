@@ -50,13 +50,25 @@ fun FavoriteScreen(
     }
     val coroutineScope = rememberCoroutineScope()
     var actionModeTitle = remember { mutableStateOf("") }
-
-    val onBack = { //handle on back pressed
-        isContextual.value = false
-        actionModeTitle.value =""
-        selectedRecipes.clear()
+    var counter = remember {
+        mutableStateOf(0)
     }
-    BackPressHandler(onBackPressed = onBack)
+    val onBack = { //handle on back pressed
+
+        isContextual.value = false
+        actionModeTitle.value = ""
+        selectedRecipes.clear()
+        counter.value++
+
+        if (counter.value > 1) {
+            navController.popBackStack()
+        }
+    }
+    if (isContextual.value)
+    {
+        BackPressHandler(onBackPressed = onBack)
+    }
+
 
     Scaffold(
         modifier = Modifier.padding(bottom = MEDIUM_PADDING),
@@ -122,7 +134,7 @@ fun FoodItem(
     if (isContextual.value) //clear multiple selection on back press
     {
         multiSelection = true
-    }else{
+    } else {
         multiSelection = false
     }
     Box(
@@ -283,11 +295,11 @@ fun applicationSelection(
     if (selectedRecipes.contains(currentRecipe)) {
         selectedRecipes.remove(currentRecipe)
         selectedItem.value = false
-        applyActionModeTitle(actionModeTitle,isContextual)
+        applyActionModeTitle(actionModeTitle, isContextual)
     } else {
         selectedRecipes.add(currentRecipe)
         selectedItem.value = true
-        applyActionModeTitle(actionModeTitle,isContextual)
+        applyActionModeTitle(actionModeTitle, isContextual)
     }
 
 }
@@ -315,11 +327,11 @@ private fun saveItemState(
     selectedItem: MutableState<Boolean>,
 ) {
 
-        if (selectedRecipes.contains(foodItem)) {
-            selectedItem.value = true
-        } else {
-            selectedItem.value = false
-        }
+    if (selectedRecipes.contains(foodItem)) {
+        selectedItem.value = true
+    } else {
+        selectedItem.value = false
+    }
 
 }
 
