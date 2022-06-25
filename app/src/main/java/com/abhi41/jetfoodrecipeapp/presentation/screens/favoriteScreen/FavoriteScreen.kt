@@ -50,19 +50,11 @@ fun FavoriteScreen(
     }
     val coroutineScope = rememberCoroutineScope()
     var actionModeTitle = remember { mutableStateOf("") }
-    var counter = remember {
-        mutableStateOf(0)
-    }
-    val onBack = { //handle on back pressed
 
+    val onBack = { //handle on back pressed
         isContextual.value = false
         actionModeTitle.value = ""
         selectedRecipes.clear()
-        counter.value++
-
-        if (counter.value > 1) {
-            navController.popBackStack()
-        }
     }
     if (isContextual.value)
     {
