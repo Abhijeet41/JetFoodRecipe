@@ -40,7 +40,12 @@ fun FavoriteScreenAppbar(
         },
         navigationIcon = {
             AppBarIcon(R.drawable.ic_arrow_back) {
-                navController.popBackStack()
+                if (!isContextual.value){
+                    navController.popBackStack()
+                }else{
+                    isContextual.value = true
+                }
+
             }
         },
         actions = {

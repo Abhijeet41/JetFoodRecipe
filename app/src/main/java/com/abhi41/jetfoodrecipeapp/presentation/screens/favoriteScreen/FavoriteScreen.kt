@@ -3,6 +3,9 @@
 package com.abhi41.jetfoodrecipeapp.presentation.screens.favoriteScreen
 
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -45,8 +48,14 @@ fun FavoriteScreen(
         mutableStateOf(false)
     }
     val coroutineScope = rememberCoroutineScope()
-
     var actionModeTitle = remember { mutableStateOf("") }
+
+    val onBack = { //handle on back pressed
+        isContextual.value = false
+        actionModeTitle.value =""
+        selectedRecipes.clear()
+    }
+    BackPressHandler(onBackPressed = onBack)
 
     Scaffold(
         modifier = Modifier.padding(bottom = MEDIUM_PADDING),
@@ -110,7 +119,12 @@ fun FoodItem(
     }
     //we need to save state because this is a recyclerview it will recycle last selected recipe
     saveItemState(foodItemEntity, selectedItem)
-
+    if (isContextual.value) //clear multiple selection on back press
+    {
+        multiSelection = true
+    }else{
+        multiSelection = false
+    }
     Box(
         modifier = Modifier
             .height(FoodRecipe_ITEM_HEIGHT)
@@ -300,9 +314,38 @@ private fun saveItemState(
     foodItem: FavoriteEntity,
     selectedItem: MutableState<Boolean>,
 ) {
-    if (selectedRecipes.contains(foodItem)) {
-        selectedItem.value = true
-    } else {
-        selectedItem.value = false
+
+        if (selectedRecipes.contains(foodItem)) {
+            selectedItem.value = true
+        } else {
+            selectedItem.value = false
+        }
+
+}
+
+@Composable
+fun BackPressHandler(
+    backPressedDispatcher: OnBackPressedDispatcher? =
+        LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher,
+    onBackPressed: () -> Unit
+) {
+    val currentOnBackPressed by rememberUpdatedState(newValue = onBackPressed)
+
+    val backCallback = remember {
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                currentOnBackPressed()
+            }
+        }
+    }
+
+    DisposableEffect(key1 = backPressedDispatcher) {
+        backPressedDispatcher?.addCallback(backCallback)
+
+        onDispose {
+            backCallback.remove()
+        }
     }
 }
+
+
