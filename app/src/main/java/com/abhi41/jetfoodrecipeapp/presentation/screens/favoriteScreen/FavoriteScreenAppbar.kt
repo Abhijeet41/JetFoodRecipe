@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun FavoriteScreenAppbar(
-    navController: NavHostController,
     detailViewModel: DetailViewModel,
     isContextual: MutableState<Boolean>,
     actionModeTitle: MutableState<String>,
@@ -37,16 +36,6 @@ fun FavoriteScreenAppbar(
         backgroundColor = backgroundColor,
         title = {
             Text(text = "Favorite ${actionModeTitle.value}", fontWeight = FontWeight.Bold, color = Color.White)
-        },
-        navigationIcon = {
-            AppBarIcon(R.drawable.ic_arrow_back) {
-                if (!isContextual.value){
-                    navController.popBackStack()
-                }else{
-                    isContextual.value = true
-                }
-
-            }
         },
         actions = {
             if (isContextual.value) {

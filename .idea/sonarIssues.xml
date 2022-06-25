@@ -298,6 +298,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/abhi41/jetfoodrecipeapp/presentation/common/BackPressHandler.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/abhi41/jetfoodrecipeapp/presentation/common/HandleResponse.kt">
           <value>
             <set />

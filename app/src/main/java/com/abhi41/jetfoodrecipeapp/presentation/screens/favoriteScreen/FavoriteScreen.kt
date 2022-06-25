@@ -30,6 +30,7 @@ import com.abhi41.foodrecipe.model.Result
 import com.abhi41.jetfoodrecipeapp.R
 import com.abhi41.jetfoodrecipeapp.data.local.entities.FavoriteEntity
 import com.abhi41.jetfoodrecipeapp.navigation.Screen
+import com.abhi41.jetfoodrecipeapp.presentation.common.BackPressHandler
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.DetailViewModel
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
 import kotlinx.coroutines.launch
@@ -61,7 +62,6 @@ fun FavoriteScreen(
         modifier = Modifier.padding(bottom = MEDIUM_PADDING),
         topBar = {
             FavoriteScreenAppbar(
-                navController = navController,
                 detailViewModel = detailViewModel,
                 isContextual = isContextual,
                 actionModeTitle = actionModeTitle
@@ -304,7 +304,7 @@ fun applyActionModeTitle(
         1 -> {
             actionModeTitle.value = "${selectedRecipes.size} item selected"
         }
-        2 -> {
+        else -> {
             actionModeTitle.value = "${selectedRecipes.size} items selected"
         }
     }
@@ -323,29 +323,6 @@ private fun saveItemState(
 
 }
 
-@Composable
-fun BackPressHandler(
-    backPressedDispatcher: OnBackPressedDispatcher? =
-        LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher,
-    onBackPressed: () -> Unit
-) {
-    val currentOnBackPressed by rememberUpdatedState(newValue = onBackPressed)
 
-    val backCallback = remember {
-        object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                currentOnBackPressed()
-            }
-        }
-    }
-
-    DisposableEffect(key1 = backPressedDispatcher) {
-        backPressedDispatcher?.addCallback(backCallback)
-
-        onDispose {
-            backCallback.remove()
-        }
-    }
-}
 
 
