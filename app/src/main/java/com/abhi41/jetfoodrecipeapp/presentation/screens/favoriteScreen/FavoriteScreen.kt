@@ -77,6 +77,7 @@ fun FavoriteScreen(
                     }
                 }
                 actionModeTitle.value = ""
+                selectedRecipes.clear()
             }
         }
     ) {
