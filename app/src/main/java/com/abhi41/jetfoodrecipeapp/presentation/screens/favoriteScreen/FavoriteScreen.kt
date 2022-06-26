@@ -56,8 +56,7 @@ fun FavoriteScreen(
         actionModeTitle.value = ""
         selectedRecipes.clear()
     }
-    if (isContextual.value)
-    {
+    if (isContextual.value) {
         BackPressHandler(onBackPressed = onBack)
     }
 
@@ -77,7 +76,7 @@ fun FavoriteScreen(
                         detailViewModel.deleteFavoriteRecipe(favoriteEntity)
                     }
                 }
-
+                actionModeTitle.value = ""
             }
         }
     ) {
@@ -123,7 +122,7 @@ fun FoodItem(
     }
     //we need to save state because this is a recyclerview it will recycle last selected recipe
     saveItemState(foodItemEntity, selectedItem)
-    if (isContextual.value) //clear multiple selection on back press
+    if (isContextual.value) //clear multiple selection on backpress
     {
         multiSelection = true
     } else {
@@ -161,10 +160,10 @@ fun FoodItem(
                         selectedItem.value = true
 
                         applicationSelection(
-                            foodItemEntity,
-                            selectedItem,
-                            actionModeTitle,
-                            isContextual,
+                            currentRecipe = foodItemEntity,
+                            selectedItem = selectedItem,
+                            actionModeTitle = actionModeTitle,
+                            isContextual = isContextual,
                         )
 
                         true

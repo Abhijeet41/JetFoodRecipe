@@ -20,6 +20,7 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -119,5 +120,8 @@ dependencies {
 
     //Contextual app bar -Accompanist
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
+
+    //multidex support
+    implementation 'com.android.support:multidex:1.0.3'
 
 }
