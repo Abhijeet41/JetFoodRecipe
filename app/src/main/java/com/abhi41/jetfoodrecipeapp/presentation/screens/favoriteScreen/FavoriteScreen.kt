@@ -133,7 +133,8 @@ fun FoodItem(
         modifier = Modifier
             .height(FoodRecipe_ITEM_HEIGHT)
             .border(
-                1.dp, if (selectedItem.value) Color.Green else Color.White,
+                1.dp, if (selectedItem.value) MaterialTheme.colors.strokeBorderColor
+                else MaterialTheme.colors.cardStrokeBorder,
                 shape = RoundedCornerShape(
                     size = MEDIUM_PADDING
                 )
@@ -141,7 +142,7 @@ fun FoodItem(
             .combinedClickable(
                 onClick = {
 
-                    if (isContextual.value) {
+                    if (isContextual.value || multiSelection) {
                         applicationSelection(
                             currentRecipe = foodItemEntity,
                             selectedItem = selectedItem,
@@ -166,10 +167,9 @@ fun FoodItem(
                             actionModeTitle = actionModeTitle,
                             isContextual = isContextual,
                         )
-
                         true
                     } else {
-                        multiSelection = false
+                        //multiSelection = false
                         false
                     }
 
@@ -205,7 +205,7 @@ fun FoodItem(
                     Text(
                         text = foodItem.title,
                         style = MaterialTheme.typography.subtitle1,
-                        color = Color.White,
+                        color = MaterialTheme.colors.titleColor,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -213,7 +213,7 @@ fun FoodItem(
                         modifier = Modifier.padding(top = 20.dp),
                         text = foodItem.summary,
                         style = MaterialTheme.typography.caption,
-                        color = Color.White.copy(alpha = ContentAlpha.medium),
+                        color = MaterialTheme.colors.descriptionColor,
                         maxLines = 4,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -242,7 +242,7 @@ fun RowLikesAndCategory(foodItem: Result) {
         InfoColumn(
             R.drawable.ic_clock,
             "${foodItem.readyInMinutes}",
-            Color.Yellow
+            MaterialTheme.colors.readyInMinute
         )
         InfoColumn(
             R.drawable.ic_leaf,

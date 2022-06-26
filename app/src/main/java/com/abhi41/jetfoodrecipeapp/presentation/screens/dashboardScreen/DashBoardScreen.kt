@@ -27,7 +27,7 @@ import com.abhi41.jetfoodrecipeapp.ui.theme.TXT_MEDIUM_SIZE
 import kotlinx.coroutines.launch
 
 
-@OptIn(ExperimentalMaterialApi::class)
+
 @Composable
 fun DashBoardScreen(navController: NavHostController = rememberNavController()) {
     Scaffold(

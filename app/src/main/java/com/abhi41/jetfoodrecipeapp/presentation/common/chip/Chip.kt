@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -16,7 +15,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.abhi41.jetfoodrecipeapp.R
-import com.abhi41.jetfoodrecipeapp.ui.theme.EXTRA_SMALL_PADDING
 import com.abhi41.jetfoodrecipeapp.ui.theme.SMALL_PADDING
 
 @Preview(showBackground = true)
@@ -50,6 +48,7 @@ fun Chip(
                     top = SMALL_PADDING
                 ),
                 painter = painterResource(id = R.drawable.ic_checkmark),
+                tint = Color.White,
                 contentDescription = "Check Icon"
             ) else Box() {}
             Text(

@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -269,13 +270,15 @@ private fun BottomSheetScreen(
             ) {
                 Button(
                     modifier = Modifier
-                        .fillMaxWidth(0.5f)
+                        .fillMaxWidth(0.4f)
+                        .height(BUTTON_HEIGHT)
                         .padding(MEDIUM_PADDING),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.colorPrimary)),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.buttonColor),
+                    shape = RoundedCornerShape(50),
                     onClick = {
 
-                        Log.d("selectedMealType", "${selectedMealType.value}")
-                        Log.d("selectedDietType", "${selectedDietType.value}")
+                    /*    Log.d("selectedMealType", "${selectedMealType.value}")
+                        Log.d("selectedDietType", "${selectedDietType.value}")*/
                         recipesViewModel.saveMealAndDietType( //save to datastore
                             selectedMealType.value,
                             selectedDietType.value

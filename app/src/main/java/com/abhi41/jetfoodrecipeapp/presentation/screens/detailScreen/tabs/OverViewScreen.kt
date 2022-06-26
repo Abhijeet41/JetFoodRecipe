@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -73,12 +74,13 @@ private fun ImageSection(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(80.dp).background(
+                .height(80.dp)
+                .background(
                     brush = Brush.verticalGradient(
-                      colors = listOf(
-                          Color.Transparent,
-                          Color(0x80000000),
-                      )
+                        colors = listOf(
+                            Color.Transparent,
+                            Color(0x80000000),
+                        )
                     )
                 )
         )
@@ -120,7 +122,7 @@ private fun TitleAndCategoriesSection(selectedHero: Result?) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = Color.DarkGray)
+            .background(color = MaterialTheme.colors.categoriesBackgroundColor)
             .padding(SMALL_PADDING),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -128,7 +130,7 @@ private fun TitleAndCategoriesSection(selectedHero: Result?) {
             text = selectedHero?.title ?: "Strawberry Cheesecake Chocolate",
             fontWeight = FontWeight.Bold,
             //color = MaterialTheme.colors.titleColor,
-            color = Color.White,
+            color = MaterialTheme.colors.titleColor,
             fontSize = TXT_EXTRA_LARGE_SIZE,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
@@ -181,7 +183,8 @@ private fun ColumnCategory(selectedHero: Result?) {
 
 @Composable
 fun RowCategories(icon: Int, text: String, isVegetarian: Boolean) {
-    val color = if (isVegetarian) Color.Green else Color.White
+    val color = if (isVegetarian) MaterialTheme.colors.categoriesSelectedIconColor
+    else MaterialTheme.colors.categoriesIconColor
     Row(
         modifier = Modifier.padding(top = SMALL_PADDING),
         verticalAlignment = Alignment.CenterVertically
@@ -216,8 +219,8 @@ fun DescriptionSection(summary: String?) {
 
         Text(
             text = summary
-                ?: "When it comes to laying out the child composables within a Column, we may want to control how much space each child is to occupy without having to define a fixed height. In these cases we can utilise the Weight modifier to build fluid and dynamic layouts – the Weight modifier is also a part of the Column Scope. The weight defines how much of the available height the composable should get – so let’s imagine that there are three composables within a container, two of which have a weight of 3 and the third has a weight of 2. This totals to 8 – meaning that the available height will be divided by 8 and distributed amongst the children for their corresponding weight.",
-            color = MaterialTheme.colors.titleColor,
+                ?: stringResource(R.string.descriptionDemo),
+            color = MaterialTheme.colors.descriptionColor,
             fontSize = TXT_MEDIUM_SIZE,
         )
     }

@@ -1,6 +1,7 @@
 package com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -60,7 +61,7 @@ fun IngredientItem(extendedIngredient: ExtendedIngredient) {
 
     val painter =
         rememberImagePainter(data = "${Constants.BASE_IMAGE_URL}${extendedIngredient.image}") {
-            placeholder(R.drawable.ic_error_placeholder)
+            placeholder(R.drawable.ic_transperent)
             crossfade(600)
             error(R.drawable.ic_error_placeholder)
         }
@@ -68,18 +69,15 @@ fun IngredientItem(extendedIngredient: ExtendedIngredient) {
     Box(
         modifier = Modifier
             .border(
-                1.dp, Color.White, shape = RoundedCornerShape(
+                1.dp, MaterialTheme.colors.cardStrokeBorder, shape = RoundedCornerShape(
                     size = MEDIUM_PADDING
                 )
             )
             .height(INGREDIENT_ITEM_HEIGHT)
-            .clickable {
-
-            },
-
+            .clickable {},
         ) {
         Surface(
-            modifier = Modifier.padding(1.dp),
+            modifier = Modifier.padding(MEDIUM_PADDING),
         ) {
             Row(
                 modifier = Modifier
@@ -92,7 +90,8 @@ fun IngredientItem(extendedIngredient: ExtendedIngredient) {
                 Image(
                     modifier = Modifier
                         .fillMaxWidth(0.4f)
-                        .wrapContentHeight(),
+                        .background(Color.Transparent)
+                        .fillMaxHeight(),
                     painter = painter,
                     contentDescription = "Ingredient Image",
                     contentScale = ContentScale.Crop
@@ -108,7 +107,7 @@ fun IngredientItem(extendedIngredient: ExtendedIngredient) {
                         style = MaterialTheme.typography.h4,
                         fontSize = TXT_TITLE_TEXT,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White,
+                        color = MaterialTheme.colors.titleColor,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -119,7 +118,7 @@ fun IngredientItem(extendedIngredient: ExtendedIngredient) {
                         ),
                         text = extendedIngredient.amount.toString(),
                         style = MaterialTheme.typography.caption,
-                        color = Color.LightGray,
+                        color = MaterialTheme.colors.titleColor,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -129,7 +128,7 @@ fun IngredientItem(extendedIngredient: ExtendedIngredient) {
                         ),
                         text = extendedIngredient.consistency,
                         style = MaterialTheme.typography.caption,
-                        color = Color.LightGray,
+                        color = MaterialTheme.colors.titleColor,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -139,7 +138,7 @@ fun IngredientItem(extendedIngredient: ExtendedIngredient) {
                         ),
                         text = extendedIngredient.original,
                         style = MaterialTheme.typography.caption,
-                        color = Color.LightGray,
+                        color = MaterialTheme.colors.titleColor,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )

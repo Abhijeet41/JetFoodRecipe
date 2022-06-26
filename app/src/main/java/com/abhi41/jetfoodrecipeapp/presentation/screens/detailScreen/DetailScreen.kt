@@ -1,6 +1,5 @@
 package com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen
 
-import androidx.compose.animation.Animatable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -19,6 +18,7 @@ import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs.Ingred
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs.InstructionScreen
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs.OverViewScreen
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs.overview.DetailScreenAppbar
+import com.abhi41.jetfoodrecipeapp.ui.theme.tabBackgroundColor
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.launch
 
@@ -85,11 +85,11 @@ fun DetailScreen(
                 TabRow(
                     selectedTabIndex = pagerState.currentPage,
                     backgroundColor = Color.Transparent,
-                    contentColor = Color.Black,
+                    contentColor = MaterialTheme.colors.tabBackgroundColor,
                     divider = {
                         TabRowDefaults.Divider(
                             thickness = 1.dp,
-                            color = Color.Black
+                            color = Color.Transparent
                         )
                     },
                     indicator = { tabPosition ->
@@ -106,13 +106,11 @@ fun DetailScreen(
                 ) {
                     tabItems.forEachIndexed { index, _ ->
                         val selected = pagerState.currentPage == index
-                        val color = remember {
-                            Animatable(Color.Black)
-                        }
+
 
                         Tab(
                             modifier = Modifier.background(
-                                color = color.value,
+                                color = MaterialTheme.colors.tabBackgroundColor,
                             ),
                             text = {
                                 Text(

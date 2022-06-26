@@ -68,7 +68,7 @@ fun FoodItem(food: Result, navController: NavHostController) {
     Box(
         modifier = Modifier
             .border(
-                1.dp, Color.White, shape = RoundedCornerShape(
+                1.dp, MaterialTheme.colors.cardStrokeBorder, shape = RoundedCornerShape(
                     size = MEDIUM_PADDING
                 )
             )
@@ -106,7 +106,7 @@ fun FoodItem(food: Result, navController: NavHostController) {
                     Text(
                         text = food.title,
                         style = MaterialTheme.typography.subtitle1,
-                        color = Color.White,
+                        color = MaterialTheme.colors.titleColor,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -114,7 +114,7 @@ fun FoodItem(food: Result, navController: NavHostController) {
                         modifier = Modifier.padding(top = 20.dp),
                         text = food.summary,
                         style = MaterialTheme.typography.caption,
-                        color = Color.White.copy(alpha = ContentAlpha.medium),
+                        color = MaterialTheme.colors.descriptionColor,
                         maxLines = 4,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -145,7 +145,7 @@ fun RowLikesAndCategory(food: Result) {
         InfoColumn(
             R.drawable.ic_clock,
             "${food.readyInMinutes}",
-            Color.Yellow
+            MaterialTheme.colors.readyInMinute
         )
         InfoColumn(
             R.drawable.ic_leaf,

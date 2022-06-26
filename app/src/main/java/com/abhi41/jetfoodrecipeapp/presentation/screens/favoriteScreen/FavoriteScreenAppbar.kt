@@ -13,6 +13,7 @@ import com.abhi41.jetfoodrecipeapp.data.local.entities.FavoriteEntity
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.DetailViewModel
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs.overview.AppBarIcon
 import com.abhi41.jetfoodrecipeapp.ui.theme.TXT_MEDIUM_SIZE
+import com.abhi41.jetfoodrecipeapp.ui.theme.topAppBarBackgroundColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -29,7 +30,7 @@ fun FavoriteScreenAppbar(
     val backgroundColor = if (isContextual.value) {
         Color.DarkGray
     } else {
-        Color.Black
+        MaterialTheme.colors.topAppBarBackgroundColor
     }
 
     TopAppBar(

@@ -1,9 +1,6 @@
 package com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs.overview
 
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -12,6 +9,9 @@ import androidx.navigation.NavHostController
 import com.abhi41.foodrecipe.model.Result
 import com.abhi41.jetfoodrecipeapp.R
 import com.abhi41.jetfoodrecipeapp.data.local.entities.FavoriteEntity
+import com.abhi41.jetfoodrecipeapp.ui.theme.darkYello
+import com.abhi41.jetfoodrecipeapp.ui.theme.tabBackgroundColor
+import com.abhi41.jetfoodrecipeapp.utils.HexToJetpackColor
 
 @Composable
 fun DetailScreenAppbar(
@@ -47,7 +47,7 @@ fun DetailScreenAppbar(
                 onFavoriteClick()
             }
         },
-        backgroundColor = Color.Black
+        backgroundColor = MaterialTheme.colors.tabBackgroundColor
     )
 
 }
@@ -58,7 +58,7 @@ fun AppBarIcon(icon: Int, isRecipeSaved: Boolean = false, onClick: () -> Unit) {
         Icon(
             painter = painterResource(id = icon),
             contentDescription = "Icon",
-            tint = if (isRecipeSaved) Color.Yellow else Color.White
+            tint = if (isRecipeSaved) HexToJetpackColor.getColor(darkYello) else Color.White
         )
     }
 }

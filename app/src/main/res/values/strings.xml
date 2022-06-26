@@ -29,4 +29,5 @@
     <string name="delete_all">Delete All</string>
     <string name="share">Share</string>
     <string name="food_joke_txt">\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \"</string>
+    <string name="descriptionDemo">When it comes to laying out the child composables within a Column, we may want to control how much space each child is to occupy without having to define a fixed height. In these cases we can utilise the Weight modifier to build fluid and dynamic layouts – the Weight modifier is also a part of the Column Scope. The weight defines how much of the available height the composable should get – so let’s imagine that there are three composables within a container, two of which have a weight of 3 and the third has a weight of 2. This totals to 8 – meaning that the available height will be divided by 8 and distributed amongst the children for their corresponding weight.</string>
 </resources>
