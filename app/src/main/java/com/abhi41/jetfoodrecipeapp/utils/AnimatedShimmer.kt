@@ -99,7 +99,7 @@ fun ShimmerListItem(brush: Brush) {
                     Spacer(
                         modifier = Modifier
                             .background(brush)
-                            .height(30.dp)
+                            .height(55.dp)
                             .padding(EXTRA_SMALL_PADDING)
                             .fillMaxWidth(),
                     )
