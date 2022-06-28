@@ -1,5 +1,8 @@
 package com.abhi41.jetfoodrecipeapp.presentation.common.chip
 
+import com.abhi41.jetfoodrecipeapp.utils.Constants.DEFAULT_DIET_TYPE
+import com.abhi41.jetfoodrecipeapp.utils.Constants.DEFAULT_MEAL_TYPE
+
 /*
 enum class MealType(var value: String) {
     MainCourse("MainCourse"),
@@ -19,7 +22,7 @@ enum class MealType(var value: String) {
 class MealType {
     companion object {
         fun getMeals() = listOf<Meal>(
-            Meal("Main Course"),
+            Meal(DEFAULT_MEAL_TYPE),
             Meal("Side Dish"),
             Meal("Dessert"),
             Meal("Appetizer"),
@@ -48,7 +51,7 @@ enum class DietType(var value: String) {
 class DietType{
     companion object{
         fun getDiets() = listOf<Diet>(
-            Diet("Gluten Free"),
+            Diet(DEFAULT_DIET_TYPE),
             Diet("Ketogenic"),
             Diet("Vegetarian"),
             Diet("Vegan"),

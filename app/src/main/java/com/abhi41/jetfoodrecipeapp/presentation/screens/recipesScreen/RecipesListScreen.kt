@@ -20,7 +20,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.abhi41.foodrecipe.model.Result
 import com.abhi41.jetfoodrecipeapp.R
@@ -31,8 +30,9 @@ import com.abhi41.jetfoodrecipeapp.presentation.common.chip.*
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.DashBoardViewModel
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.SharedResultViewModel
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
+import com.abhi41.jetfoodrecipeapp.utils.AnimatedShimmer
 import com.abhi41.jetfoodrecipeapp.utils.Constants
-import com.abhi41.jetfoodrecipeapp.utils.NetworkResult
+import com.abhi41.jetfoodrecipeapp.utils.Resource
 import com.riegersan.composeexperiments.DietTypeChipGroup
 import com.riegersan.composeexperiments.MealTypeChipGroup
 import kotlinx.coroutines.launch
@@ -153,12 +153,12 @@ fun observers(
     val context = LocalContext.current
 
     when (response) {
-        is NetworkResult.Success -> {
+        is Resource.Success -> {
             //   hideShimmerEffect()
             foodRecipes = response?.data?.results!!
         }
 
-        is NetworkResult.Error -> {
+        is Resource.Error -> {
             //   hideShimmerEffect()
             ///  loadDataFromCache()
             Toast.makeText(
@@ -168,8 +168,8 @@ fun observers(
             ).show()
         }
 
-        is NetworkResult.Loading -> {
-            //   showShimmerEffect()
+        is Resource.Loading -> {
+            AnimatedShimmer()
         }
     }
 

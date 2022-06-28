@@ -498,6 +498,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/abhi41/jetfoodrecipeapp/utils/AnimatedShimmer.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/abhi41/jetfoodrecipeapp/utils/Constants.kt">
           <value>
             <set />
@@ -514,6 +519,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/abhi41/jetfoodrecipeapp/utils/NetworkResult.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/abhi41/jetfoodrecipeapp/utils/Resource.kt">
           <value>
             <set />
           </value>

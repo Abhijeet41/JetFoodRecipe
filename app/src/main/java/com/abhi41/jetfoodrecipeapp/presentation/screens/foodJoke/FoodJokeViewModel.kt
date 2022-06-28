@@ -6,8 +6,7 @@ import com.abhi41.foodrecipe.model.FoodJoke
 import com.abhi41.jetfoodrecipeapp.data.local.LocalDataSource
 import com.abhi41.jetfoodrecipeapp.data.local.entities.FoodJokeEntity
 import com.abhi41.jetfoodrecipeapp.data.network.RemoteDataSource
-import com.abhi41.jetfoodrecipeapp.utils.Constants
-import com.abhi41.jetfoodrecipeapp.utils.NetworkResult
+import com.abhi41.jetfoodrecipeapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,7 +19,7 @@ class FoodJokeViewModel @Inject constructor(
     private val localDataSource: LocalDataSource
 ) : ViewModel() {
 
-    val foodJokeResponse: MutableLiveData<NetworkResult<FoodJoke>> = MutableLiveData()
+    val foodJokeResponse: MutableLiveData<Resource<FoodJoke>> = MutableLiveData()
 
     val readFoodJoke: LiveData<List<FoodJokeEntity>> = localDataSource.readFoodJoke().asLiveData()
 
@@ -31,7 +30,7 @@ class FoodJokeViewModel @Inject constructor(
 
 
     private suspend fun getFoodJokeSafeCall(apiKey: String) {
-        foodJokeResponse.value = NetworkResult.Loading()
+        foodJokeResponse.value = Resource.Loading()
 
         try {
             val response = remoteDataSource.getFoodJoke(apiKey)
@@ -44,7 +43,7 @@ class FoodJokeViewModel @Inject constructor(
                 offlineCacheFoodJoke(foodJoke)
             }
         } catch (e: Exception) {
-            foodJokeResponse.value = NetworkResult.Error("No Joke Found")
+            foodJokeResponse.value = Resource.Error("No Joke Found")
         }
 
     }
@@ -62,21 +61,21 @@ class FoodJokeViewModel @Inject constructor(
 
     private fun handleFoodJokeResponse(
         response: Response<FoodJoke>
-    ): NetworkResult<FoodJoke> {
+    ): Resource<FoodJoke> {
         when {
             response.message().toString().contains("timeout") -> {
-                return NetworkResult.Error("Connection Timeout!")
+                return Resource.Error("Connection Timeout!")
             }
             response.code() == 420 -> {
-                return NetworkResult.Error("Api Key Limited.")
+                return Resource.Error("Api Key Limited.")
             }
             response.isSuccessful -> {
                 val foodJoke = response.body()
-                return NetworkResult.Success(foodJoke!!)
+                return Resource.Success(foodJoke!!)
             }
 
             else -> {
-                return NetworkResult.Error(response.message())
+                return Resource.Error(response.message())
             }
         }
     }

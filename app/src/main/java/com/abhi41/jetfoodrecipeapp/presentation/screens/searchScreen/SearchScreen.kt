@@ -9,7 +9,8 @@ import androidx.navigation.NavHostController
 import com.abhi41.jetfoodrecipeapp.presentation.common.RecipesListContent
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.DashBoardViewModel
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.SharedResultViewModel
-import com.abhi41.jetfoodrecipeapp.utils.NetworkResult
+import com.abhi41.jetfoodrecipeapp.utils.AnimatedShimmer
+import com.abhi41.jetfoodrecipeapp.utils.Resource
 
 @Composable
 fun SearchScreen(
@@ -41,7 +42,7 @@ fun SearchScreen(
         content = {
             when (response) {
 
-                is NetworkResult.Success -> {
+                is Resource.Success -> {
                     val recipes = response?.data?.results
                     RecipesListContent(
                         foodRecipes = recipes,
@@ -50,12 +51,13 @@ fun SearchScreen(
                     )
                 }
 
-                is NetworkResult.Error -> {
+                is Resource.Error -> {
                     //error
                 }
 
-                is NetworkResult.Loading -> {
+                is Resource.Loading -> {
                     //loading
+                    AnimatedShimmer()
                 }
             }
 
