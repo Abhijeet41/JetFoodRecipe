@@ -4,6 +4,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
@@ -12,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -57,6 +59,10 @@ private fun ImageSection(
     aggregateLikes: Int? = 1225,
     readyInMinutes: Int? = 40
 ) {
+    val lazyListState = rememberLazyListState()
+    var scrolledY = 0f
+    var previousOffset = 0
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -66,6 +72,11 @@ private fun ImageSection(
         Image(
             modifier = Modifier
                 .fillMaxWidth()
+                .graphicsLayer {
+                    scrolledY += lazyListState.firstVisibleItemScrollOffset - previousOffset
+                    translationY = scrolledY * 0.5f
+                    previousOffset = lazyListState.firstVisibleItemScrollOffset
+                }
                 .height(250.dp),
             painter = recipeImg,
             contentDescription = "recipe_image",

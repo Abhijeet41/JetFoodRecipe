@@ -8,11 +8,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.abhi41.jetfoodrecipeapp.presentation.common.RecipesListContent
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.DashBoardViewModel
+import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.SharedResultViewModel
 import com.abhi41.jetfoodrecipeapp.utils.NetworkResult
 
 @Composable
 fun SearchScreen(
     navHostController: NavHostController,
+    sharedResultViewModel: SharedResultViewModel,
     searchViewModel: SearchViewModel = hiltViewModel(),
     dashBoardViewModel: DashBoardViewModel = hiltViewModel()
 ) {
@@ -41,7 +43,11 @@ fun SearchScreen(
 
                 is NetworkResult.Success -> {
                     val recipes = response?.data?.results
-                    RecipesListContent(foodRecipes = recipes, navController = navHostController)
+                    RecipesListContent(
+                        foodRecipes = recipes,
+                        navController = navHostController,
+                        sharedResultViewModel = sharedResultViewModel
+                    )
                 }
 
                 is NetworkResult.Error -> {

@@ -5,8 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abhi41.jetfoodrecipeapp.data.repository.MealAndDietType
 import com.abhi41.jetfoodrecipeapp.data.repository.MealDataStoreRepository
-import com.abhi41.jetfoodrecipeapp.presentation.common.chip.Diet
-import com.abhi41.jetfoodrecipeapp.presentation.common.chip.Meal
 import com.abhi41.jetfoodrecipeapp.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +16,7 @@ class RecipesViewModel @Inject constructor(
     private val dataStoreRepository: MealDataStoreRepository
 ) : ViewModel() {
 
+    private lateinit var mealAndDiet: MealAndDietType
 
     //read data preferences from repository class
     val readMealAndDietType = dataStoreRepository.readMealAndDietType
@@ -25,10 +24,15 @@ class RecipesViewModel @Inject constructor(
 
     //save meal data datastore preferences
     fun saveMealAndDietType(
-        mealType: Meal,
-        dietType: Diet,
-        ) = viewModelScope.launch(Dispatchers.IO) {
-        dataStoreRepository.saveMealAndDietType(mealType.meal, dietType.diet)
+        mealType: String,
+        dietType: String,
+    ) = viewModelScope.launch(Dispatchers.IO) {
+
+        mealAndDiet = MealAndDietType(
+            mealType,
+            dietType
+        )
+        dataStoreRepository.saveMealAndDietType(mealAndDiet)
     }
 
 
@@ -38,6 +42,7 @@ class RecipesViewModel @Inject constructor(
 
         quries[Constants.QUERY_NUMBER] = "50"
         quries[Constants.QUERY_API_KEY] = Constants.API_KEY
+
         quries[Constants.QUERY_TYPE] = mealType
         quries[Constants.QUERY_DIET] = dietType
         quries[Constants.QUERY_ADD_RECIPE_INFO] = "true"

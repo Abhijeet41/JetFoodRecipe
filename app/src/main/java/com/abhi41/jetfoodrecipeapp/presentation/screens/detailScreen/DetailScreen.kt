@@ -1,5 +1,6 @@
 package com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -14,6 +15,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.abhi41.foodrecipe.model.Result
 import com.abhi41.jetfoodrecipeapp.data.local.entities.FavoriteEntity
+import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.DashBoardViewModel
+import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.SharedResultViewModel
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs.IngredientScreen
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs.InstructionScreen
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs.OverViewScreen
@@ -26,18 +29,17 @@ import kotlinx.coroutines.launch
 @Composable
 fun DetailScreen(
     navController: NavHostController,
-    detailViewModel: DetailViewModel = hiltViewModel()
+    sharedResultViewModel: SharedResultViewModel,
+    detailViewModel: DetailViewModel = hiltViewModel(),
 ) {
-    val selectedHero by detailViewModel.selectedRecipe.collectAsState()
+    val result = sharedResultViewModel.result
 
     val tabItems = listOf("Overview", "Ingredients", "Instruction")
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
     val favoriteRecipe = detailViewModel.readFavoriteRecipes.observeAsState()
-    var isRecipeSaved by remember {
-        mutableStateOf(false)
-    }
-    var savedRecipeId by remember { mutableStateOf(0)}
+    var isRecipeSaved by remember { mutableStateOf(false) }
+    var savedRecipeId by remember { mutableStateOf(0) }
 
     Scaffold(
         topBar = {
@@ -45,38 +47,38 @@ fun DetailScreen(
                 DetailScreenAppbar(//we passing list and selected list to change color of appbar
                     navController = navController,
                     favoriteRecipe = favoriteRecipe,
-                    selectedHero = selectedHero
+                    selectedHero = result
                 ) { //favorite click listener
 
-                    var selectedId = detailViewModel.selectedRecipe.value?.recipeId
-                        //check whether favorite recipe saved or not
-                        for (favorite in favoriteRecipe.value!!) {
-                            if (favorite.result.recipeId == selectedId) {
-                                isRecipeSaved = true
-                                savedRecipeId = favorite.id
-                                break
-                            }
-                        }
 
-                        if (!isRecipeSaved) { //if its not already saved then insert
-                            detailViewModel.insertFavoriteRecipe(
-                                FavoriteEntity(0, selectedHero!!)
-                            )
+                    //check whether favorite recipe saved or not
+                    for (favorite in favoriteRecipe.value!!) {
+                        if (favorite.result.recipeId == result?.recipeId) {
                             isRecipeSaved = true
-                        } else { //if its already saved then delete
-                            var favoriteEntity = FavoriteEntity(
-                                savedRecipeId,
-                                selectedHero!!
-                            )
-                            coroutineScope.launch {
-                                detailViewModel.deleteFavoriteRecipe(favoriteEntity)
-                            }
+                            savedRecipeId = favorite.id
+                            break
+                        }
+                    }
 
+                    if (!isRecipeSaved) { //if its not already saved then insert
+                        detailViewModel.insertFavoriteRecipe(
+                            FavoriteEntity(0, result!!)
+                        )
+                        isRecipeSaved = true
+                    } else { //if its already saved then delete
+                        var favoriteEntity = FavoriteEntity(
+                            savedRecipeId,
+                            result!!
+                        )
+                        coroutineScope.launch {
+                            detailViewModel.deleteFavoriteRecipe(favoriteEntity)
                         }
 
                     }
 
                 }
+
+            }
 
         },
 
@@ -131,7 +133,7 @@ fun DetailScreen(
                             })
                     }
                 }
-                horizontalPager(tabItems, pagerState, selectedHero)
+                horizontalPager(tabItems, pagerState, result)
             }
         }
     )

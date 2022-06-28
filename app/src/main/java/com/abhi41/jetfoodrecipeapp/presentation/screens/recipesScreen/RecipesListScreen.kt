@@ -10,7 +10,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -21,13 +20,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.abhi41.foodrecipe.model.Result
 import com.abhi41.jetfoodrecipeapp.R
+import com.abhi41.jetfoodrecipeapp.data.repository.MealAndDietType
 import com.abhi41.jetfoodrecipeapp.navigation.Screen
 import com.abhi41.jetfoodrecipeapp.presentation.common.RecipesListContent
 import com.abhi41.jetfoodrecipeapp.presentation.common.chip.*
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.DashBoardViewModel
+import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.SharedResultViewModel
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
 import com.abhi41.jetfoodrecipeapp.utils.Constants
 import com.abhi41.jetfoodrecipeapp.utils.NetworkResult
@@ -42,6 +44,7 @@ private var foodRecipes = emptyList<Result>()
 @Composable
 fun RecipesScreen(
     navController: NavHostController,
+    sharedResultViewModel: SharedResultViewModel,
     recipesViewModel: RecipesViewModel = hiltViewModel(),
     dashBoardViewModel: DashBoardViewModel = hiltViewModel()
 ) {
@@ -54,7 +57,8 @@ fun RecipesScreen(
         RecipeDesign(
             navController = navController,
             recipesViewModel = recipesViewModel,
-            dashBoardViewModel = dashBoardViewModel
+            dashBoardViewModel = dashBoardViewModel,
+            sharedResultViewModel = sharedResultViewModel
         )
     } else {
         requestApiData(
@@ -73,6 +77,7 @@ fun RecipeDesign(
     navController: NavHostController,
     recipesViewModel: RecipesViewModel,
     dashBoardViewModel: DashBoardViewModel,
+    sharedResultViewModel: SharedResultViewModel,
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -97,7 +102,8 @@ fun RecipeDesign(
                 modalBottomSheetState,
                 navController,
                 recipesViewModel,
-                dashBoardViewModel
+                dashBoardViewModel,
+                sharedResultViewModel
             )
         },
         floatingActionButton = {
@@ -177,6 +183,7 @@ fun BottomSheet(
     navController: NavHostController,
     recipesViewModel: RecipesViewModel,
     dashBoardViewModel: DashBoardViewModel,
+    sharedResultViewModel: SharedResultViewModel,
 ) {
     ModalBottomSheetLayout(
         sheetContent = {
@@ -191,7 +198,7 @@ fun BottomSheet(
     ) {
 
         if (!foodRecipes.isNullOrEmpty()) {
-            RecipesListContent(foodRecipes, navController)
+            RecipesListContent(foodRecipes, navController,sharedResultViewModel)
         } else {
             //show error screen
         }
@@ -207,6 +214,10 @@ private fun BottomSheetScreen(
 ) {
     //read data preference from repository class
     var readMealAndDietType = recipesViewModel.readMealAndDietType.asLiveData()
+    lateinit var mealAndDiet: MealAndDietType
+
+    Log.d("selectedMealType", readMealAndDietType.value?.selectedMealType ?: "null")
+    Log.d("selectedDietType", readMealAndDietType.value?.selectedDietType ?: "null")
     val coroutineScope = rememberCoroutineScope()
 
     var selectedMealType = remember {
@@ -276,18 +287,21 @@ private fun BottomSheetScreen(
                     colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.buttonColor),
                     shape = RoundedCornerShape(50),
                     onClick = {
-
+                        mealAndDiet = MealAndDietType(
+                        selectedMealType.value.meal,
+                        selectedDietType.value.diet
+                        )
                     /*    Log.d("selectedMealType", "${selectedMealType.value}")
                         Log.d("selectedDietType", "${selectedDietType.value}")*/
                         recipesViewModel.saveMealAndDietType( //save to datastore
-                            selectedMealType.value,
-                            selectedDietType.value
+                            mealAndDiet.selectedMealType,
+                            mealAndDiet.selectedMealType
                         )
 
                         dashBoardViewModel.getRecipes(
                             recipesViewModel.applyQueries(
-                                selectedMealType.value.meal,
-                                selectedDietType.value.diet
+                                mealAndDiet.selectedMealType,
+                                mealAndDiet.selectedMealType
                             )
                         )
                         coroutineScope.launch {
@@ -314,6 +328,7 @@ fun RecipeDesignPreview() {
         navController = NavHostController(LocalContext.current),
         recipesViewModel = hiltViewModel(),
         dashBoardViewModel = hiltViewModel(),
+        sharedResultViewModel = SharedResultViewModel()
     )
 
 }

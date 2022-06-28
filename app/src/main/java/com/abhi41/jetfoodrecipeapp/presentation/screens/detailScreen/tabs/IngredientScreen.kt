@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -68,6 +70,7 @@ fun IngredientItem(extendedIngredient: ExtendedIngredient) {
 
     Box(
         modifier = Modifier
+
             .border(
                 1.dp, MaterialTheme.colors.cardStrokeBorder, shape = RoundedCornerShape(
                     size = MEDIUM_PADDING
@@ -91,6 +94,7 @@ fun IngredientItem(extendedIngredient: ExtendedIngredient) {
                     modifier = Modifier
                         .fillMaxWidth(0.4f)
                         .background(Color.Transparent)
+
                         .fillMaxHeight(),
                     painter = painter,
                     contentDescription = "Ingredient Image",

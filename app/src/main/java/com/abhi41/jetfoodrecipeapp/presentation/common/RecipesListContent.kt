@@ -20,19 +20,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.abhi41.foodrecipe.model.Result
 import com.abhi41.jetfoodrecipeapp.R
 import com.abhi41.jetfoodrecipeapp.navigation.Screen
+import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.DashBoardViewModel
+import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.SharedResultViewModel
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
 
 
 @Composable
 fun RecipesListContent(
     foodRecipes: List<Result>?,
-    navController: NavHostController
+    navController: NavHostController,
+    sharedResultViewModel: SharedResultViewModel
 ) {
     LazyColumn(
         modifier = Modifier
@@ -48,7 +52,7 @@ fun RecipesListContent(
             }
         ) { food ->
             food.let {
-                FoodItem(food, navController)
+                FoodItem(food, navController,sharedResultViewModel)
             }
         }
     }
@@ -57,11 +61,15 @@ fun RecipesListContent(
 
 
 @Composable
-fun FoodItem(food: Result, navController: NavHostController) {
+fun FoodItem(
+    food: Result,
+    navController: NavHostController,
+    sharedResultViewModel: SharedResultViewModel,
+) {
 
     val painter = rememberImagePainter(data = "${food.image}") {
         placeholder(R.drawable.ic_placeholder)
-       // crossfade(600)
+        // crossfade(600)
         error(R.drawable.ic_placeholder)
     }
 
@@ -74,7 +82,8 @@ fun FoodItem(food: Result, navController: NavHostController) {
             )
             .height(FoodRecipe_ITEM_HEIGHT)
             .clickable {
-                navController.navigate(Screen.DetailPage.passRecipeId   (recipeId = food.recipeId))
+                sharedResultViewModel.addResult(food)
+                navController.navigate(Screen.DetailPage.passRecipeId(recipeId = food.recipeId))
             }
     ) {
         Surface(

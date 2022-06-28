@@ -22,12 +22,8 @@ private const val TAG = "DetailViewModel"
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     val localDataSource: LocalDataSource,
-    savedStateHandle: SavedStateHandle //savedStateHandle allow us to retrieve heroId from DetailScreen
-
 ) : ViewModel() {
 
-    private val _selectRecipe: MutableStateFlow<Result?> = MutableStateFlow(null)
-    val selectedRecipe: StateFlow<Result?> = _selectRecipe
 
     //read from favorite database
     val readFavoriteRecipes = localDataSource.readFavoriteRecipes().asLiveData()
@@ -46,23 +42,5 @@ class DetailViewModel @Inject constructor(
         localDataSource.deleteAllFavoriteRecipes()
     }
 
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            //Instead of getting id in detail page screen we get in ViewModel to fetch details against id
-
-            /* so with the help of savedStateHandle
-              we get recipeId which is passed through RecipesScreen or SearchScreen*/
-            val recipeId = savedStateHandle.get<Int>(Constants.DETAILS_ARGUMENTS_KEY)
-            _selectRecipe.value = recipeId?.let { localDataSource.getSelectedRecipe(it) }
-            _selectRecipe.value?.let {  //log purpose only
-                 Log.d(TAG, "${it.image}")
-             }
-
-        /*    StateFlow is a type of interface, which is only a read-only and always returns the
-            updated value. And to receive the updated value we just collect the value from
-            the implemented Flow.*/
-
-        }
-    }
 
 }

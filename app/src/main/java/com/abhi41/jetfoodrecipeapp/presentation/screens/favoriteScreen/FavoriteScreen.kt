@@ -3,9 +3,6 @@
 package com.abhi41.jetfoodrecipeapp.presentation.screens.favoriteScreen
 
 import android.util.Log
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
-import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -31,6 +28,7 @@ import com.abhi41.jetfoodrecipeapp.R
 import com.abhi41.jetfoodrecipeapp.data.local.entities.FavoriteEntity
 import com.abhi41.jetfoodrecipeapp.navigation.Screen
 import com.abhi41.jetfoodrecipeapp.presentation.common.BackPressHandler
+import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.SharedResultViewModel
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.DetailViewModel
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
 import kotlinx.coroutines.launch
@@ -42,6 +40,7 @@ var selectedRecipes: MutableList<FavoriteEntity> = mutableListOf()
 @Composable
 fun FavoriteScreen(
     navController: NavHostController,
+    sharedResultViewModel: SharedResultViewModel,
     detailViewModel: DetailViewModel = hiltViewModel()
 ) {
     val favoriteRecipe by detailViewModel.readFavoriteRecipes.observeAsState()
@@ -95,7 +94,7 @@ fun FavoriteScreen(
                         foodItem.id
                     }
                 ) { foodItem ->
-                    FoodItem(foodItem, navController, isContextual, actionModeTitle)
+                    FoodItem(foodItem, navController, isContextual, actionModeTitle,sharedResultViewModel)
                 }
             }
 
@@ -110,6 +109,7 @@ fun FoodItem(
     navController: NavHostController,
     isContextual: MutableState<Boolean>,
     actionModeTitle: MutableState<String>,
+    sharedResultViewModel: SharedResultViewModel,
 ) {
     val foodItem = foodItemEntity.result
 
@@ -150,6 +150,7 @@ fun FoodItem(
                             isContextual = isContextual,
                         )
                     } else {
+                        sharedResultViewModel.addResult(foodItem)
                         navController.navigate(Screen.DetailPage.passRecipeId(recipeId = foodItem.recipeId))
                     }
                 },
