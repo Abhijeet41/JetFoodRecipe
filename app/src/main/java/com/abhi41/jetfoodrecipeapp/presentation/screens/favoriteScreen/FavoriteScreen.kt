@@ -32,6 +32,7 @@ import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.SharedRe
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.DetailViewModel
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
 import kotlinx.coroutines.launch
+import org.jsoup.Jsoup
 
 private const val TAG = "FavoriteScreen"
 
@@ -212,7 +213,7 @@ fun FoodItem(
                     )
                     Text(
                         modifier = Modifier.padding(top = 20.dp),
-                        text = foodItem.summary,
+                        text = Jsoup.parse(foodItem.summary).text(),
                         style = MaterialTheme.typography.caption,
                         color = MaterialTheme.colors.descriptionColor,
                         maxLines = 4,

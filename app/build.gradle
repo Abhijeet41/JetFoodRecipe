@@ -124,4 +124,7 @@ dependencies {
     //multidex support
     implementation 'com.android.support:multidex:1.0.3'
 
+    // Jsoup use to parse html tags to web browsers
+    implementation 'org.jsoup:jsoup:1.13.1'
+
 }

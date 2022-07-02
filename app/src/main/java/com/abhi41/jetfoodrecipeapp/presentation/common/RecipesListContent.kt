@@ -30,6 +30,7 @@ import com.abhi41.jetfoodrecipeapp.navigation.Screen
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.DashBoardViewModel
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.SharedResultViewModel
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
+import org.jsoup.Jsoup
 
 
 @Composable
@@ -121,7 +122,7 @@ fun FoodItem(
                     )
                     Text(
                         modifier = Modifier.padding(top = 20.dp),
-                        text = food.summary,
+                        text = Jsoup.parse(food.summary).text(),
                         style = MaterialTheme.typography.caption,
                         color = MaterialTheme.colors.descriptionColor,
                         maxLines = 4,

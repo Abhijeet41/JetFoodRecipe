@@ -27,6 +27,7 @@ import coil.compose.rememberImagePainter
 import com.abhi41.foodrecipe.model.Result
 import com.abhi41.jetfoodrecipeapp.R
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
+import org.jsoup.Jsoup
 
 @Composable
 fun OverViewScreen(selectedHero: Result?) {
@@ -217,7 +218,7 @@ fun RowCategories(icon: Int, text: String, isVegetarian: Boolean) {
 
 @Composable
 fun DescriptionSection(summary: String?) {
-
+    val summary = Jsoup.parse(summary).text()
     Box(
         modifier = Modifier
             .padding(
