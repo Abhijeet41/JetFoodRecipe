@@ -1,4 +1,7 @@
-# JetFoodRecipe
+# JetPack FoodRecipe
+
+Used Dagger-Hilt,kotlin coroutines,roomdatabase,offline caching,coil and much more
+
 
 <table>
   <tr>
