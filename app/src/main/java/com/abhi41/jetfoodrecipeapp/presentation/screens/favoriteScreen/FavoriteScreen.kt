@@ -38,6 +38,7 @@ private const val TAG = "FavoriteScreen"
 
 var selectedRecipes: MutableList<FavoriteEntity> = mutableListOf()
 
+
 @Composable
 fun FavoriteScreen(
     navController: NavHostController,
@@ -45,18 +46,17 @@ fun FavoriteScreen(
     detailViewModel: DetailViewModel = hiltViewModel()
 ) {
     val favoriteRecipe by detailViewModel.readFavoriteRecipes.observeAsState()
-    var isContextual = remember {
-        mutableStateOf(false)
-    }
     val coroutineScope = rememberCoroutineScope()
-    var actionModeTitle = remember { mutableStateOf("") }
+    var state = remember {
+        mutableStateOf(FavoriteState())
+    }
 
     val onBack = { //handle on back pressed
-        isContextual.value = false
-        actionModeTitle.value = ""
+        state.value = state.value.copy(isContextual = false)
+        state.value = state.value.copy(actionModeTitle = "")
         selectedRecipes.clear()
     }
-    if (isContextual.value) {
+    if (state.value.isContextual) {
         BackPressHandler(onBackPressed = onBack)
     }
 
@@ -66,17 +66,16 @@ fun FavoriteScreen(
         topBar = {
             FavoriteScreenAppbar(
                 detailViewModel = detailViewModel,
-                isContextual = isContextual,
-                actionModeTitle = actionModeTitle
+                state = state
             ) {
                 //On delete Click
-                isContextual.value = false
+                state.value = state.value.copy(isContextual = false)
                 selectedRecipes.forEach { favoriteEntity ->
                     coroutineScope.launch {
                         detailViewModel.deleteFavoriteRecipe(favoriteEntity)
                     }
                 }
-                actionModeTitle.value = ""
+                state.value = state.value.copy(actionModeTitle = "")
                 selectedRecipes.clear()
             }
         }
@@ -95,7 +94,12 @@ fun FavoriteScreen(
                         foodItem.id
                     }
                 ) { foodItem ->
-                    FoodItem(foodItem, navController, isContextual, actionModeTitle,sharedResultViewModel)
+                    FoodItem(
+                        foodItemEntity = foodItem,
+                        navController = navController,
+                        sharedResultViewModel = sharedResultViewModel,
+                        state = state
+                    )
                 }
             }
 
@@ -108,9 +112,8 @@ fun FavoriteScreen(
 fun FoodItem(
     foodItemEntity: FavoriteEntity,
     navController: NavHostController,
-    isContextual: MutableState<Boolean>,
-    actionModeTitle: MutableState<String>,
     sharedResultViewModel: SharedResultViewModel,
+    state: MutableState<FavoriteState>,
 ) {
     val foodItem = foodItemEntity.result
 
@@ -124,7 +127,7 @@ fun FoodItem(
     }
     //we need to save state because this is a recyclerview it will recycle last selected recipe
     saveItemState(foodItemEntity, selectedItem)
-    if (isContextual.value) //clear multiple selection on backpress
+    if (state.value.isContextual) //clear multiple selection on backpress
     {
         multiSelection = true
     } else {
@@ -143,12 +146,11 @@ fun FoodItem(
             .combinedClickable(
                 onClick = {
 
-                    if (isContextual.value || multiSelection) {
+                    if (state.value.isContextual || multiSelection) {
                         applicationSelection(
                             currentRecipe = foodItemEntity,
                             selectedItem = selectedItem,
-                            actionModeTitle = actionModeTitle,
-                            isContextual = isContextual,
+                            state = state
                         )
                     } else {
                         sharedResultViewModel.addResult(foodItem)
@@ -160,14 +162,13 @@ fun FoodItem(
 
                     if (!multiSelection) {
                         multiSelection = true
-                        isContextual.value = true
+                        state.value = state.value.copy(isContextual = true)
                         selectedItem.value = true
 
                         applicationSelection(
                             currentRecipe = foodItemEntity,
                             selectedItem = selectedItem,
-                            actionModeTitle = actionModeTitle,
-                            isContextual = isContextual,
+                            state = state
                         )
                         true
                     } else {
@@ -282,36 +283,34 @@ fun InfoColumn(
 fun applicationSelection(
     currentRecipe: FavoriteEntity,
     selectedItem: MutableState<Boolean>,
-    actionModeTitle: MutableState<String>,
-    isContextual: MutableState<Boolean>,
+    state: MutableState<FavoriteState>,
 ) {
 
     if (selectedRecipes.contains(currentRecipe)) {
         selectedRecipes.remove(currentRecipe)
         selectedItem.value = false
-        applyActionModeTitle(actionModeTitle, isContextual)
+        applyActionModeTitle(state)
     } else {
         selectedRecipes.add(currentRecipe)
         selectedItem.value = true
-        applyActionModeTitle(actionModeTitle, isContextual)
+        applyActionModeTitle(state)
     }
 
 }
 
-fun applyActionModeTitle(
-    actionModeTitle: MutableState<String>,
-    isContextual: MutableState<Boolean>
-) {
+fun applyActionModeTitle(state: MutableState<FavoriteState>) {
     when (selectedRecipes.size) {
         0 -> {
-            isContextual.value = false
-            actionModeTitle.value = ""
+            state.value = state.value.copy(isContextual = false)
+            state.value = state.value.copy(actionModeTitle = "")
         }
         1 -> {
-            actionModeTitle.value = "${selectedRecipes.size} item selected"
+            state.value =
+                state.value.copy(actionModeTitle = "${selectedRecipes.size} item selected")
         }
         else -> {
-            actionModeTitle.value = "${selectedRecipes.size} items selected"
+            state.value =
+                state.value.copy(actionModeTitle = "${selectedRecipes.size} items selected")
         }
     }
 }

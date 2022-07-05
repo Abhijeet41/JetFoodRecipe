@@ -21,25 +21,29 @@ import kotlinx.coroutines.launch
 @Composable
 fun FavoriteScreenAppbar(
     detailViewModel: DetailViewModel,
-    isContextual: MutableState<Boolean>,
-    actionModeTitle: MutableState<String>,
+    state: MutableState<FavoriteState>,
     onDeleteClick: () -> Unit
 ) {
 
     val coroutineScope = rememberCoroutineScope()
-    val backgroundColor = if (isContextual.value) {
+    val backgroundColor = if (state.value.isContextual) {
         Color.DarkGray
     } else {
         MaterialTheme.colors.topAppBarBackgroundColor
     }
+    var isActionModeEmpty = state.value.actionModeTitle.equals("")
 
     TopAppBar(
         backgroundColor = backgroundColor,
         title = {
-            Text(text = "Favorite ${actionModeTitle.value}", fontWeight = FontWeight.Bold, color = Color.White)
+            Text(
+                text = if (isActionModeEmpty) "Favorite" else state.value.actionModeTitle,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
         },
         actions = {
-            if (isContextual.value) {
+            if (state.value.isContextual) {
                 IconButton(onClick = onDeleteClick) {
                     Icon(
                         imageVector = Icons.Default.Delete,
