@@ -43,8 +43,8 @@ class DashBoardViewModel @Inject constructor(
 
         try {
             val response = repository.remote.getRecipes(quries = quries)
-            _recipesResponse.value = HandleResponse.handleFoodRecipesResponse(response)
 
+            _recipesResponse.value = HandleResponse.handleFoodRecipesResponse(response)
             /*---------- Caching FoodRecipes------------- */
 
             val foodRecipe = _recipesResponse.value?.data
@@ -71,7 +71,7 @@ class DashBoardViewModel @Inject constructor(
 
     }
 
-     fun cleareSearchList(){ //clear data when clicked on search trailing close button
+    fun cleareSearchList() { //clear data when clicked on search trailing close button
         _searchedRecipesResponse.value = null
     }
 

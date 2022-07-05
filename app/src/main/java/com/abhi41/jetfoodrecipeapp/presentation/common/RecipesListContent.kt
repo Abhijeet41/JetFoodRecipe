@@ -53,7 +53,7 @@ fun RecipesListContent(
             }
         ) { food ->
             food.let {
-                FoodItem(food, navController,sharedResultViewModel)
+                FoodItem(food, navController, sharedResultViewModel)
             }
         }
     }

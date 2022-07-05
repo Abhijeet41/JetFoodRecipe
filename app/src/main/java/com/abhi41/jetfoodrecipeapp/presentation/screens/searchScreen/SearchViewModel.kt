@@ -18,8 +18,6 @@ class SearchViewModel @Inject constructor(
         _searchQuery.value = query
     }
 
-
-
     //search quries
     fun applySearchQuery(searchQuery: String): HashMap<String, String> {
         val queries: HashMap<String, String> = HashMap()

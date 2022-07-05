@@ -298,6 +298,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/abhi41/jetfoodrecipeapp/presentation/common/AnimatedShimmer.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/abhi41/jetfoodrecipeapp/presentation/common/BackPressHandler.kt">
           <value>
             <set />
@@ -564,6 +569,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/gradle.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../JetPackStockMarket/app/src/main/java/com/abhi41/jetstockapp/data/repository/StockRepository.kt">
           <value>
             <set />
           </value>

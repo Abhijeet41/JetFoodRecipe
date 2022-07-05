@@ -34,7 +34,6 @@ fun SearchScreen(
                 },
                 onClosedClicked = {
                     navHostController.popBackStack()
-
                 },
                 dashBoardViewModel
             )

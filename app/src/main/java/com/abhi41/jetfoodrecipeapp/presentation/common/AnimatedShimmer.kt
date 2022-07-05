@@ -44,8 +44,8 @@ fun AnimatedShimmer() {
         start = Offset.Zero,
         end = Offset(x = translateAnimation.value, translateAnimation.value)
     )
-    Column(){
-        repeat(6){
+    Column() {
+        repeat(6) {
             ShimmerListItem(brush = brush)
         }
     }
@@ -110,17 +110,13 @@ fun ShimmerListItem(brush: Brush) {
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Spacer(
-                            modifier = Modifier
-                                .size(30.dp)
-                                .background(brush)
-                        )
-                        Spacer(modifier = Modifier
-                            .size(30.dp)
-                            .background(brush))
-                        Spacer(modifier = Modifier
-                            .size(30.dp)
-                            .background(brush))
+                        repeat(3) {
+                            Spacer(
+                                modifier = Modifier
+                                    .size(30.dp)
+                                    .background(brush)
+                            )
+                        }
                     }
                     Row(
                         modifier = Modifier
@@ -128,20 +124,15 @@ fun ShimmerListItem(brush: Brush) {
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Spacer(
-                            modifier = Modifier
-                                .width(30.dp)
-                                .height(20.dp)
-                                .background(brush)
-                        )
-                        Spacer(modifier = Modifier
-                            .width(30.dp)
-                            .height(20.dp)
-                            .background(brush))
-                        Spacer(modifier = Modifier
-                            .width(30.dp)
-                            .height(20.dp)
-                            .background(brush))
+                        repeat(3) {
+                            Spacer(
+                                modifier = Modifier
+                                    .width(30.dp)
+                                    .height(20.dp)
+                                    .background(brush)
+                            )
+                        }
+
                     }
 
                 }

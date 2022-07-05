@@ -18,6 +18,9 @@ interface RecipesDao {
     @Query("SELECT * FROM recipes_table WHERE recipeId = :recipeId")
     fun getSelectedRecipe(recipeId: Int): Result
 
+    @Query("DELETE FROM recipes_table")
+    suspend fun deleteAllRecipes()
+
     //----------------queries for FavoriteRecipes-----------------------------
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

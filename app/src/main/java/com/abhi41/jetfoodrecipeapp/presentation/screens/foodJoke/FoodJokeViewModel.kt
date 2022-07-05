@@ -24,8 +24,10 @@ class FoodJokeViewModel @Inject constructor(
     val readFoodJoke: LiveData<List<FoodJokeEntity>> = localDataSource.readFoodJoke().asLiveData()
 
 
-    fun requestFoodJoke(queryApi: String) = viewModelScope.launch {
-        getFoodJokeSafeCall(queryApi)
+    fun requestFoodJoke(queryApi: String) {
+        viewModelScope.launch {
+            getFoodJokeSafeCall(queryApi)
+        }
     }
 
 

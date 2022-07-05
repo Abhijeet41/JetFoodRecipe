@@ -41,7 +41,6 @@ private const val TAG = "FoodJokeScreen"
 fun FoodJokeScreen(
     foodJokeViewModel: FoodJokeViewModel = hiltViewModel()
 ) {
-
     Scaffold(
         topBar = {
             TopAppBar(
