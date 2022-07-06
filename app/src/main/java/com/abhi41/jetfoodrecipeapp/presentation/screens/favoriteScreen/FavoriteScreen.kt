@@ -3,6 +3,9 @@
 package com.abhi41.jetfoodrecipeapp.presentation.screens.favoriteScreen
 
 import android.util.Log
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -16,11 +19,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.abhi41.foodrecipe.model.Result
@@ -32,58 +39,54 @@ import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.SharedRe
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.DetailViewModel
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
 import kotlinx.coroutines.launch
-import org.jsoup.Jsoup
 
 private const val TAG = "FavoriteScreen"
 
 var selectedRecipes: MutableList<FavoriteEntity> = mutableListOf()
-var state: MutableState<FavoriteState> = mutableStateOf(FavoriteState())
 
 @Composable
 fun FavoriteScreen(
     navController: NavHostController,
     sharedResultViewModel: SharedResultViewModel,
-    detailViewModel: DetailViewModel = hiltViewModel()
+    detailViewModel: DetailViewModel = hiltViewModel(),
 ) {
     val favoriteRecipe by detailViewModel.readFavoriteRecipes.observeAsState()
+    var isContextual = remember {
+        mutableStateOf(false)
+    }
     val coroutineScope = rememberCoroutineScope()
-    val favoriteState = state.value
+    var actionModeTitle = remember { mutableStateOf("") }
 
     val onBack = { //handle on back pressed
-
-        state.value = favoriteState.copy(
-            isContextual = false,
-            actionModeTitle = ""
-        )
+        isContextual.value = false
+        actionModeTitle.value = ""
         selectedRecipes.clear()
     }
-    if (state.value.isContextual) {
+    if (isContextual.value) {
         BackPressHandler(onBackPressed = onBack)
     }
-
 
     Scaffold(
         modifier = Modifier.padding(bottom = MEDIUM_PADDING),
         topBar = {
             FavoriteScreenAppbar(
                 detailViewModel = detailViewModel,
-                state = state
+                isContextual = isContextual,
+                actionModeTitle = actionModeTitle
             ) {
                 //On delete Click
-
+                isContextual.value = false
                 selectedRecipes.forEach { favoriteEntity ->
                     coroutineScope.launch {
                         detailViewModel.deleteFavoriteRecipe(favoriteEntity)
                     }
                 }
-                state.value = state.value.copy(
-                    isContextual = false,
-                    actionModeTitle = ""
-                )
+                actionModeTitle.value = ""
                 selectedRecipes.clear()
             }
         }
     ) {
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
@@ -92,6 +95,7 @@ fun FavoriteScreen(
             verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
         ) {
             if (!favoriteRecipe.isNullOrEmpty()) {
+
                 items(
                     items = favoriteRecipe!!,
                     key = { foodItem ->
@@ -99,14 +103,18 @@ fun FavoriteScreen(
                     }
                 ) { foodItem ->
                     FoodItem(
-                        foodItemEntity = foodItem,
-                        navController = navController,
-                        sharedResultViewModel = sharedResultViewModel,
+                        foodItem,
+                        navController,
+                        isContextual,
+                        actionModeTitle,
+                        sharedResultViewModel
                     )
                 }
+
             }
 
         }
+
     }
 }
 
@@ -115,10 +123,14 @@ fun FavoriteScreen(
 fun FoodItem(
     foodItemEntity: FavoriteEntity,
     navController: NavHostController,
+    isContextual: MutableState<Boolean>,
+    actionModeTitle: MutableState<String>,
     sharedResultViewModel: SharedResultViewModel,
 ) {
     val foodItem = foodItemEntity.result
-    val favoriteState = state.value
+
+    var multiSelection by remember { mutableStateOf(false) }
+    var selectedItem = remember { mutableStateOf(false) }
 
     val painter = rememberImagePainter(data = "${foodItem.image}") {
         placeholder(R.drawable.ic_placeholder)
@@ -126,18 +138,19 @@ fun FoodItem(
         error(R.drawable.ic_placeholder)
     }
     //we need to save state because this is a recyclerview it will recycle last selected recipe
-    saveItemState(foodItemEntity)
-    if (favoriteState.isContextual) //clear multiple selection on backpress
+    saveItemState(foodItemEntity, selectedItem)
+    if (isContextual.value) //clear multiple selection on backpress
     {
-        state.value = favoriteState.copy(multiSelection = true)
+        multiSelection = true
     } else {
-        state.value = favoriteState.copy(multiSelection = false)
+        multiSelection = false
+        selectedRecipes.clear()
     }
     Box(
         modifier = Modifier
             .height(FoodRecipe_ITEM_HEIGHT)
             .border(
-                1.dp, if (state.value.selectedItem) MaterialTheme.colors.strokeBorderColor
+                1.dp, if (selectedItem.value) MaterialTheme.colors.strokeBorderColor
                 else MaterialTheme.colors.cardStrokeBorder,
                 shape = RoundedCornerShape(
                     size = MEDIUM_PADDING
@@ -145,9 +158,13 @@ fun FoodItem(
             )
             .combinedClickable(
                 onClick = {
-                    if (state.value.isContextual || favoriteState.multiSelection) {
+
+                    if (isContextual.value || multiSelection) {
                         applicationSelection(
                             currentRecipe = foodItemEntity,
+                            selectedItem = selectedItem,
+                            actionModeTitle = actionModeTitle,
+                            isContextual = isContextual,
                         )
                     } else {
                         sharedResultViewModel.addResult(foodItem)
@@ -157,14 +174,16 @@ fun FoodItem(
                 onLongClick = {
                     Log.d(TAG, "On long Click")
 
-                    if (!favoriteState.multiSelection) {
-                        state.value = favoriteState.copy(
-                            multiSelection = true,
-                            isContextual = true,
-                            selectedItem = true
-                        )
+                    if (!multiSelection) {
+                        multiSelection = true
+                        isContextual.value = true
+                        selectedItem.value = true
+
                         applicationSelection(
                             currentRecipe = foodItemEntity,
+                            selectedItem = selectedItem,
+                            actionModeTitle = actionModeTitle,
+                            isContextual = isContextual,
                         )
                         true
                     } else {
@@ -210,7 +229,7 @@ fun FoodItem(
                     )
                     Text(
                         modifier = Modifier.padding(top = 20.dp),
-                        text = Jsoup.parse(foodItem.summary).text(),
+                        text = foodItem.summary,
                         style = MaterialTheme.typography.caption,
                         color = MaterialTheme.colors.descriptionColor,
                         maxLines = 4,
@@ -278,45 +297,52 @@ fun InfoColumn(
 
 fun applicationSelection(
     currentRecipe: FavoriteEntity,
+    selectedItem: MutableState<Boolean>,
+    actionModeTitle: MutableState<String>,
+    isContextual: MutableState<Boolean>,
 ) {
 
     if (selectedRecipes.contains(currentRecipe)) {
         selectedRecipes.remove(currentRecipe)
-        state.value = state.value.copy(selectedItem = false)
-        applyActionModeTitle()
+        selectedItem.value = false
+        applyActionModeTitle(actionModeTitle, isContextual)
     } else {
         selectedRecipes.add(currentRecipe)
-        state.value = state.value.copy(selectedItem = true)
-        applyActionModeTitle()
+        selectedItem.value = true
+        applyActionModeTitle(actionModeTitle, isContextual)
     }
 
 }
 
-fun applyActionModeTitle() {
+fun applyActionModeTitle(
+    actionModeTitle: MutableState<String>,
+    isContextual: MutableState<Boolean>
+) {
     when (selectedRecipes.size) {
         0 -> {
-            state.value = state.value.copy(isContextual = false)
-            state.value = state.value.copy(actionModeTitle = "")
+            isContextual.value = false
+            actionModeTitle.value = ""
         }
         1 -> {
-            state.value =
-                state.value.copy(actionModeTitle = "${selectedRecipes.size} item selected")
+            actionModeTitle.value = "${selectedRecipes.size} item selected"
         }
         else -> {
-            state.value =
-                state.value.copy(actionModeTitle = "${selectedRecipes.size} items selected")
+            actionModeTitle.value = "${selectedRecipes.size} items selected"
         }
     }
 }
 
 private fun saveItemState(
     foodItem: FavoriteEntity,
+    selectedItem: MutableState<Boolean>,
 ) {
+
     if (selectedRecipes.contains(foodItem)) {
-        state.value = state.value.copy(selectedItem = true)
+        selectedItem.value = true
     } else {
-        state.value = state.value.copy(selectedItem = false)
+        selectedItem.value = false
     }
+
 }
 
 
