@@ -34,10 +34,7 @@ import com.abhi41.jetfoodrecipeapp.ui.theme.*
 import kotlinx.coroutines.launch
 
 private const val TAG = "FavoriteScreen"
-
 var selectedRecipes: MutableList<FavoriteEntity> = mutableListOf()
-
-
 
 @Composable
 fun FavoriteScreen(
@@ -46,16 +43,11 @@ fun FavoriteScreen(
     detailViewModel: DetailViewModel = hiltViewModel(),
 ) {
     val favoriteRecipe by detailViewModel.readFavoriteRecipes.observeAsState()
-    var state = remember {
-        mutableStateOf(FavoriteState())
-    }
+    var state = remember { mutableStateOf(FavoriteState()) }
     val coroutineScope = rememberCoroutineScope()
 
-
     val onBack = { //handle on back pressed
-        //isContextual.value = false
         state.value = state.value.copy(isContextual = false, actionModeTitle = "")
-        //actionModeTitle.value = ""
         selectedRecipes.clear()
     }
     if (state.value.isContextual) {
@@ -68,8 +60,7 @@ fun FavoriteScreen(
             FavoriteScreenAppbar(
                 detailViewModel = detailViewModel,
                 state
-            ) {
-                //On delete Click
+            ) { //On delete Click
                 state.value = state.value.copy(isContextual = false, actionModeTitle = "")
                 selectedRecipes.forEach { favoriteEntity ->
                     coroutineScope.launch {
@@ -89,7 +80,6 @@ fun FavoriteScreen(
             verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
         ) {
             if (!favoriteRecipe.isNullOrEmpty()) {
-
                 items(
                     items = favoriteRecipe!!,
                     key = { foodItem ->
@@ -103,11 +93,8 @@ fun FavoriteScreen(
                         state
                     )
                 }
-
             }
-
         }
-
     }
 }
 
@@ -122,7 +109,7 @@ fun FoodItem(
     val foodItem = foodItemEntity.result
 
     var multiSelection by remember { mutableStateOf(false) }
-    var selectedItem = remember { mutableStateOf(false) }
+    val selectedItem = remember { mutableStateOf(false) }
 
     val painter = rememberImagePainter(data = "${foodItem.image}") {
         placeholder(R.drawable.ic_placeholder)
@@ -292,7 +279,6 @@ fun applicationSelection(
     selectedItem: MutableState<Boolean>,
     state: MutableState<FavoriteState>,
 ) {
-
     if (selectedRecipes.contains(currentRecipe)) {
         selectedRecipes.remove(currentRecipe)
         selectedItem.value = false
@@ -302,7 +288,6 @@ fun applicationSelection(
         selectedItem.value = true
         applyActionModeTitle(state)
     }
-
 }
 
 fun applyActionModeTitle(state: MutableState<FavoriteState>) {
@@ -328,14 +313,11 @@ private fun saveItemState(
     foodItem: FavoriteEntity,
     selectedItem: MutableState<Boolean>,
 ) {
-
     if (selectedRecipes.contains(foodItem)) {
         selectedItem.value = true
     } else {
         selectedItem.value = false
     }
-
-
 }
 
 
