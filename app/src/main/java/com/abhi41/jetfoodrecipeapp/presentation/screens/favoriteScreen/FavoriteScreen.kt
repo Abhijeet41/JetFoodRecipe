@@ -108,28 +108,25 @@ fun FoodItem(
 ) {
     val foodItem = foodItemEntity.result
 
-    var multiSelection by remember { mutableStateOf(false) }
-    val selectedItem = remember { mutableStateOf(false) }
-
     val painter = rememberImagePainter(data = "${foodItem.image}") {
         placeholder(R.drawable.ic_placeholder)
         // crossfade(600)
         error(R.drawable.ic_placeholder)
     }
     //we need to save state because this is a recyclerview it will recycle last selected recipe
-    saveItemState(foodItemEntity, selectedItem)
+    saveItemState(foodItemEntity, state)
     if (state.value.isContextual) //clear multiple selection on switching screen
     {
-        multiSelection = true
+        state.value = state.value.copy(multiSelection = true)
     } else {
-        multiSelection = false
+        state.value = state.value.copy(multiSelection = false)
         selectedRecipes.clear()
     }
     Box(
         modifier = Modifier
             .height(FoodRecipe_ITEM_HEIGHT)
             .border(
-                1.dp, if (selectedItem.value) MaterialTheme.colors.strokeBorderColor
+                1.dp, if (state.value.selectedItem) MaterialTheme.colors.strokeBorderColor
                 else MaterialTheme.colors.cardStrokeBorder,
                 shape = RoundedCornerShape(
                     size = MEDIUM_PADDING
@@ -138,10 +135,9 @@ fun FoodItem(
             .combinedClickable(
                 onClick = {
 
-                    if (state.value.isContextual || multiSelection) {
+                    if (state.value.isContextual || state.value.multiSelection) {
                         applicationSelection(
                             currentRecipe = foodItemEntity,
-                            selectedItem = selectedItem,
                             state
                         )
                     } else {
@@ -152,16 +148,13 @@ fun FoodItem(
                 onLongClick = {
                     Log.d(TAG, "On long Click")
 
-                    if (!multiSelection) {
-                        multiSelection = true
+                    if (!state.value.multiSelection) {
                         state.value = state.value.copy(
                             isContextual = true,
+                            multiSelection = true
                         )
-                        selectedItem.value = true
-
                         applicationSelection(
                             currentRecipe = foodItemEntity,
-                            selectedItem = selectedItem,
                             state
                         )
                         true
@@ -276,16 +269,15 @@ fun InfoColumn(
 
 fun applicationSelection(
     currentRecipe: FavoriteEntity,
-    selectedItem: MutableState<Boolean>,
     state: MutableState<FavoriteState>,
 ) {
     if (selectedRecipes.contains(currentRecipe)) {
         selectedRecipes.remove(currentRecipe)
-        selectedItem.value = false
+        state.value = state.value.copy(selectedItem = false)
         applyActionModeTitle(state)
     } else {
         selectedRecipes.add(currentRecipe)
-        selectedItem.value = true
+        state.value = state.value.copy(selectedItem = true)
         applyActionModeTitle(state)
     }
 }
@@ -311,12 +303,12 @@ fun applyActionModeTitle(state: MutableState<FavoriteState>) {
 
 private fun saveItemState(
     foodItem: FavoriteEntity,
-    selectedItem: MutableState<Boolean>,
+    state: MutableState<FavoriteState>,
 ) {
     if (selectedRecipes.contains(foodItem)) {
-        selectedItem.value = true
+        state.value = state.value.copy(selectedItem = true)
     } else {
-        selectedItem.value = false
+        state.value = state.value.copy(selectedItem = false)
     }
 }
 
