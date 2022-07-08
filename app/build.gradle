@@ -127,4 +127,6 @@ dependencies {
     // Jsoup use to parse html tags to web browsers
     implementation 'org.jsoup:jsoup:1.13.1'
 
+    def sqlcipher_version = "4.5.0"
+    implementation "net.zetetic:android-database-sqlcipher:$sqlcipher_version"
 }
