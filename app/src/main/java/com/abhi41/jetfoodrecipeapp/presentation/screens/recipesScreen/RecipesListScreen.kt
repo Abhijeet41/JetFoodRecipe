@@ -218,17 +218,8 @@ private fun BottomSheetScreen(
     dashBoardViewModel: DashBoardViewModel,
     bottomSheetScaffoldState: ModalBottomSheetState,
 ) {
-
-    //read data preference from repository class
-    //var readMealAndDietType = recipesViewModel.readMealAndDietType.asLiveData()
     lateinit var mealAndDiet: MealAndDietType
-
-    val readMealAndDietType = MealDataStoreRepository(LocalContext.current)
-
     val coroutineScope = rememberCoroutineScope()
-
-
-
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -303,7 +294,7 @@ private fun BottomSheetScreen(
                         dashBoardViewModel.getRecipes(
                             recipesViewModel.applyQueries(
                                 mealAndDiet.selectedMealType,
-                                mealAndDiet.selectedMealType
+                                mealAndDiet.selectedDietType
                             )
                         )
                         coroutineScope.launch {

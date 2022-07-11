@@ -29,14 +29,14 @@ class RecipesViewModel @Inject constructor(
 
     var selectedMealType = mutableStateOf(MealType.getMeals().get(0))
     var selectedDietType = mutableStateOf(DietType.getDiets().get(0))
+
     init {
         viewModelScope.launch {
-            readMealAndDietType.collect{ state->
-                withContext(Dispatchers.Main){
-                    if (state != null){
-                        selectedMealType.value = Meal(state.selectedMealType)
-                        selectedDietType.value = Diet(state.selectedDietType)
-                    }
+            readMealAndDietType.collect { state ->
+                withContext(Dispatchers.Main) {
+                    selectedMealType.value = Meal(state.selectedMealType)
+                    selectedDietType.value = Diet(state.selectedDietType)
+
                     Log.d("selectedMealType", state.selectedMealType)
                     Log.d("selectedDietType", state.selectedDietType)
                 }
