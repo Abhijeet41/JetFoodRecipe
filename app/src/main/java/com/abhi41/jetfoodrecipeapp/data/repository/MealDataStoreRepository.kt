@@ -45,7 +45,7 @@ class MealDataStoreRepository @Inject constructor(
     suspend fun saveMealAndDietType(mealType: MealAndDietType) {
         dataStore.edit { mutablePreferences ->
             mutablePreferences[PreferencesKeys.selectedMealType] = mealType.selectedMealType
-            mutablePreferences[PreferencesKeys.selectedDietType] = mealType.selectedMealType
+            mutablePreferences[PreferencesKeys.selectedDietType] = mealType.selectedDietType
         }
     }
 

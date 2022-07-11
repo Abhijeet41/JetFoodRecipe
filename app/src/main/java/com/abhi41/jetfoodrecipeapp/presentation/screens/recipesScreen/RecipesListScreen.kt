@@ -1,6 +1,7 @@
 package com.abhi41.jetfoodrecipeapp.presentation.screens.recipesScreen
 
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
@@ -24,6 +25,7 @@ import androidx.navigation.NavHostController
 import com.abhi41.foodrecipe.model.Result
 import com.abhi41.jetfoodrecipeapp.R
 import com.abhi41.jetfoodrecipeapp.data.repository.MealAndDietType
+import com.abhi41.jetfoodrecipeapp.data.repository.MealDataStoreRepository
 import com.abhi41.jetfoodrecipeapp.navigation.Screen
 import com.abhi41.jetfoodrecipeapp.presentation.common.RecipesListContent
 import com.abhi41.jetfoodrecipeapp.presentation.common.chip.*
@@ -35,7 +37,10 @@ import com.abhi41.jetfoodrecipeapp.utils.Constants
 import com.abhi41.jetfoodrecipeapp.utils.Resource
 import com.riegersan.composeexperiments.DietTypeChipGroup
 import com.riegersan.composeexperiments.MealTypeChipGroup
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 private const val TAG = "RecipesListScreen"
@@ -205,6 +210,7 @@ fun BottomSheet(
     }
 }
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun BottomSheetScreen(
@@ -212,20 +218,16 @@ private fun BottomSheetScreen(
     dashBoardViewModel: DashBoardViewModel,
     bottomSheetScaffoldState: ModalBottomSheetState,
 ) {
+
     //read data preference from repository class
-    var readMealAndDietType = recipesViewModel.readMealAndDietType.asLiveData()
+    //var readMealAndDietType = recipesViewModel.readMealAndDietType.asLiveData()
     lateinit var mealAndDiet: MealAndDietType
 
-    Log.d("selectedMealType", readMealAndDietType.value?.selectedMealType ?: "null")
-    Log.d("selectedDietType", readMealAndDietType.value?.selectedDietType ?: "null")
+    val readMealAndDietType = MealDataStoreRepository(LocalContext.current)
+
     val coroutineScope = rememberCoroutineScope()
 
-    var selectedMealType = remember {
-        mutableStateOf(MealType.getMeals().get(0))
-    }
-    var selectedDietType = remember {
-        mutableStateOf(DietType.getDiets().get(0))
-    }
+
 
     Box(
         modifier = Modifier
@@ -251,10 +253,10 @@ private fun BottomSheetScreen(
             )
             MealTypeChipGroup(
                 meals = MealType.getMeals(),
-                selectedMeal = selectedMealType.value
+                selectedMeal = recipesViewModel.selectedMealType.value
             ) { changedSelection ->
                 Log.d("changedSelection", changedSelection)
-                selectedMealType.value = Meal(changedSelection)
+                recipesViewModel.selectedMealType.value = Meal(changedSelection)
             }
 
             Text(
@@ -270,9 +272,9 @@ private fun BottomSheetScreen(
 
             DietTypeChipGroup(
                 meals = DietType.getDiets(),
-                selectedMeal = selectedDietType.value,
+                selectedMeal = recipesViewModel.selectedDietType.value,
             ) { changeSelection ->
-                selectedDietType.value = Diet(changeSelection)
+                recipesViewModel.selectedDietType.value = Diet(changeSelection)
             }
 
             Row(
@@ -288,14 +290,14 @@ private fun BottomSheetScreen(
                     shape = RoundedCornerShape(50),
                     onClick = {
                         mealAndDiet = MealAndDietType(
-                        selectedMealType.value.meal,
-                        selectedDietType.value.diet
+                        recipesViewModel.selectedMealType.value.meal,
+                        recipesViewModel.selectedDietType.value.diet
                         )
                     /*    Log.d("selectedMealType", "${selectedMealType.value}")
                         Log.d("selectedDietType", "${selectedDietType.value}")*/
                         recipesViewModel.saveMealAndDietType( //save to datastore
                             mealAndDiet.selectedMealType,
-                            mealAndDiet.selectedMealType
+                            mealAndDiet.selectedDietType
                         )
 
                         dashBoardViewModel.getRecipes(

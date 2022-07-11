@@ -18,15 +18,11 @@ import net.sqlcipher.database.SQLiteDatabase
 class MainActivity : ComponentActivity() {
 
  //   private lateinit var navController: NavHostController
-   lateinit var db :RecipesDatabase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             SQLiteDatabase.loadLibs(this);
-             //if it's singleton (and i suggest making it as such)
-            /*val databasePath = getDatabasePath(Constants.DATABASE_NAME);
-            val database = SQLiteDatabase.openDatabase(databasePath.absolutePath, "password",
-                null, SQLiteDatabase.OPEN_READWRITE, null, null)*/
 
             if (isSystemInDarkTheme())
             {
@@ -38,7 +34,6 @@ class MainActivity : ComponentActivity() {
             JetFoodRecipeAppTheme {
              //   navController = rememberNavController()
                 RootNavGraph(navController = rememberNavController())
-
             }
         }
     }

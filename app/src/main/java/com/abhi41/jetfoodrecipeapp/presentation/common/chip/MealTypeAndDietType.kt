@@ -66,9 +66,9 @@ class DietType{
 
 
 data class Meal(
-    val meal: String
+    var meal: String
 )
 
 data class Diet(
-    val diet: String
+    var diet: String
 )

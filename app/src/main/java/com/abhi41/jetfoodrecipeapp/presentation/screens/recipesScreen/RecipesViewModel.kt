@@ -1,14 +1,20 @@
 package com.abhi41.jetfoodrecipeapp.presentation.screens.recipesScreen
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abhi41.jetfoodrecipeapp.data.repository.MealAndDietType
 import com.abhi41.jetfoodrecipeapp.data.repository.MealDataStoreRepository
+import com.abhi41.jetfoodrecipeapp.presentation.common.chip.Diet
+import com.abhi41.jetfoodrecipeapp.presentation.common.chip.DietType
+import com.abhi41.jetfoodrecipeapp.presentation.common.chip.Meal
+import com.abhi41.jetfoodrecipeapp.presentation.common.chip.MealType
 import com.abhi41.jetfoodrecipeapp.utils.Constants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,6 +26,23 @@ class RecipesViewModel @Inject constructor(
 
     //read data preferences from repository class
     val readMealAndDietType = dataStoreRepository.readMealAndDietType
+
+    var selectedMealType = mutableStateOf(MealType.getMeals().get(0))
+    var selectedDietType = mutableStateOf(DietType.getDiets().get(0))
+    init {
+        viewModelScope.launch {
+            readMealAndDietType.collect{ state->
+                withContext(Dispatchers.Main){
+                    if (state != null){
+                        selectedMealType.value = Meal(state.selectedMealType)
+                        selectedDietType.value = Diet(state.selectedDietType)
+                    }
+                    Log.d("selectedMealType", state.selectedMealType)
+                    Log.d("selectedDietType", state.selectedDietType)
+                }
+            }
+        }
+    }
 
 
     //save meal data datastore preferences

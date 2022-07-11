@@ -31,7 +31,7 @@ object DatabaseModule {
             RecipesDatabase::class.java,
             Constants.DATABASE_NAME
         ).fallbackToDestructiveMigration()
-         //   .openHelperFactory(supportFactory) In this way we can use sql cipher 
+         //   .openHelperFactory(supportFactory) In this way we can use sql cipher
             .build()
     }
 
