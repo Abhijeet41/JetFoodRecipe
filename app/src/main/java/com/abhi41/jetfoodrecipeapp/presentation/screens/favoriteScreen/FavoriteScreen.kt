@@ -28,18 +28,22 @@ import com.abhi41.jetfoodrecipeapp.R
 import com.abhi41.jetfoodrecipeapp.data.local.entities.FavoriteEntity
 import com.abhi41.jetfoodrecipeapp.navigation.Screen
 import com.abhi41.jetfoodrecipeapp.presentation.common.BackPressHandler
+import com.abhi41.jetfoodrecipeapp.presentation.destinations.DetailScreenDestination
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.SharedResultViewModel
+import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.DetailScreen
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.DetailViewModel
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
 
 private const val TAG = "FavoriteScreen"
 var selectedRecipes: MutableList<FavoriteEntity> = mutableListOf()
 
+@Destination
 @Composable
 fun FavoriteScreen(
-    navController: NavHostController,
-    sharedResultViewModel: SharedResultViewModel,
+    navigator: DestinationsNavigator,
     detailViewModel: DetailViewModel = hiltViewModel(),
 ) {
     val favoriteRecipe by detailViewModel.readFavoriteRecipes.observeAsState()
@@ -88,8 +92,7 @@ fun FavoriteScreen(
                 ) { foodItem ->
                     FoodItem(
                         foodItem,
-                        navController,
-                        sharedResultViewModel,
+                        navigator,
                         state
                     )
                 }
@@ -102,8 +105,7 @@ fun FavoriteScreen(
 @Composable
 fun FoodItem(
     foodItemEntity: FavoriteEntity,
-    navController: NavHostController,
-    sharedResultViewModel: SharedResultViewModel,
+    navigator: DestinationsNavigator,
     state: MutableState<FavoriteState>,
 ) {
     val foodItem = foodItemEntity.result
@@ -140,8 +142,9 @@ fun FoodItem(
                             state
                         )
                     } else {
-                        sharedResultViewModel.addResult(foodItem)
-                        navController.navigate(Screen.DetailPage.passRecipeId(recipeId = foodItem.recipeId))
+                      //  sharedResultViewModel.addResult(foodItem)
+                        navigator.navigate(DetailScreenDestination(result = foodItem))
+                        //navController.navigate(Screen.DetailPage.passRecipeId(recipeId = foodItem.recipeId))
                     }
                 },
                 onLongClick = {

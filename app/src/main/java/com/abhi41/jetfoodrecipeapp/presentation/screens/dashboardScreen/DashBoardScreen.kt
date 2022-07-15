@@ -17,25 +17,39 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.abhi41.jetfoodrecipeapp.BottomBarScreen
 import com.abhi41.jetfoodrecipeapp.R
 import com.abhi41.jetfoodrecipeapp.navigation.SetupBottomNavGraph
+import com.abhi41.jetfoodrecipeapp.presentation.screens.favoriteScreen.FavoriteScreen
+import com.abhi41.jetfoodrecipeapp.presentation.screens.foodJoke.FoodJokeScreen
+import com.abhi41.jetfoodrecipeapp.presentation.screens.recipesScreen.RecipesScreen
 import com.abhi41.jetfoodrecipeapp.ui.theme.BOTTOMSHEET_HEIGHT
 import com.abhi41.jetfoodrecipeapp.ui.theme.TXT_MEDIUM_SIZE
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
 
 
-
+@Destination()
 @Composable
-fun DashBoardScreen(navController: NavHostController = rememberNavController()) {
+fun DashBoardScreen(
+    navigator: DestinationsNavigator
+) {
+    val navController: NavHostController = rememberNavController()
+
     Scaffold(
         bottomBar = {
             BottomBar(navController = navController)
         },
         content = {
-            SetupBottomNavGraph(navController = navController)
+            SetupBottomNavGraph(
+                navController = navController,
+                navigator = navigator
+            )
         }
     )
 }

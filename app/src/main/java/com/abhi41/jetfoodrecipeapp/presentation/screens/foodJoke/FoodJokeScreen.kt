@@ -25,9 +25,11 @@ import com.abhi41.jetfoodrecipeapp.ui.theme.EXTRA_LARGE_PADDING
 import com.abhi41.jetfoodrecipeapp.ui.theme.MEDIUM_PADDING
 import com.abhi41.jetfoodrecipeapp.ui.theme.TXT_LARGE_SIZE
 import com.abhi41.jetfoodrecipeapp.utils.Constants
+import com.ramcosta.composedestinations.annotation.Destination
 
 private const val TAG = "FoodJokeScreen"
 
+@Destination
 @Composable
 fun FoodJokeScreen(
     foodJokeViewModel: FoodJokeViewModel = hiltViewModel()

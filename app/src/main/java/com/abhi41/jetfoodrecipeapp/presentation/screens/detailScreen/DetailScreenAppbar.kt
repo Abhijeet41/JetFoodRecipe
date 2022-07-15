@@ -12,12 +12,13 @@ import com.abhi41.jetfoodrecipeapp.data.local.entities.FavoriteEntity
 import com.abhi41.jetfoodrecipeapp.ui.theme.darkYello
 import com.abhi41.jetfoodrecipeapp.ui.theme.tabBackgroundColor
 import com.abhi41.jetfoodrecipeapp.utils.HexToJetpackColor
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Composable
 fun DetailScreenAppbar(
-    navController: NavHostController,
     favoriteRecipe: State<List<FavoriteEntity>?>,
     selectedHero: Result?,
+    navigator: DestinationsNavigator,
     onFavoriteClick: () -> Unit
 ) {
     var isRecipeSaved by remember {
@@ -29,7 +30,7 @@ fun DetailScreenAppbar(
         },
         navigationIcon = {
             AppBarIcon(R.drawable.ic_arrow_back) {
-                navController.popBackStack()
+                navigator.popBackStack()
             }
         },
         actions = {

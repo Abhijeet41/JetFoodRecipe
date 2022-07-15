@@ -23,16 +23,19 @@ import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs.OverVi
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs.overview.DetailScreenAppbar
 import com.abhi41.jetfoodrecipeapp.ui.theme.tabBackgroundColor
 import com.google.accompanist.pager.*
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class)
+@Destination
 @Composable
 fun DetailScreen(
-    navController: NavHostController,
-    sharedResultViewModel: SharedResultViewModel,
+    result:Result,
+    navigator: DestinationsNavigator,
     detailViewModel: DetailViewModel = hiltViewModel(),
 ) {
-    val result = sharedResultViewModel.result
+
 
     val tabItems = listOf("Overview", "Ingredients", "Instruction")
     val pagerState = rememberPagerState()
@@ -45,9 +48,9 @@ fun DetailScreen(
         topBar = {
             TopAppBar() {
                 DetailScreenAppbar(//we passing list and selected list to change color of appbar
-                    navController = navController,
                     favoriteRecipe = favoriteRecipe,
-                    selectedHero = result
+                    selectedHero = result,
+                    navigator = navigator
                 ) { //favorite click listener
 
 

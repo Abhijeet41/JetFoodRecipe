@@ -11,11 +11,13 @@ import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.DashBoar
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.SharedResultViewModel
 import com.abhi41.jetfoodrecipeapp.utils.AnimatedShimmer
 import com.abhi41.jetfoodrecipeapp.utils.Resource
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
+@Destination
 @Composable
 fun SearchScreen(
-    navHostController: NavHostController,
-    sharedResultViewModel: SharedResultViewModel,
+    navigator: DestinationsNavigator,
     searchViewModel: SearchViewModel = hiltViewModel(),
     dashBoardViewModel: DashBoardViewModel = hiltViewModel()
 ) {
@@ -33,7 +35,7 @@ fun SearchScreen(
                     dashBoardViewModel.searchRecipes(searchViewModel.applySearchQuery(it))
                 },
                 onClosedClicked = {
-                    navHostController.popBackStack()
+                    navigator.popBackStack()
                 },
                 dashBoardViewModel
             )
@@ -44,8 +46,7 @@ fun SearchScreen(
                     val recipes = response?.data?.results
                     RecipesListContent(
                         foodRecipes = recipes,
-                        navController = navHostController,
-                        sharedResultViewModel = sharedResultViewModel
+                        navigator = navigator,
                     )
                 }
 

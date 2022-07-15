@@ -29,12 +29,17 @@ import com.abhi41.jetfoodrecipeapp.data.repository.MealDataStoreRepository
 import com.abhi41.jetfoodrecipeapp.navigation.Screen
 import com.abhi41.jetfoodrecipeapp.presentation.common.RecipesListContent
 import com.abhi41.jetfoodrecipeapp.presentation.common.chip.*
+import com.abhi41.jetfoodrecipeapp.presentation.destinations.SearchScreenDestination
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.DashBoardViewModel
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.SharedResultViewModel
+import com.abhi41.jetfoodrecipeapp.presentation.screens.searchScreen.SearchScreen
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
 import com.abhi41.jetfoodrecipeapp.utils.AnimatedShimmer
 import com.abhi41.jetfoodrecipeapp.utils.Constants
 import com.abhi41.jetfoodrecipeapp.utils.Resource
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavController
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.riegersan.composeexperiments.DietTypeChipGroup
 import com.riegersan.composeexperiments.MealTypeChipGroup
 import kotlinx.coroutines.Dispatchers
@@ -46,10 +51,10 @@ import kotlinx.coroutines.withContext
 private const val TAG = "RecipesListScreen"
 private var foodRecipes = emptyList<Result>()
 
+@Destination
 @Composable
 fun RecipesScreen(
-    navController: NavHostController,
-    sharedResultViewModel: SharedResultViewModel,
+    navigator: DestinationsNavigator,
     recipesViewModel: RecipesViewModel = hiltViewModel(),
     dashBoardViewModel: DashBoardViewModel = hiltViewModel()
 ) {
@@ -60,10 +65,9 @@ fun RecipesScreen(
         foodRecipes = readRecipes as List<Result>
 
         RecipeDesign(
-            navController = navController,
+            navigator = navigator,
             recipesViewModel = recipesViewModel,
             dashBoardViewModel = dashBoardViewModel,
-            sharedResultViewModel = sharedResultViewModel
         )
     } else {
         requestApiData(
@@ -79,10 +83,9 @@ fun RecipesScreen(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RecipeDesign(
-    navController: NavHostController,
+    navigator: DestinationsNavigator,
     recipesViewModel: RecipesViewModel,
     dashBoardViewModel: DashBoardViewModel,
-    sharedResultViewModel: SharedResultViewModel,
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -99,16 +102,16 @@ fun RecipeDesign(
         topBar = {
             RecipesTopBar {
                 //onSearch icon clicked navigate to search screen
-                navController.navigate(Screen.SearchPage.route)
+              //  navController.navigate(Screen.SearchPage.route)
+                navigator.navigate(SearchScreenDestination())
             }
         },
         content = {
             BottomSheet(
                 modalBottomSheetState,
-                navController,
+                navigator,
                 recipesViewModel,
                 dashBoardViewModel,
-                sharedResultViewModel
             )
         },
         floatingActionButton = {
@@ -185,10 +188,9 @@ fun observers(
 @Composable
 fun BottomSheet(
     bottomSheetScaffoldState: ModalBottomSheetState,
-    navController: NavHostController,
+    navigator: DestinationsNavigator,
     recipesViewModel: RecipesViewModel,
     dashBoardViewModel: DashBoardViewModel,
-    sharedResultViewModel: SharedResultViewModel,
 ) {
     ModalBottomSheetLayout(
         sheetContent = {
@@ -203,7 +205,7 @@ fun BottomSheet(
     ) {
 
         if (!foodRecipes.isNullOrEmpty()) {
-            RecipesListContent(foodRecipes, navController,sharedResultViewModel)
+            RecipesListContent(foodRecipes, navigator)
         } else {
             //show error screen
         }
@@ -317,12 +319,11 @@ private fun BottomSheetScreen(
 @Preview
 @Composable
 fun RecipeDesignPreview() {
-    RecipeDesign(
-        navController = NavHostController(LocalContext.current),
+  /*  RecipeDesign(
+        navigator = DestinationsNavigator,
         recipesViewModel = hiltViewModel(),
         dashBoardViewModel = hiltViewModel(),
-        sharedResultViewModel = SharedResultViewModel()
-    )
+    )*/
 
 }
 

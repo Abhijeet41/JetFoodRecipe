@@ -27,17 +27,20 @@ import coil.compose.rememberImagePainter
 import com.abhi41.foodrecipe.model.Result
 import com.abhi41.jetfoodrecipeapp.R
 import com.abhi41.jetfoodrecipeapp.navigation.Screen
+import com.abhi41.jetfoodrecipeapp.presentation.destinations.DetailScreenDestination
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.DashBoardViewModel
 import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.SharedResultViewModel
+import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.DetailScreen
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import org.jsoup.Jsoup
 
-
+@Destination
 @Composable
 fun RecipesListContent(
     foodRecipes: List<Result>?,
-    navController: NavHostController,
-    sharedResultViewModel: SharedResultViewModel
+    navigator: DestinationsNavigator,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -53,7 +56,7 @@ fun RecipesListContent(
             }
         ) { food ->
             food.let {
-                FoodItem(food, navController, sharedResultViewModel)
+                FoodItem(food,navigator)
             }
         }
     }
@@ -64,8 +67,7 @@ fun RecipesListContent(
 @Composable
 fun FoodItem(
     food: Result,
-    navController: NavHostController,
-    sharedResultViewModel: SharedResultViewModel,
+    navigator: DestinationsNavigator,
 ) {
 
     val painter = rememberImagePainter(data = "${food.image}") {
@@ -83,8 +85,9 @@ fun FoodItem(
             )
             .height(FoodRecipe_ITEM_HEIGHT)
             .clickable {
-                sharedResultViewModel.addResult(food)
-                navController.navigate(Screen.DetailPage.passRecipeId(recipeId = food.recipeId))
+                navigator.navigate(DetailScreenDestination(food))
+                /* sharedResultViewModel.addResult(food)
+                navController.navigate(Screen.DetailPage.passRecipeId(recipeId = food.recipeId))*/
             }
     ) {
         Surface(
