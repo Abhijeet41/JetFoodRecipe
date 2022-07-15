@@ -28,11 +28,13 @@ fun SplashScreen(navigator: DestinationsNavigator) {
             durationMillis = 3
         )
     )
-    LaunchedEffect(key1 = true){
+    LaunchedEffect(key1 = true) {
         startAnimation = true
         delay(3000)
-      //  navigator.popBackStack() //remove splash screen from stack
-        navigator.navigate(DashBoardScreenDestination())
+        navigator.navigate(
+            DashBoardScreenDestination(),
+            navigator.popBackStack()  //remove splash screen from stack
+        )
     }
     AnimatedSplashScreen(alpha = alphaAnim.value)
 }
