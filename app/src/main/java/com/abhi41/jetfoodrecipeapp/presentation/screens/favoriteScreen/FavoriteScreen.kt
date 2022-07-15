@@ -134,7 +134,6 @@ fun FoodItem(
             )
             .combinedClickable(
                 onClick = {
-
                     if (state.value.isContextual || state.value.multiSelection) {
                         applicationSelection(
                             currentRecipe = foodItemEntity,

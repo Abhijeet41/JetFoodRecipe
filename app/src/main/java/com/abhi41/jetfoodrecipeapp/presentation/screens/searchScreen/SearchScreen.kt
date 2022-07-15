@@ -40,7 +40,6 @@ fun SearchScreen(
         },
         content = {
             when (response) {
-
                 is Resource.Success -> {
                     val recipes = response?.data?.results
                     RecipesListContent(
