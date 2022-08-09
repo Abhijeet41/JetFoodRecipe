@@ -20,17 +20,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.abhi41.foodrecipe.model.Result
 import com.abhi41.jetfoodrecipeapp.R
-import com.abhi41.jetfoodrecipeapp.navigation.Screen
-import com.abhi41.jetfoodrecipeapp.presentation.destinations.DetailScreenDestination
-import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.DashBoardViewModel
-import com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen.SharedResultViewModel
-import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.DetailScreen
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -85,9 +78,7 @@ fun FoodItem(
             )
             .height(FoodRecipe_ITEM_HEIGHT)
             .clickable {
-                navigator.navigate(DetailScreenDestination(food))
-                /* sharedResultViewModel.addResult(food)
-                navController.navigate(Screen.DetailPage.passRecipeId(recipeId = food.recipeId))*/
+              //  navigator.navigate(DetailScreenDestination(food))
             }
     ) {
         Surface(

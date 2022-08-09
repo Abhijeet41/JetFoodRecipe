@@ -11,7 +11,6 @@ import kotlinx.parcelize.RawValue
 
 
 @Parcelize
-@Entity(tableName = Constants.RECIPES_TABLE)
 data class Result(
     @SerializedName("aggregateLikes")
     val aggregateLikes: Int,

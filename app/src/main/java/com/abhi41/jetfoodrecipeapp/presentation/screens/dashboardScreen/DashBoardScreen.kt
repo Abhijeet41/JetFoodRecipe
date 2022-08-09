@@ -1,37 +1,21 @@
 package com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.abhi41.jetfoodrecipeapp.BottomBarScreen
-import com.abhi41.jetfoodrecipeapp.R
 import com.abhi41.jetfoodrecipeapp.navigation.SetupBottomNavGraph
-import com.abhi41.jetfoodrecipeapp.presentation.screens.favoriteScreen.FavoriteScreen
-import com.abhi41.jetfoodrecipeapp.presentation.screens.foodJoke.FoodJokeScreen
-import com.abhi41.jetfoodrecipeapp.presentation.screens.recipesScreen.RecipesScreen
-import com.abhi41.jetfoodrecipeapp.ui.theme.BOTTOMSHEET_HEIGHT
-import com.abhi41.jetfoodrecipeapp.ui.theme.TXT_MEDIUM_SIZE
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import kotlinx.coroutines.launch
 
 
 @Destination()
