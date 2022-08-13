@@ -1,7 +1,9 @@
-package com.abhi41.jetfoodrecipeapp.data.network
+package com.abhi41.jetfoodrecipeapp.data.remote
 
-import com.abhi41.foodrecipe.model.FoodJoke
-import com.abhi41.foodrecipe.model.FoodRecipe
+import com.abhi41.jetfoodrecipeapp.data.dto.FoodJokeDto
+import com.abhi41.jetfoodrecipeapp.data.dto.FoodRecipeDto
+import com.abhi41.jetfoodrecipeapp.model.FoodJoke
+import com.abhi41.jetfoodrecipeapp.utils.Resource
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -12,16 +14,16 @@ interface FoodRecipesApi {
     @GET("/recipes/complexSearch")
     suspend fun getRecipies(
         @QueryMap queries: Map<String, String>
-    ): Response<FoodRecipe>
+    ): Response<FoodRecipeDto>
 
     @GET("/recipes/complexSearch")
     suspend fun searchRecipes(
         @QueryMap searchQuery: Map<String, String>
-    ): Response<FoodRecipe>
+    ): Response<FoodRecipeDto>
 
     @GET("/food/jokes/random")
     suspend fun getFoodJoke(
         @Query("apiKey") apiKey:String
-    ): Response<FoodJoke>
+    ): Response<FoodJokeDto>
 
 }

@@ -1,9 +1,5 @@
-package com.abhi41.foodrecipe.model
-
-
-import com.google.gson.annotations.SerializedName
+package com.abhi41.jetfoodrecipeapp.model
 
 data class FoodJoke(
-    @SerializedName("text")
     val text: String?
 )

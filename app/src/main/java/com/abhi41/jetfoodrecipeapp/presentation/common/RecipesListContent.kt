@@ -22,8 +22,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import com.abhi41.foodrecipe.model.Result
 import com.abhi41.jetfoodrecipeapp.R
+import com.abhi41.jetfoodrecipeapp.model.Result
+import com.abhi41.jetfoodrecipeapp.presentation.destinations.DetailScreenDestination
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -78,7 +79,7 @@ fun FoodItem(
             )
             .height(FoodRecipe_ITEM_HEIGHT)
             .clickable {
-              //  navigator.navigate(DetailScreenDestination(food))
+                navigator.navigate(DetailScreenDestination(food))
             }
     ) {
         Surface(

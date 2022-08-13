@@ -5,6 +5,8 @@ import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.abhi41.jetfoodrecipeapp.BottomBarScreen
+import com.abhi41.jetfoodrecipeapp.presentation.screens.favorite.FavoriteScreen
+import com.abhi41.jetfoodrecipeapp.presentation.screens.foodJoke.FoodJokeScreen
 import com.abhi41.jetfoodrecipeapp.presentation.screens.recipesScreen.RecipesScreen
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -20,6 +22,12 @@ fun SetupBottomNavGraph(
         ) {
         composable(route = BottomBarScreen.Recipes.route) {
             RecipesScreen(navigator)
+        }
+        composable(route = BottomBarScreen.Favorite.route) {
+            FavoriteScreen(navigator)
+        }
+        composable(route = BottomBarScreen.FoodJoke.route) {
+            FoodJokeScreen()
         }
     }
 

@@ -3,8 +3,11 @@ package com.abhi41.jetfoodrecipeapp.di
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.abhi41.jetfoodrecipeapp.data.local.Converters
 import com.abhi41.jetfoodrecipeapp.data.local.database.RecipesDatabase
+import com.abhi41.jetfoodrecipeapp.data.local.util.GsonParser
 import com.abhi41.jetfoodrecipeapp.utils.Constants
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,11 +35,14 @@ object DatabaseModule {
             Constants.DATABASE_NAME
         ).fallbackToDestructiveMigration()
          //   .openHelperFactory(supportFactory) In this way we can use sql cipher
+            .addMigrations(RecipesDatabase.migration_1_2)
+            .addTypeConverter(Converters(GsonParser(Gson())))
             .build()
     }
 
     @Singleton
     @Provides
     fun provideDao(database: RecipesDatabase) = database.recipeDao()
+
 
 }

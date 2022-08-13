@@ -1,12 +1,21 @@
 package com.abhi41.jetfoodrecipeapp.di
 
-import com.abhi41.jetfoodrecipeapp.data.network.FoodRecipesApi
+import android.content.Context
+import com.abhi41.jetfoodrecipeapp.data.local.dao.RecipesDao
+import com.abhi41.jetfoodrecipeapp.data.local.database.RecipesDatabase
+import com.abhi41.jetfoodrecipeapp.data.remote.FoodRecipesApi
+import com.abhi41.jetfoodrecipeapp.data.remote.RecipesRepositoryImpl
+import com.abhi41.jetfoodrecipeapp.data.usecase.FoodJokeUsecase
+import com.abhi41.jetfoodrecipeapp.data.usecase.RecipesUsecase
+import com.abhi41.jetfoodrecipeapp.data.usecase.SearchResultUseCase
+import com.abhi41.jetfoodrecipeapp.domain.RecipesRepository
 import com.abhi41.jetfoodrecipeapp.utils.Constants
 import com.abhi41.jetfoodrecipeapp.utils.Constants.sh2561
 import com.abhi41.jetfoodrecipeapp.utils.Constants.sh2562
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
@@ -67,6 +76,40 @@ object NetworkModule {
     ): FoodRecipesApi {
         return retrofit.create(FoodRecipesApi::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun provideRecipesRepository(
+        database:RecipesDao,
+        api: FoodRecipesApi,
+        @ApplicationContext context: Context
+
+    ): RecipesRepository{
+        return RecipesRepositoryImpl(
+            api = api,
+            dao = database,
+            context = context
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetRecipesUseCase(recipesRepository: RecipesRepository): RecipesUsecase{
+        return RecipesUsecase(recipesRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFoodJokeUseCase(recipesRepository: RecipesRepository): FoodJokeUsecase{
+        return FoodJokeUsecase(recipesRepository)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSearchResultUseCase(recipesRepository: RecipesRepository): SearchResultUseCase{
+        return SearchResultUseCase(recipesRepository)
+    }
+
 
 
 }

@@ -1,6 +1,6 @@
 package com.abhi41.jetfoodrecipeapp.presentation.common
 
-import com.abhi41.foodrecipe.model.FoodRecipe
+import com.abhi41.jetfoodrecipeapp.data.dto.FoodRecipeDto
 import com.abhi41.jetfoodrecipeapp.utils.Resource
 import retrofit2.Response
 
@@ -10,7 +10,7 @@ class HandleResponse {
         /* we make this common because we use handleFoodRecipesResponse method in
          search screen  as well as in recipes screen
          */
-         fun handleFoodRecipesResponse(response: Response<FoodRecipe>): Resource<FoodRecipe>? {
+         fun handleFoodRecipesResponse(response: Response<FoodRecipeDto>): Resource<FoodRecipeDto>? {
             when {
                 response.message().contains("timeout") -> {
                     return Resource.Error("Connection TimeOut")

@@ -2,7 +2,6 @@ package com.abhi41.jetfoodrecipeapp.ui.theme
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.abhi41.foodrecipe.model.FoodRecipe
 
 val EXTRA_LARGE_PADDING = 40.dp
 val LARGE_PADDING = 20.dp
