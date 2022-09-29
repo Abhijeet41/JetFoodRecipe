@@ -9,7 +9,7 @@ Used Dagger-Hilt, kotlin coroutines, roomdatabase, offline caching, coil and muc
      <td><img src="https://user-images.githubusercontent.com/45313305/191197437-aa5e8385-b8c8-41d7-9307-52a959554eae.jpg" width=360 height=640></td>
   </tr>
 <tr>
-    <td><img src="https://user-images.githubusercontent.com/45313305/176989463-14203d3a-9f12-4791-8a4f-0e05acdb00ac.jpg" width=360 height=640></td>
+    <td><img src="https://user-images.githubusercontent.com/45313305/193030600-a350e021-fdb2-4849-a340-041274bf4190.jpg" width=360 height=640></td>
    <td><img src="https://user-images.githubusercontent.com/45313305/193028622-b9793a44-3803-4fe7-aa9b-6a6194ffe2d9.gif" width=360 height=640></td>
   </tr>
 <tr>
