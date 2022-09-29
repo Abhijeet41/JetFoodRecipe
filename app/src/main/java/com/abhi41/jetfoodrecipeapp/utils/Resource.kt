@@ -1,5 +1,8 @@
 package com.abhi41.jetfoodrecipeapp.utils
 
+import androidx.annotation.Keep
+
+@Keep
 sealed class Resource<T>(
     val data: T? = null,
     val message: String? = null

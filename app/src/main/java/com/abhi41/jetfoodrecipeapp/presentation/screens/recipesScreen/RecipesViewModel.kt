@@ -1,5 +1,6 @@
 package com.abhi41.jetfoodrecipeapp.presentation.screens.recipesScreen
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -14,7 +15,10 @@ import com.abhi41.jetfoodrecipeapp.presentation.common.chip.Meal
 import com.abhi41.jetfoodrecipeapp.presentation.common.chip.MealType
 import com.abhi41.jetfoodrecipeapp.utils.Constants
 import com.abhi41.jetfoodrecipeapp.utils.Resource
+import com.abhi41.jetfoodrecipeapp.utils.newtwork_status.ConnectivityObserver
+import com.abhi41.jetfoodrecipeapp.utils.newtwork_status.NetworkConnectivityObserver
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -24,10 +28,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+lateinit var connectivityObserver: ConnectivityObserver
 @HiltViewModel
 class RecipesViewModel @Inject constructor(
     private val getRecipesUsecase: RecipesUsecase,
     private val dataStoreRepository: MealDataStoreRepository,
+    @ApplicationContext val context: Context
 ) : ViewModel() {
 
     private lateinit var mealAndDiet: MealAndDietType
@@ -44,19 +50,28 @@ class RecipesViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+
+
     init {
+        connectivityObserver = NetworkConnectivityObserver(context)
+
+
         viewModelScope.launch {
             readMealAndDietType.collect { state ->
                 withContext(Dispatchers.Main) {
                     selectedMealType.value = Meal(state.selectedMealType)
                     selectedDietType.value = Diet(state.selectedDietType)
-
+                    getRecipes(
+                        selectedMealType = selectedMealType.value.meal,
+                        selectedDietType = selectedDietType.value.diet
+                    )
                     Log.d("selectedMealType", state.selectedMealType)
                     Log.d("selectedDietType", state.selectedDietType)
+
                 }
             }
         }
-        getRecipes()
+
     }
 
     //save meal data datastore preferences
@@ -73,8 +88,8 @@ class RecipesViewModel @Inject constructor(
     }
 
     fun getRecipes(
-        selectedMealType: String = Constants.DEFAULT_MEAL_TYPE,
-        selectedDietType: String = Constants.DEFAULT_DIET_TYPE
+        selectedMealType: String,
+        selectedDietType: String
     ) {
 
         viewModelScope.launch(Dispatchers.IO) {

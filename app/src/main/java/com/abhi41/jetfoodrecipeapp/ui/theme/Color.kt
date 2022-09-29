@@ -70,3 +70,7 @@ val Colors.categoriesIconColor:Color
 val Colors.categoriesSelectedIconColor:Color
     @Composable
     get() = if (isLight) HexToJetpackColor.getColor(green) else Green
+
+val Colors.txtFoodJoke:Color
+    @Composable
+    get() = if (isLight) Black else White

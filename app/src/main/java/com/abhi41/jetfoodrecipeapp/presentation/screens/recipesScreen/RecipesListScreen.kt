@@ -3,13 +3,18 @@ package com.abhi41.jetfoodrecipeapp.presentation.screens.recipesScreen
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -17,14 +22,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
 import com.abhi41.jetfoodrecipeapp.R
 import com.abhi41.jetfoodrecipeapp.data.repository.MealAndDietType
+import com.abhi41.jetfoodrecipeapp.model.Result
 import com.abhi41.jetfoodrecipeapp.presentation.common.RecipesListContent
 import com.abhi41.jetfoodrecipeapp.presentation.common.chip.*
 import com.abhi41.jetfoodrecipeapp.presentation.destinations.SearchScreenDestination
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
+import com.abhi41.jetfoodrecipeapp.utils.AnimatedShimmer
+import com.abhi41.jetfoodrecipeapp.utils.newtwork_status.ConnectivityObserver
+import com.abhi41.jetfoodrecipeapp.utils.newtwork_status.NetworkConnectivityObserver
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.navigation.EmptyDestinationsNavigator
 import com.riegersan.composeexperiments.DietTypeChipGroup
 import com.riegersan.composeexperiments.MealTypeChipGroup
 import kotlinx.coroutines.flow.collectLatest
@@ -53,10 +65,12 @@ fun RecipesScreen(
                 }
             }
         }
+
     }
     RecipeDesign(navigator = navigator)
 }
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RecipeDesign(
@@ -112,6 +126,7 @@ fun RecipeDesign(
 }
 
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BottomSheet(
@@ -129,10 +144,28 @@ fun BottomSheet(
     ) {
         val viewModel: RecipesViewModel = hiltViewModel()
         val state = viewModel.recipesState.value
-        RecipesListContent(
-            foodRecipes = state.recipesItem,
-            navigator = navigator
+
+        val context = LocalContext.current
+        connectivityObserver = NetworkConnectivityObserver(context)
+
+        val status by connectivityObserver.observe().collectAsState(
+            initial = null
         )
+        LaunchedEffect(key1 = status) {
+            if (status != null) {
+                Toast.makeText(context, "Network Status: $status", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        if (!state.isLoading) {
+            RecipesListContent(
+                foodRecipes = state.recipesItem,
+                navigator = navigator
+            )
+        } else {
+            AnimatedShimmer()
+        }
+
     }
 }
 
@@ -145,7 +178,6 @@ private fun BottomSheetScreen(
     lateinit var mealAndDiet: MealAndDietType
     val coroutineScope = rememberCoroutineScope()
     val recipeViewmodel: RecipesViewModel = hiltViewModel()
-    val readMealAndDietType = recipeViewmodel.readMealAndDietType.collectAsState(initial =null).value
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -212,10 +244,6 @@ private fun BottomSheetScreen(
                             recipeViewmodel.selectedMealType.value.meal,
                             recipeViewmodel.selectedDietType.value.diet
                         )
-                      /*  recipeViewmodel.saveMealAndDietType(
-                            mealAndDiet.selectedMealType,
-                            mealAndDiet.selectedDietType
-                        )*/
                         recipeViewmodel.getRecipes(
                             mealAndDiet.selectedMealType,
                             mealAndDiet.selectedDietType
@@ -241,19 +269,10 @@ private fun BottomSheetScreen(
 @Preview
 @Composable
 fun RecipeDesignPreview() {
-    /*  RecipeDesign(
-          navigator = DestinationsNavigator,
-          recipesViewModel = hiltViewModel(),
-          dashBoardViewModel = hiltViewModel(),
-      )*/
-
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Preview(showBackground = true)
-@Composable
-fun BottomSheetScreenPreview() {
-    BottomSheetScreen(
-        bottomSheetScaffoldState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+    RecipesListContent(
+        foodRecipes = emptyList(),
+        navigator = EmptyDestinationsNavigator
     )
 }
+
+

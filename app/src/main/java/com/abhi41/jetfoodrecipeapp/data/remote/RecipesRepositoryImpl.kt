@@ -1,6 +1,7 @@
 package com.abhi41.jetfoodrecipeapp.data.remote
 
 import android.content.Context
+import androidx.annotation.Keep
 import com.abhi41.jetfoodrecipeapp.R
 import com.abhi41.jetfoodrecipeapp.data.dto.FoodJokeDto
 import com.abhi41.jetfoodrecipeapp.data.dto.FoodRecipeDto
@@ -20,6 +21,7 @@ import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
 
+@Keep
 class RecipesRepositoryImpl (
     private val api: FoodRecipesApi,
     private val dao: RecipesDao,

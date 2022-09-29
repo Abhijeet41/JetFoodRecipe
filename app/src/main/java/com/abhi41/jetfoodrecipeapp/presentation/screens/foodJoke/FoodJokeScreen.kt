@@ -1,14 +1,13 @@
 package com.abhi41.jetfoodrecipeapp.presentation.screens.foodJoke
 
+import android.content.res.Configuration.UI_MODE_NIGHT_NO
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,25 +22,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.abhi41.jetfoodrecipeapp.R
-import com.abhi41.jetfoodrecipeapp.ui.theme.EXTRA_LARGE_PADDING
-import com.abhi41.jetfoodrecipeapp.ui.theme.MEDIUM_PADDING
-import com.abhi41.jetfoodrecipeapp.ui.theme.TXT_LARGE_SIZE
-import com.abhi41.jetfoodrecipeapp.utils.Constants
+import com.abhi41.jetfoodrecipeapp.ui.theme.*
 import com.ramcosta.composedestinations.annotation.Destination
 
 private const val TAG = "FoodJokeScreen"
+
 @Destination
 @Composable
 fun FoodJokeScreen(
     foodJokeViewModel: FoodJokeViewModel = hiltViewModel()
 ) {
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(text = "Food Joke", fontWeight = FontWeight.Bold)
                 },
-                backgroundColor = Color.Black
+                backgroundColor = MaterialTheme.colors.topAppBarBackgroundColor
             )
         }
     ) {
@@ -60,36 +58,41 @@ fun FoodJokeScreen(
 
 @Composable
 fun foodJokeDesign(jokes: String) {
+
+    val painter = if (isSystemInDarkTheme())
+        painterResource(id = R.drawable.ic_food_joke_background_dark)
+    else painterResource(id = R.drawable.ic_food_joke_background)
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier.padding(bottom = EXTRA_LARGE_PADDING)
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_food_joke_background_dark),
+            painter = painter,
             contentScale = ContentScale.Crop,
             contentDescription = "food joke background"
         )
         Card(
             modifier = Modifier
-                .padding(EXTRA_LARGE_PADDING)
-                .background(Color.Transparent)
-                .border(
-                    1.dp, Color.White, shape = RoundedCornerShape(
-                        size = MEDIUM_PADDING
-                    )
-                ),
+                    .padding(EXTRA_LARGE_PADDING)
+                    .background(Color.Transparent)
+                    .border(
+                        1.dp, Color.White, shape = RoundedCornerShape(
+                            size = MEDIUM_PADDING
+                        )
+                    ),
             elevation = 4.dp,
         ) {
             Box(
                 modifier = Modifier
-                    .padding(MEDIUM_PADDING)
-                    .verticalScroll(rememberScrollState()),
+                        .padding(MEDIUM_PADDING)
+                        .verticalScroll(rememberScrollState()),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = jokes,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = MaterialTheme.colors.txtFoodJoke,
                     fontFamily = FontFamily.Monospace,
                     fontSize = TXT_LARGE_SIZE
                 )
@@ -98,8 +101,22 @@ fun foodJokeDesign(jokes: String) {
     }
 }
 
-@Preview
+@Preview(
+    uiMode = UI_MODE_NIGHT_NO,
+    group = "devices",
+    device = "spec:shape=Normal,width=360, height=640,unit=dp,dpi=480"
+)
 @Composable
 fun foodJokeDesignPreview() {
+    foodJokeDesign(stringResource(R.string.food_joke_txt))
+}
+
+@Preview(
+    uiMode = UI_MODE_NIGHT_YES,
+    group = "devices",
+    device = "spec:shape=Normal,width=360, height=640,unit=dp,dpi=480"
+)
+@Composable
+fun foodJokeDesignDarkPreview() {
     foodJokeDesign(stringResource(R.string.food_joke_txt))
 }

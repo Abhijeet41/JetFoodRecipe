@@ -1,6 +1,5 @@
 package com.abhi41.jetfoodrecipeapp.utils
 
-import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -9,15 +8,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.abhi41.jetfoodrecipeapp.R
-import com.abhi41.jetfoodrecipeapp.ui.theme.*
+import com.abhi41.jetfoodrecipeapp.ui.theme.EXTRA_SMALL_PADDING
+import com.abhi41.jetfoodrecipeapp.ui.theme.FoodRecipe_ITEM_HEIGHT
+import com.abhi41.jetfoodrecipeapp.ui.theme.MEDIUM_PADDING
+import com.abhi41.jetfoodrecipeapp.ui.theme.cardStrokeBorder
 
 @Composable
 fun AnimatedShimmer() {

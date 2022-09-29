@@ -1,20 +1,24 @@
+@file:OptIn(ExperimentalMaterialApi::class)
+
 package com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -22,17 +26,35 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ExperimentalMotionApi
+import androidx.constraintlayout.compose.MotionLayout
+import androidx.constraintlayout.compose.MotionScene
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.abhi41.jetfoodrecipeapp.R
-import com.abhi41.jetfoodrecipeapp.data.local.entity.ResultEntity
 import com.abhi41.jetfoodrecipeapp.model.Result
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
 import org.jsoup.Jsoup
 
+@OptIn(ExperimentalMotionApi::class)
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun OverViewScreen(selectedHero: Result?) {
+    val context = LocalContext.current
+    val motionScene = remember {
+        context.resources
+            .openRawResource(R.raw.overview_motion_img)
+            .readBytes()
+            .decodeToString()
+    }
+
+
     Scaffold() {
+        var animateButton by remember { mutableStateOf(false) }
+        val buttonAnimationProgress by animateFloatAsState(
+            targetValue = if (animateButton) 1f else 0f,
+            animationSpec = tween(1000)
+        )
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -43,13 +65,24 @@ fun OverViewScreen(selectedHero: Result?) {
                 crossfade(600)
                 error(R.drawable.ic_error_placeholder)
             }
-            ImageSection(
-                recipeImg,
-                selectedHero?.aggregateLikes,
-                selectedHero?.readyInMinutes
-            )
-            TitleAndCategoriesSection(selectedHero)
-            DescriptionSection(selectedHero?.summary)
+
+            MotionLayout(
+                motionScene = MotionScene(content = motionScene),
+                progress = buttonAnimationProgress,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                ImageSection(
+                    recipeImg,
+                    selectedHero?.aggregateLikes,
+                    selectedHero?.readyInMinutes
+                )
+                TitleAndCategoriesSection(selectedHero) {
+                    animateButton = !animateButton
+                }
+                DescriptionSection(selectedHero?.summary)
+            }
+
         }
     }
 }
@@ -61,24 +94,25 @@ private fun ImageSection(
     aggregateLikes: Int? = 1225,
     readyInMinutes: Int? = 40
 ) {
-    val lazyListState = rememberLazyListState()
+    //val lazyListState = rememberLazyListState()
     var scrolledY = 0f
     var previousOffset = 0
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .layoutId("imgFood"),
         contentAlignment = Alignment.BottomEnd
     ) {
         Image(
             modifier = Modifier
                 .fillMaxWidth()
-                .graphicsLayer {
+                /*     .graphicsLayer {
                     scrolledY += lazyListState.firstVisibleItemScrollOffset - previousOffset
                     translationY = scrolledY * 0.5f
                     previousOffset = lazyListState.firstVisibleItemScrollOffset
-                }
+                }*/
                 .height(250.dp),
             painter = recipeImg,
             contentDescription = "recipe_image",
@@ -131,11 +165,15 @@ fun RowLikesAndTimeInfo(text: String, icon: Int) {
 }
 
 @Composable
-private fun TitleAndCategoriesSection(selectedHero: Result?) {
+private fun TitleAndCategoriesSection(selectedHero: Result?, onClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable {
+                onClick()
+            }
             .background(color = MaterialTheme.colors.categoriesBackgroundColor)
+            .layoutId("title_and_category")
             .padding(SMALL_PADDING),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -219,6 +257,7 @@ fun RowCategories(icon: Int, text: String, isVegetarian: Boolean) {
 
 @Composable
 fun DescriptionSection(summary: String?) {
+
     val summary = Jsoup.parse(summary).text()
     Box(
         modifier = Modifier
@@ -226,8 +265,7 @@ fun DescriptionSection(summary: String?) {
                 bottom = SMALL_PADDING,
                 start = SMALL_PADDING,
                 end = SMALL_PADDING
-            )
-            .verticalScroll(rememberScrollState())
+            ).layoutId("description")
     ) {
 
         Text(
@@ -237,6 +275,7 @@ fun DescriptionSection(summary: String?) {
             fontSize = TXT_MEDIUM_SIZE,
         )
     }
+
 
 }
 

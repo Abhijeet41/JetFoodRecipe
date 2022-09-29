@@ -2,13 +2,14 @@ package com.abhi41.jetfoodrecipeapp.data.dto
 
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import com.abhi41.jetfoodrecipeapp.data.local.entity.ResultEntity
 import com.abhi41.jetfoodrecipeapp.model.Result
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
-
+@Keep
 @Parcelize
 data class ResultDto(
     @SerializedName("aggregateLikes")

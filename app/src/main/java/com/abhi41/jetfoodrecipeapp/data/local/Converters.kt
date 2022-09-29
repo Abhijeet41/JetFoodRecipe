@@ -1,12 +1,13 @@
 package com.abhi41.jetfoodrecipeapp.data.local
 
+import androidx.annotation.Keep
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.abhi41.jetfoodrecipeapp.data.local.util.JsonParser
 import com.abhi41.jetfoodrecipeapp.model.ExtendedIngredient
 import com.google.gson.reflect.TypeToken
 import com.abhi41.jetfoodrecipeapp.model.Result
-
+@Keep
 @ProvidedTypeConverter
 class Converters(
     private val jsonParser: JsonParser

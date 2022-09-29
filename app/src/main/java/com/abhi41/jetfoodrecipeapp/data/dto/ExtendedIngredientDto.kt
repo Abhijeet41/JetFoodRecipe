@@ -2,12 +2,14 @@ package com.abhi41.jetfoodrecipeapp.data.dto
 
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import androidx.versionedparcelable.ParcelField
 import com.abhi41.jetfoodrecipeapp.model.ExtendedIngredient
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 
+@Keep
 @Parcelize
 data class ExtendedIngredientDto(
     @SerializedName("amount")

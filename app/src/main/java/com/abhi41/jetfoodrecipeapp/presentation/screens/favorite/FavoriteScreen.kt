@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.R
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,10 +23,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
+import com.abhi41.jetfoodrecipeapp.R.drawable
 import com.abhi41.jetfoodrecipeapp.data.local.entity.FavoriteEntity
 import com.abhi41.jetfoodrecipeapp.model.Result
 import com.abhi41.jetfoodrecipeapp.presentation.common.BackPressHandler
-import com.abhi41.jetfoodrecipeapp.presentation.common.FoodItem
 import com.abhi41.jetfoodrecipeapp.presentation.destinations.DetailScreenDestination
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
 import com.ramcosta.composedestinations.annotation.Destination
@@ -41,7 +40,7 @@ var selectedRecipes: MutableList<FavoriteEntity> = mutableListOf()
 @Composable
 fun FavoriteScreen(
     navigator: DestinationsNavigator,
-    viewModel: FavoriteViewModel = hiltViewModel()
+    viewModel: FavoriteViewModel = hiltViewModel(),
 ) {
 
     val favoriteRecipe by viewModel.readFavoriteRecipes.observeAsState()
@@ -49,21 +48,26 @@ fun FavoriteScreen(
     val coroutineScope = rememberCoroutineScope()
 
     val onBack = { //handle on back pressed
-        state.value = state.value.copy(isContextual = false, actionModeTitle = "")
+        state.value = state.value.copy(
+            isContextual = false,
+            actionModeTitle = ""
+        )
         selectedRecipes.clear()
     }
     if (state.value.isContextual) {
         BackPressHandler(onBackPressed = onBack)
     }
 
-    Scaffold(
-        modifier = Modifier.padding(bottom = MEDIUM_PADDING),
+    Scaffold(modifier = Modifier.padding(bottom = MEDIUM_PADDING),
         topBar = {
             FavoriteScreenAppbar(
                 viewModel = viewModel,
                 state = state
             ) { //On delete Click
-                state.value = state.value.copy(isContextual = false, actionModeTitle = "")
+                state.value = state.value.copy(
+                    isContextual = false,
+                    actionModeTitle = ""
+                )
                 selectedRecipes.forEach { favoriteEntity ->
                     coroutineScope.launch {
                         viewModel.deleteFavoriteRecipe(favoriteEntity)
@@ -71,8 +75,7 @@ fun FavoriteScreen(
                 }
                 selectedRecipes.clear()
             }
-        }
-    ) {
+        }) {
 
         LazyColumn(
             modifier = Modifier
@@ -82,16 +85,12 @@ fun FavoriteScreen(
             verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
         ) {
             if (!favoriteRecipe.isNullOrEmpty()) {
-                items(
-                    items = favoriteRecipe!!,
+                items(items = favoriteRecipe!!,
                     key = { foodItem ->
                         foodItem.id
-                    }
-                ) { foodItem ->
+                    }) { foodItem ->
                     FoodItem(
-                        foodItem,
-                        navigator,
-                        state
+                        foodItem, navigator, state
                     )
                 }
             }
@@ -109,12 +108,15 @@ fun FoodItem(
     val foodItem = foodItemEntity.result
 
     val painter = rememberImagePainter(data = "${foodItem.image}") {
-        placeholder(com.abhi41.jetfoodrecipeapp.R.drawable.ic_placeholder)
+        placeholder(drawable.ic_placeholder)
         // crossfade(600)
-        error(com.abhi41.jetfoodrecipeapp.R.drawable.ic_placeholder)
+        error(drawable.ic_placeholder)
     }
     //we need to save state because this is a recyclerview it will recycle last selected recipe
-    saveItemState(foodItemEntity, state)
+    saveItemState(
+        foodItemEntity,
+        state
+    )
     if (state.value.isContextual) //clear multiple selection on switching screen
     {
         state.value = state.value.copy(multiSelection = true)
@@ -126,11 +128,10 @@ fun FoodItem(
         modifier = Modifier
             .height(FoodRecipe_ITEM_HEIGHT)
             .border(
-                1.dp, if (state.value.selectedItem) MaterialTheme.colors.strokeBorderColor
-                else MaterialTheme.colors.cardStrokeBorder,
-                shape = RoundedCornerShape(
-                    size = MEDIUM_PADDING
-                )
+                width = 1.dp,
+                color = if (state.value.selectedItem) MaterialTheme.colors.strokeBorderColor
+                        else MaterialTheme.colors.cardStrokeBorder,
+                shape = RoundedCornerShape(size = MEDIUM_PADDING)
             )
             .combinedClickable(
                 onClick = {
@@ -146,7 +147,10 @@ fun FoodItem(
                     }
                 },
                 onLongClick = {
-                    Log.d(TAG, "On long Click")
+                    Log.d(
+                        TAG,
+                        "On long Click"
+                    )
 
                     if (!state.value.multiSelection) {
                         state.value = state.value.copy(
@@ -167,11 +171,7 @@ fun FoodItem(
             )
 
     ) {
-        Surface(
-            shape = RoundedCornerShape(
-                size = MEDIUM_PADDING
-            )
-        ) {
+        Surface(shape = RoundedCornerShape(size = MEDIUM_PADDING)) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -210,6 +210,13 @@ fun FoodItem(
                     RowLikesAndCategory(foodItem)
                 }
 
+                Column(modifier = Modifier.padding(20.dp)) {
+                    Text(
+                        text = "test",
+                        color = Color.White
+                    )
+                }
+
             }
         }
     }
@@ -225,17 +232,17 @@ fun RowLikesAndCategory(foodItem: Result) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         InfoColumn(
-            com.abhi41.jetfoodrecipeapp.R.drawable.ic_heart,
+            drawable.ic_heart,
             "${foodItem.aggregateLikes}",
             Color.Red
         )
         InfoColumn(
-            com.abhi41.jetfoodrecipeapp.R.drawable.ic_clock,
+            drawable.ic_clock,
             "${foodItem.readyInMinutes}",
             MaterialTheme.colors.readyInMinute
         )
         InfoColumn(
-            com.abhi41.jetfoodrecipeapp.R.drawable.ic_leaf,
+            drawable.ic_leaf,
             if (foodItem.vegan) "Vegan" else "Non vegan",
             Color.Green
         )
@@ -246,11 +253,9 @@ fun RowLikesAndCategory(foodItem: Result) {
 fun InfoColumn(
     @DrawableRes intResource: Int,
     text: String,
-    color: Color
+    color: Color,
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Icon(
             painter = painterResource(id = intResource),
             contentDescription = "heart icon",

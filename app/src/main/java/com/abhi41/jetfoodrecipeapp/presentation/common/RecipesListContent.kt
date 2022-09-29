@@ -10,7 +10,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +31,7 @@ import com.abhi41.jetfoodrecipeapp.presentation.destinations.DetailScreenDestina
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.spec.DestinationStyle
 import org.jsoup.Jsoup
 
 @Destination
@@ -36,6 +40,8 @@ fun RecipesListContent(
     foodRecipes: List<Result>?,
     navigator: DestinationsNavigator,
 ) {
+
+
     LazyColumn(
         modifier = Modifier
             .fillMaxHeight()
@@ -50,7 +56,7 @@ fun RecipesListContent(
             }
         ) { food ->
             food.let {
-                FoodItem(food,navigator)
+                FoodItem(food, navigator)
             }
         }
     }
@@ -131,6 +137,7 @@ fun FoodItem(
     }
 
 }
+
 
 @Composable
 fun RowLikesAndCategory(food: Result) {
