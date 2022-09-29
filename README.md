@@ -23,3 +23,4 @@ Used Dagger-Hilt, kotlin coroutines, roomdatabase, offline caching, coil and muc
 
  </table>
 
+
