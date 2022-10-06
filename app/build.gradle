@@ -7,9 +7,11 @@ plugins {
     id 'com.google.devtools.ksp' version '1.6.10-1.0.2'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id("com.github.triplet.play") version "3.7.0"
 }
 
 kotlin {
+
     sourceSets {
         debug {
             kotlin.srcDir("build/generated/ksp/debug/kotlin")
@@ -17,37 +19,62 @@ kotlin {
         release {
             kotlin.srcDir("build/generated/ksp/release/kotlin")
         }
+
     }
 }
 
 android {
     compileSdk 33
+    def versionPropsFile = file('version.properties')
+    if (versionPropsFile.canRead()){
+        def Properties versionProps = new Properties()
 
-    defaultConfig {
-        configurations.all {
-            resolutionStrategy { force 'androidx.core:core-ktx:1.6.0' }
+        versionProps.load(new FileInputStream(versionPropsFile))
+        def name = versionProps['VERSION_NAME']
+        def code = versionProps['VERSION_CODE'].toInteger()
+        versionProps['VERSION_CODE']=code.toString()
+        versionProps.store(versionPropsFile.newWriter(), null)
+        defaultConfig {
+            configurations.all {
+                resolutionStrategy { force 'androidx.core:core-ktx:1.6.0' }
+            }
+
+            applicationId "com.abhi41.jetfoodrecipeapp"
+            minSdk 24
+            targetSdk 32
+            versionCode code
+            versionName name
+
+            testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+            vectorDrawables {
+                useSupportLibrary true
+            }
+            multiDexEnabled true
         }
+    }else {
+       // throw StopExecutionException("error occured")
+    }
+    // add this line
+    increaseVersionCode()
 
-        applicationId "com.abhi41.jetfoodrecipeapp"
-        minSdk 24
-        targetSdk 32
-        versionCode 3
-        versionName "1.0.4"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
+    signingConfigs{
+        create("release") {
+            storeFile = file(project.property("KEYSTORE_FILE").toString())
+            storePassword = project.property("KEYSTORE_PASSWORD").toString()
+            keyAlias = project.property("KEY_ALIAS").toString()
+            keyPassword = project.property("KEY_PASSWORD").toString()
         }
-        multiDexEnabled true
     }
 
     buildTypes {
-        release {
+
+        getByName("release"){
             debuggable false
             minifyEnabled true
             shrinkResources true
             ext.enableCrashlytics = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig = signingConfigs.getByName("release")
         }
         debug {
             debuggable true
@@ -76,8 +103,38 @@ android {
         }
     }
     namespace 'com.abhi41.jetfoodrecipeapp'
+    defaultConfig {
+        minSdk 21
+    }
+}
+//Add a configuration block after android block
+//after then try this command to check everythis is working ./gradlew bootstrapListing
+//play folder will gets generate in src/main/play location
+play{
+    String apiKeyFile = project.property("googlePlayApiKey").toString()
+    serviceAccountCredentials.set(file(apiKeyFile))
+    track.set("internal")
 }
 
+def increaseVersionCode() {
+    gradle.taskGraph.whenReady { taskGraph ->
+        if (taskGraph.hasTask(assembleRelease)) {
+            /* when run release task */
+            if (versionPropsFile.canRead()) {
+                def Properties versionProps = new Properties()
+
+                versionProps.load(new FileInputStream(versionPropsFile))
+
+                def build = versionProps['VERSION_BUILD'].toInteger() + 1
+                def code = versionProps['VERSION_CODE'].toInteger() + 1
+
+                versionProps['VERSION_BUILD'] = build.toString()
+                versionProps['VERSION_CODE'] = code.toString()
+                versionProps.store(versionPropsFile.newWriter(), null)
+            }
+        }
+    }
+}
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.7.0'
