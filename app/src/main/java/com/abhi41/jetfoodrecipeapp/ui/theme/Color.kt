@@ -25,7 +25,7 @@ val Colors.titleColor
 val Colors.descriptionColor
     @Composable
     get() = if (isLight) Black.copy(alpha = 0.5f)
-    else LightGray.copy(alpha = 0.6f)
+    else LightGray.copy(alpha = 0.5f)
 
 val Colors.buttonColor
     @Composable
