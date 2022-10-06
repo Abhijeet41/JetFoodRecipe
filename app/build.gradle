@@ -26,13 +26,13 @@ kotlin {
 android {
     compileSdk 33
     def versionPropsFile = file('version.properties')
-    if (versionPropsFile.canRead()){
+    if (versionPropsFile.canRead()) {
         def Properties versionProps = new Properties()
 
         versionProps.load(new FileInputStream(versionPropsFile))
         def name = versionProps['VERSION_NAME']
         def code = versionProps['VERSION_CODE'].toInteger()
-        versionProps['VERSION_CODE']=code.toString()
+        versionProps['VERSION_CODE'] = code.toString()
         versionProps.store(versionPropsFile.newWriter(), null)
         defaultConfig {
             configurations.all {
@@ -51,24 +51,35 @@ android {
             }
             multiDexEnabled true
         }
-    }else {
-       // throw StopExecutionException("error occured")
+    } else {
+        // throw StopExecutionException("error occured")
     }
     // add this line
     increaseVersionCode()
 
-    signingConfigs{
+    signingConfigs {
         create("release") {
-            storeFile = file(project.property("KEYSTORE_FILE").toString())
-            storePassword = project.property("KEYSTORE_PASSWORD").toString()
-            keyAlias = project.property("KEY_ALIAS").toString()
-            keyPassword = project.property("KEY_PASSWORD").toString()
+            def keystoreFile = file('keystore.properties')
+            if (keystoreFile.canRead()) {
+                def Properties keystoreFileProps = new Properties()
+                keystoreFileProps.load(new FileInputStream(keystoreFile))
+                storeFile = keystoreFileProps['KEYSTORE_FILE'].toString()
+                storePassword = keystoreFileProps['KEYSTORE_PASSWORD'].toString()
+                keyAlias = keystoreFileProps['KEY_ALIAS'].toString()
+                keyPassword = keystoreFileProps['KEY_PASSWORD'].toString()
+            }
+
+            //this is for reading values from gradle.properties
+            /*  storeFile = file(project.property("KEYSTORE_FILE").toString())
+              storePassword = project.property("KEYSTORE_PASSWORD").toString()
+              keyAlias = project.property("KEY_ALIAS").toString()
+              keyPassword = project.property("KEY_PASSWORD").toString()*/
         }
     }
 
     buildTypes {
 
-        getByName("release"){
+        getByName("release") {
             debuggable false
             minifyEnabled true
             shrinkResources true
@@ -78,10 +89,10 @@ android {
         }
         debug {
             debuggable true
-       /*     minifyEnabled true
-            shrinkResources true
-            ext.enableCrashlytics = true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'*/
+            /*     minifyEnabled true
+                 shrinkResources true
+                 ext.enableCrashlytics = true
+                 proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'*/
         }
     }
     compileOptions {
@@ -110,7 +121,7 @@ android {
 //Add a configuration block after android block
 //after then try this command to check everythis is working ./gradlew bootstrapListing
 //play folder will gets generate in src/main/play location
-play{
+play {
     String apiKeyFile = project.property("googlePlayApiKey").toString()
     serviceAccountCredentials.set(file(apiKeyFile))
     track.set("internal")
@@ -135,6 +146,7 @@ def increaseVersionCode() {
         }
     }
 }
+
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.7.0'
