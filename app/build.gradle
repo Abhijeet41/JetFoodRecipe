@@ -1,3 +1,4 @@
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -25,15 +26,17 @@ kotlin {
 
 android {
     compileSdk 33
+
     def versionPropsFile = file('version.properties')
     if (versionPropsFile.canRead()) {
         def Properties versionProps = new Properties()
 
         versionProps.load(new FileInputStream(versionPropsFile))
         def name = versionProps['VERSION_NAME']
-        def code = versionProps['VERSION_CODE'].toInteger()
-        versionProps['VERSION_CODE'] = code.toString()
+        def code = versionProps['VERSION_CODE'].toInteger() + 1
+        versionProps['VERSION_CODE']=code.toString()
         versionProps.store(versionPropsFile.newWriter(), null)
+
         defaultConfig {
             configurations.all {
                 resolutionStrategy { force 'androidx.core:core-ktx:1.6.0' }
@@ -43,7 +46,7 @@ android {
             minSdk 24
             targetSdk 32
             versionCode code
-            versionName name
+            versionName "1.0."+code.toString()
 
             testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
             vectorDrawables {
@@ -51,11 +54,10 @@ android {
             }
             multiDexEnabled true
         }
+
     } else {
-        // throw StopExecutionException("error occured")
+        //throw new GradleException("Could not read version.properties!")
     }
-    // add this line
-    increaseVersionCode()
 
     signingConfigs {
         create("release") {
@@ -66,7 +68,7 @@ android {
                 storeFile = keystoreFileProps['KEYSTORE_FILE'].toString()
                 storePassword = keystoreFileProps['KEYSTORE_PASSWORD'].toString()
                 keyAlias = keystoreFileProps['KEY_ALIAS'].toString()
-                keyPassword = keystoreFileProps['KEY_PASSWORD'].toString()//
+                keyPassword = keystoreFileProps['KEY_PASSWORD'].toString()
             }
 
             //this is for reading values from gradle.properties
@@ -125,26 +127,6 @@ play {
     String apiKeyFile = project.property("googlePlayApiKey").toString()
     serviceAccountCredentials.set(file(apiKeyFile))
     track.set("internal")
-}
-
-def increaseVersionCode() {
-    gradle.taskGraph.whenReady { taskGraph ->
-        if (taskGraph.hasTask(assembleRelease)) {
-            /* when run release task */
-            if (versionPropsFile.canRead()) {
-                def Properties versionProps = new Properties()
-
-                versionProps.load(new FileInputStream(versionPropsFile))
-
-                def build = versionProps['VERSION_BUILD'].toInteger() + 1
-                def code = versionProps['VERSION_CODE'].toInteger() + 1
-
-                versionProps['VERSION_BUILD'] = build.toString()
-                versionProps['VERSION_CODE'] = code.toString()
-                versionProps.store(versionPropsFile.newWriter(), null)
-            }
-        }
-    }
 }
 
 dependencies {
