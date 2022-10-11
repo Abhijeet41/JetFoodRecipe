@@ -61,7 +61,7 @@ android {
         create("release") {
             keyAlias = project.property("KEY_ALIAS").toString()
             keyPassword = project.property("KEY_PASSWORD").toString()
-            storeFile = file(project.property("KEYSTORE_FILE"))
+            storeFile = file('D:/foody_jks/myfoodkey.jks')
             storePassword = project.property("KEYSTORE_PASSWORD").toString()
         }
     }
