@@ -42,7 +42,7 @@ jobs:
               
           # Build bundle and publish to Google Play done
           - name: Make gradlew executable
-            run: chmod +x gradlew 
+            run: chmod +x gradle 
           
           - name: Build & publish to Google Play
             run: ./gradlew
