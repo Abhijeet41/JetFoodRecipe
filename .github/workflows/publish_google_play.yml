@@ -47,4 +47,7 @@ jobs:
               -PONEGRAVITY_KEYSTORE_FILE="../${{ steps.decode_keystore.outputs.filePath }}"
               -PgooglePlayApiKey="../${{ steps.decode_api_key.outputs.filePath }}"
              publishBundle --max-workers 1 --stacktrace   
+             
+          - name: Make gradlew executable
+            run: chmod +x ./gradlew  
         
