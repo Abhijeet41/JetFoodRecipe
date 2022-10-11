@@ -3,7 +3,8 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
-
+        maven { url 'https://jitpack.io' } //-> Delete
+        maven { url 'https://mvnrepository.com/artifact/com.github.gundy/semver4j'}
     }
 }
 dependencyResolutionManagement {
