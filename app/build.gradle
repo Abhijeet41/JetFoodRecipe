@@ -58,14 +58,15 @@ android {
 
 
     signingConfigs {
+        def keystorePropsFile = file('keystore.properties')
         create("release") {
-            def keystorePropsFile = file('keystore.properties')
+
             if (keystorePropsFile.canRead()) {
                 def Properties keystoreProps = new Properties()
                 keystoreProps.load(new FileInputStream(keystorePropsFile))
                 keyAlias = keystoreProps['KEY_ALIAS']
                 keyPassword = keystoreProps['KEY_PASSWORD']
-                storeFile = keystoreProps['KEYSTORE_FILE']
+                storeFile = file(keystoreProps['KEYSTORE_FILE'])
                 storePassword = keystoreProps['KEYSTORE_PASSWORD']
 
 /*
