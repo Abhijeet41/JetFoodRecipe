@@ -35,7 +35,7 @@ jobs:
         uses: timheuer/base64-to-file@v1.1
         with:
           fileDir: './secrets'
-          fileName: '1gravity.keystore'
+          fileName: 'myfoodkey.keystore'
           encodedString: ${{ secrets.KEYSTORE_FILE }}
 
       # Decode the Google Play api key file
