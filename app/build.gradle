@@ -98,14 +98,13 @@ android {
     }
 
     buildTypes {
-
-        getByName("release") {
+        release{
             debuggable false
             minifyEnabled true
             shrinkResources true
             ext.enableCrashlytics = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-           // signingConfig = signingConfigs.getByName(name)
+            // signingConfig = signingConfigs.getByName(name)
             signingConfig = signingConfigs.config
         }
         debug {
