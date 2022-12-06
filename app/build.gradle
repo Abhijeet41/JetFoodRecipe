@@ -65,10 +65,10 @@ android {
             if (keystorePropsFile.canRead()) {
                 def Properties keystoreProps = new Properties()
                 keystoreProps.load(new FileInputStream(keystorePropsFile))
-                keyAlias = keystoreProps['KEY_ALIAS'].toString()
-                keyPassword = keystoreProps['KEY_PASSWORD'].toString()
                 storeFile = file(keystoreProps['KEY_STORE_FILE_PATH'].toString())
                 storePassword = keystoreProps['KEYSTORE_PASSWORD'].toString()
+                keyAlias = keystoreProps['KEY_ALIAS'].toString()
+                keyPassword = keystoreProps['KEY_PASSWORD'].toString()
 
 /*
                 keyAlias = project.property("KEY_ALIAS").toString()
@@ -90,7 +90,7 @@ android {
             shrinkResources true
             ext.enableCrashlytics = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs.getByName(name)
         }
         debug {
             debuggable true
