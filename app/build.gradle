@@ -86,10 +86,14 @@ android {
 
         }*/
         config {
-            storeFile file('D:/foody_jks/myfoodkey.jks')
+            /*storeFile file('D:/foody_jks/myfoodkey.jks')
             storePassword 'vejita@242'
             keyAlias 'key0'
-            keyPassword 'vejita@242'
+            keyPassword 'vejita@242'*/
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'].toString())
+            storePassword keystoreProperties['storePassword']
         }
     }
 
