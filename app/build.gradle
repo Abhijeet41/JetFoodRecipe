@@ -56,7 +56,9 @@ android {
     }
     // add this line
 
-
+    lintOptions {
+        abortOnError false
+    }
     signingConfigs {
         def keystorePropsFile = file('keystore.properties')
         create("release") {
@@ -126,17 +128,9 @@ android {
 //after then try this command to check everythis is working ./gradlew bootstrapListing
 //play folder will gets generate in src/main/play location
 play {
-    def keystorePropsFile = file('keystore.properties')
-
-        if (keystorePropsFile.canRead()) {
-            def Properties keystoreProps = new Properties()
-            keystoreProps.load(new FileInputStream(keystorePropsFile))
-            String apiKeyFile = keystoreProps['googlePlayApiKey'].toString()
-            //String apiKeyFile = project.property("googlePlayApiKey").toString()
-            serviceAccountCredentials.set(file('apiKeyFile'))
-            track.set("internal")
-        }
-
+    String apiKeyFile = project.property("googlePlayApiKey").toString()
+    serviceAccountCredentials.set(file(apiKeyFile))
+    track.set("internal")
 }
 
 
