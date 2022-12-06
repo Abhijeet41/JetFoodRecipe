@@ -22,8 +22,10 @@ kotlin {
 
     }
 }
-def keystorePropertiesFile = rootProject.file("keystore.properties");
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+// Initialize a new Properties() object called keystoreProperties.
 def keystoreProperties = new Properties()
+// Load your keystore.properties file into the keystoreProperties object.
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 android {
     compileSdk 33
@@ -61,12 +63,13 @@ android {
         abortOnError false
     }
     signingConfigs {
-        def keystorePropsFile = file('keystore.properties')
+
         create("release") {
-            storeFile file(keystoreProperties['KEY_STORE_FILE_PATH'])
-            storePassword keystoreProperties['KEYSTORE_PASSWORD']
             keyAlias keystoreProperties['KEY_ALIAS']
             keyPassword keystoreProperties['KEY_PASSWORD']
+            storeFile file(keystoreProperties['KEY_STORE_FILE_PATH'])
+            storePassword keystoreProperties['KEYSTORE_PASSWORD']
+
        /*     if (keystorePropsFile.canRead()) {
                 def Properties keystoreProps = new Properties()
                 keystoreProps.load(new FileInputStream(keystorePropsFile))
