@@ -65,7 +65,7 @@ android {
             if (keystorePropsFile.canRead()) {
                 def Properties keystoreProps = new Properties()
                 keystoreProps.load(new FileInputStream(keystorePropsFile))
-                storeFile = file(keystoreProps['KEY_STORE_FILE_PATH'].toString())
+                storeFile = file(keystoreProps['KEY_STORE_FILE_PATH'])
                 storePassword = keystoreProps['KEYSTORE_PASSWORD'].toString()
                 keyAlias = keystoreProps['KEY_ALIAS'].toString()
                 keyPassword = keystoreProps['KEY_PASSWORD'].toString()
