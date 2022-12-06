@@ -74,3 +74,7 @@ val Colors.categoriesSelectedIconColor:Color
 val Colors.txtFoodJoke:Color
     @Composable
     get() = if (isLight) Black else White
+
+val Colors.motionLayoutBg: Color
+    @Composable
+    get() = if (isLight) White else Black

@@ -6,9 +6,7 @@ import android.annotation.SuppressLint
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -70,7 +68,7 @@ fun OverViewScreen(selectedHero: Result?) {
                 motionScene = MotionScene(content = motionScene),
                 progress = buttonAnimationProgress,
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth().background(MaterialTheme.colors.motionLayoutBg)
             ) {
                 ImageSection(
                     recipeImg,
@@ -257,10 +255,12 @@ fun RowCategories(icon: Int, text: String, isVegetarian: Boolean) {
 
 @Composable
 fun DescriptionSection(summary: String?) {
-
+    val scroll = rememberScrollState(0)
     val summary = Jsoup.parse(summary).text()
     Box(
         modifier = Modifier
+            .background(MaterialTheme.colors.motionLayoutBg)
+            .verticalScroll(scroll)
             .padding(
                 bottom = SMALL_PADDING,
                 start = SMALL_PADDING,
@@ -269,6 +269,7 @@ fun DescriptionSection(summary: String?) {
     ) {
 
         Text(
+            modifier = Modifier.verticalScroll(scroll),
             text = summary
                 ?: stringResource(R.string.descriptionDemo),
             color = MaterialTheme.colors.descriptionColor,
