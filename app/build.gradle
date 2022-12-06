@@ -64,13 +64,13 @@ android {
     }
     signingConfigs {
 
-        create("release") {
+/*        create("release") {
             keyAlias keystoreProperties['KEY_ALIAS']
             keyPassword keystoreProperties['KEY_PASSWORD']
-            storeFile file(keystoreProperties['KEY_STORE_FILE_PATH'])
+            storeFile file(keystoreProperties['KEY_STORE_FILE_PATH'].toString())
             storePassword keystoreProperties['KEYSTORE_PASSWORD']
 
-       /*     if (keystorePropsFile.canRead()) {
+       *//*     if (keystorePropsFile.canRead()) {
                 def Properties keystoreProps = new Properties()
                 keystoreProps.load(new FileInputStream(keystorePropsFile))
                 storeFile = file(keystoreProps['KEY_STORE_FILE_PATH'])
@@ -82,8 +82,14 @@ android {
 
             } else {
                 //file not found exception
-            }*/
+            }*//*
 
+        }*/
+        config {
+            storeFile file('D:\\foody_jks\\myfoodkey.jks')
+            storePassword 'vejita@242'
+            keyAlias 'key0'
+            keyPassword 'vejita@242'
         }
     }
 
@@ -95,7 +101,8 @@ android {
             shrinkResources true
             ext.enableCrashlytics = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig = signingConfigs.getByName(name)
+           // signingConfig = signingConfigs.getByName(name)
+            signingConfig = signingConfigs.config
         }
         debug {
             debuggable true
