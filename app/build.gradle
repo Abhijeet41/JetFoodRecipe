@@ -22,7 +22,9 @@ kotlin {
 
     }
 }
-
+def keystorePropertiesFile = rootProject.file("keystore.properties");
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 android {
     compileSdk 33
     def versionPropsFile = file('version.properties')
@@ -61,23 +63,23 @@ android {
     signingConfigs {
         def keystorePropsFile = file('keystore.properties')
         create("release") {
-
-            if (keystorePropsFile.canRead()) {
+            storeFile file(keystoreProperties['KEY_STORE_FILE_PATH'])
+            storePassword keystoreProperties['KEYSTORE_PASSWORD']
+            keyAlias keystoreProperties['KEY_ALIAS']
+            keyPassword keystoreProperties['KEY_PASSWORD']
+       /*     if (keystorePropsFile.canRead()) {
                 def Properties keystoreProps = new Properties()
                 keystoreProps.load(new FileInputStream(keystorePropsFile))
                 storeFile = file(keystoreProps['KEY_STORE_FILE_PATH'])
                 storePassword = keystoreProps['KEYSTORE_PASSWORD'].toString()
                 keyAlias = keystoreProps['KEY_ALIAS'].toString()
                 keyPassword = keystoreProps['KEY_PASSWORD'].toString()
+               // storeFile = file(project.property("KEYSTORE_FILE"))
 
-/*
-                keyAlias = project.property("KEY_ALIAS").toString()
-                keyPassword = project.property("KEY_PASSWORD").toString()
-                storeFile = file(project.property("KEYSTORE_FILE"))
-                storePassword = project.property("KEYSTORE_PASSWORD").toString()*/
+
             } else {
                 //file not found exception
-            }
+            }*/
 
         }
     }
