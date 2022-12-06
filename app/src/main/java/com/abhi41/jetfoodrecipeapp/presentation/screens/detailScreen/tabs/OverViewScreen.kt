@@ -39,7 +39,7 @@ import org.jsoup.Jsoup
 @Composable
 fun OverViewScreen(selectedHero: Result?) {
     val context = LocalContext.current
-    val motionScene = remember { 
+    val motionScene = remember {
         context.resources
             .openRawResource(R.raw.overview_motion_img)
             .readBytes()
