@@ -85,7 +85,7 @@ android {
             }*//*
 
         }*/
-        config {
+        release {
             /*storeFile file('D:/foody_jks/myfoodkey.jks')
             storePassword 'vejita@242'
             keyAlias 'key0'
@@ -105,7 +105,7 @@ android {
             ext.enableCrashlytics = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             // signingConfig = signingConfigs.getByName(name)
-            signingConfig  signingConfigs.config
+            signingConfig signingConfigs.release
         }
         debug {
             debuggable true
