@@ -51,24 +51,33 @@ jobs:
         run: ./gradlew build
 
       - name: Build Release AAB      // 1
-        run: ./gradlew bundleRelease
+        run: ./gradlew bundleRelease 
+        
 
-      - name: Sign AAB               // 2
-        uses: r0adkll/sign-android-release@v1
-        with:
-          releaseDirectory: app/build/outputs/bundle/release
-          signingKeyBase64: ${{ steps.decode_keystore.outputs.filePath }}
-          alias: ${{ secrets.KEY_ALIAS }}
-          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
+#       - name: Sign AAB               // 2
+#         uses: r0adkll/sign-android-release@v1
+#         with:
+#           releaseDirectory: app/build/outputs/bundle/release
+#           signingKeyBase64: ${{ steps.decode_keystore.outputs.filePath }}
+#           alias: ${{ secrets.KEY_ALIAS }}
+#           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+#           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
       # Build bundle and publish to Google Play
+      - name: Build & publish to Google Play
+        run: ./gradlew
+           -PBUILD_NUMBER="${{ env.BUILD_NUMBER }}"
+           -PgooglePlayApiKey="../${{ steps.decode_api_key.outputs.filePath }}"
+           -PONEGRAVITY_KEYSTORE_FILE="../${{ steps.decode_keystore.outputs.filePath }}"
+           -PONEGRAVITY_KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}
+           -PONEGRAVITY_OPENSOURCE_KEY_ALIAS=${{ secrets.KEY_ALIAS }}
+           -PONEGRAVITY_OPENSOURCE_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
+            publishBundle --max-workers 1 --stacktrace
+
+ # Build bundle and publish to Google Play
 #       - name: Build & publish to Google Play
 #         run: ./gradlew
-#            -PBUILD_NUMBER="${{ env.BUILD_NUMBER }}"
-#            -PgooglePlayApiKey="../${{ steps.decode_api_key.outputs.filePath }}"
-#            -PONEGRAVITY_KEYSTORE_FILE="../${{ steps.decode_keystore.outputs.filePath }}"
-#            -PONEGRAVITY_KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}
-#            -PONEGRAVITY_OPENSOURCE_KEY_ALIAS=${{ secrets.KEY_ALIAS }}
-#            -PONEGRAVITY_OPENSOURCE_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
-#             publishBundle --max-workers 1 --stacktrace
+#           -PBUILD_NUMBER="${{ env.BUILD_NUMBER }}"
+#           -PONEGRAVITY_KEYSTORE_FILE="../${{ steps.decode_keystore.outputs.filePath }}"
+#           -PgooglePlayApiKey="../${{ steps.decode_api_key.outputs.filePath }}"
+#           publishBundle --max-workers 1 --stacktrace
