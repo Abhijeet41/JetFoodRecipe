@@ -22,12 +22,12 @@ kotlin {
 
     }
 }
-def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystorePropertiesFile = rootProject.file("/keystore.properties")
 // Initialize a new Properties() object called keystoreProperties.
-def keystoreProperties = new Properties()
-// Load your keystore.properties file into the keystoreProperties object.
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
+    def keystorePropsFile = file('keystore.properties')
+
     compileSdk 33
     def versionPropsFile = file('version.properties')
     if (versionPropsFile.canRead()) {
@@ -64,48 +64,33 @@ android {
     }
     signingConfigs {
 
-/*        create("release") {
-            keyAlias keystoreProperties['KEY_ALIAS']
-            keyPassword keystoreProperties['KEY_PASSWORD']
-            storeFile file(keystoreProperties['KEY_STORE_FILE_PATH'].toString())
-            storePassword keystoreProperties['KEYSTORE_PASSWORD']
-
-       *//*     if (keystorePropsFile.canRead()) {
+        create("release") {
+            //./gradlew assembleRelease
+            if (keystorePropsFile.canRead()){
                 def Properties keystoreProps = new Properties()
                 keystoreProps.load(new FileInputStream(keystorePropsFile))
-                storeFile = file(keystoreProps['KEY_STORE_FILE_PATH'])
-                storePassword = keystoreProps['KEYSTORE_PASSWORD'].toString()
-                keyAlias = keystoreProps['KEY_ALIAS'].toString()
-                keyPassword = keystoreProps['KEY_PASSWORD'].toString()
-               // storeFile = file(project.property("KEYSTORE_FILE"))
 
+                storeFile file("/my-release-key.keystore")
+                storePassword keystoreProps['storePassword'].toString()
+                //storePassword 'vejita@242'
+                keyAlias keystoreProps['keyAlias'].toString()
+                keyPassword keystoreProps['keyPassword'].toString()
+            }
 
-            } else {
-                //file not found exception
-            }*//*
-
-        }*/
-        release {
-            /*storeFile file('D:/foody_jks/myfoodkey.jks')
-            storePassword 'vejita@242'
-            keyAlias 'key0'
-            keyPassword 'vejita@242'*/
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'].toString())
-            storePassword keystoreProperties['storePassword']
         }
     }
 
     buildTypes {
-        release{
+        release {
             debuggable false
             minifyEnabled true
             shrinkResources true
             ext.enableCrashlytics = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            // signingConfig = signingConfigs.getByName(name)
-            signingConfig signingConfigs.release
+            getByName("release") {
+                signingConfig = signingConfigs.getByName("release")
+            }
+            //signingConfig signingConfigs.release
         }
         debug {
             debuggable true
@@ -155,7 +140,6 @@ if (keystorePropsFile.canRead()) {
         track.set("internal")
     }
 }
-
 
 
 dependencies {
