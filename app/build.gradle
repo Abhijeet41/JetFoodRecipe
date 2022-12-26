@@ -129,19 +129,6 @@ android {
 //after then try this command to check everythis is working ./gradlew bootstrapListing
 //play folder will gets generate in src/main/play location
 
-def keystorePropsFile = file('keystore.properties')
-
-if (keystorePropsFile.canRead()) {
-
-    play {
-        def Properties keystoreProps = new Properties()
-        keystoreProps.load(new FileInputStream(keystorePropsFile))
-        String apiKeyFile = keystoreProps['googlePlayApiKey'].toString()
-        //String apiKeyFile = project.property("googlePlayApiKey").toString()
-        serviceAccountCredentials.set(file(apiKeyFile))
-        track.set("internal")
-    }
-}
 
 
 dependencies {
@@ -244,3 +231,19 @@ play {
     serviceAccountCredentials.set(file("google-play-api-key.json"))
     track.set("internal")
 }
+
+
+/*
+def keystorePropsFile = file('keystore.properties')
+
+if (keystorePropsFile.canRead()) {
+
+    play {
+        def Properties keystoreProps = new Properties()
+        keystoreProps.load(new FileInputStream(keystorePropsFile))
+        String apiKeyFile = keystoreProps['googlePlayApiKey'].toString()
+        //String apiKeyFile = project.property("googlePlayApiKey").toString()
+        serviceAccountCredentials.set(file(apiKeyFile))
+        track.set("internal")
+    }
+}*/
