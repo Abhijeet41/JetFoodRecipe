@@ -66,11 +66,11 @@ android {
 
         create("release") {
             //./gradlew assembleRelease
-            if (keystorePropsFile.canRead()){
+            if (keystorePropsFile.canRead()) {
                 def Properties keystoreProps = new Properties()
                 keystoreProps.load(new FileInputStream(keystorePropsFile))
 
-                storeFile = file(keystoreProps['storeFile'].toString())
+                //  storeFile = file(keystoreProps['storeFile'].toString())
                 //storeFile = file(project.property("KEYSTORE_FILE").toString())
                 storePassword keystoreProps['storePassword'].toString()
                 //storePassword 'vejita@242'
@@ -80,7 +80,7 @@ android {
 
         }
         release {
-        storeFile file('D:\\GitHubJava\\FoodRecipes\\app\\my-release-key.keystore')
+            storeFile file('D:\\GitHubJava\\FoodRecipes\\app\\my-release-key.keystore')
             storePassword var
             keyAlias var2
             keyPassword var3
@@ -94,9 +94,10 @@ android {
             shrinkResources true
             ext.enableCrashlytics = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            getByName("release") {
+
+        /*    getByName("release") {
                 signingConfig = signingConfigs.getByName("release")
-            }
+            }*/
             //signingConfig signingConfigs.release
         }
         debug {
