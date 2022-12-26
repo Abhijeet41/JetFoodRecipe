@@ -70,8 +70,8 @@ android {
                 def Properties keystoreProps = new Properties()
                 keystoreProps.load(new FileInputStream(keystorePropsFile))
 
-               // storeFile file(keystoreProps['storeFile'].toString())
-                storeFile = file(project.property("KEYSTORE_FILE").toString())
+                storeFile = file(keystoreProps['storeFile'].toString())
+                //storeFile = file(project.property("KEYSTORE_FILE").toString())
                 storePassword keystoreProps['storePassword'].toString()
                 //storePassword 'vejita@242'
                 keyAlias keystoreProps['keyAlias'].toString()
