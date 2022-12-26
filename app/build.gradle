@@ -79,6 +79,12 @@ android {
             }
 
         }
+        release {
+        storeFile file('D:\\GitHubJava\\FoodRecipes\\app\\my-release-key.keystore')
+            storePassword var
+            keyAlias var2
+            keyPassword var3
+        }
     }
 
     buildTypes {

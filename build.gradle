@@ -1,3 +1,4 @@
+
 buildscript {
     dependencies {
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.40.5'
@@ -9,6 +10,10 @@ buildscript {
         compose_version = '1.1.0'
         accompanist_version = '0.21.2-beta'
         //  kotlin_version = '1.5.31'
+        var = 'vejita@242'
+        var1 = 'vejita@242'
+        var2 = 'key0'
+        var3 = var
     }
     repositories {
         google()
