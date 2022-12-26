@@ -89,9 +89,9 @@ android {
             ext.enableCrashlytics = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-        /*    getByName("release") {
+            getByName("release") {
                 signingConfig = signingConfigs.getByName("release")
-            }*/
+            }
             //signingConfig signingConfigs.release
         }
         debug {
