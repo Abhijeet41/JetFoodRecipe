@@ -75,7 +75,7 @@ android {
                 //storePassword 'vejita@242'
                 keyAlias keystoreProps['keyAlias'].toString()
                 keyPassword keystoreProps['keyPassword'].toString()
-                storeFile file(keystoreProps['storeFile'])
+                storeFile file("D:/GitHubJava/FoodRecipes/app/my-release-key.keystore")
             }
 
         }
