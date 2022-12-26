@@ -71,7 +71,7 @@ android {
                 keystoreProps.load(new FileInputStream(keystorePropsFile))
 
                 //  storeFile = file(keystoreProps['storeFile'].toString())
-                //storeFile = file(project.property("KEYSTORE_FILE").toString())
+                storeFile = file("my-release-key.keystore")
                 storePassword keystoreProps['storePassword'].toString()
                 //storePassword 'vejita@242'
                 keyAlias keystoreProps['keyAlias'].toString()
