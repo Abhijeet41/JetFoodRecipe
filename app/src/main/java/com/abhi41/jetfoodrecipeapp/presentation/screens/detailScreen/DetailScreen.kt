@@ -66,13 +66,13 @@ fun DetailScreen(
 
                     if (!state.value.isRecipeSaved) { //if its not already saved then insert
                         detailViewModel.insertFavoriteRecipes(
-                            FavoriteEntity(0, result!!)
+                            FavoriteEntity(0, result)
                         )
                         state.value = state.value.copy(isRecipeSaved = true)
                     } else { //if its already saved then delete
                         var favoriteEntity = FavoriteEntity(
                             state.value.savedRecipeId,
-                            result!!
+                            result
                         )
                         coroutineScope.launch {
                             detailViewModel.deleteFavoriteRecipe(favoriteEntity)
