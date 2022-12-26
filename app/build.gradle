@@ -228,8 +228,15 @@ dependencies {
 }
 play {
     //val apiKeyFile = project.property("googlePlayApiKey").toString()
-    serviceAccountCredentials.set(file("google-play-api-key.json"))
-    track.set("internal")
+    def keystorePropsFile = file('keystore.properties')
+
+    if (keystorePropsFile.canRead()) {
+        def Properties keystoreProps = new Properties()
+        keystoreProps.load(new FileInputStream(keystorePropsFile))
+        serviceAccountCredentials.set(file(keystoreProps['googlePlayApiKey'].toString()))
+        track.set("internal")
+    }
+
 }
 
 
