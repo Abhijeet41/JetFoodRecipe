@@ -75,7 +75,7 @@ android {
                 //storePassword 'vejita@242'
                 keyAlias keystoreProps['keyAlias'].toString()
                 keyPassword keystoreProps['keyPassword'].toString()
-                storeFile file(keystoreProps['storeFile'].toString())
+                storeFile file(keystoreProps['storeFile'])
             }
 
         }
