@@ -239,3 +239,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha01'
 
 }
+play {
+    //val apiKeyFile = project.property("googlePlayApiKey").toString()
+    serviceAccountCredentials.set(file("google-play-api-key.json"))
+    track.set("internal")
+}
