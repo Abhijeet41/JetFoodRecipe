@@ -233,7 +233,7 @@ play {
     if (keystorePropsFile.canRead()) {
         def Properties keystoreProps = new Properties()
         keystoreProps.load(new FileInputStream(keystorePropsFile))
-        serviceAccountCredentials.set(file(keystoreProps['googlePlayApiKey'].toString()))
+        serviceAccountCredentials.set(file("google-play-api-key.json"))
         track.set("internal")
     }
 
