@@ -64,7 +64,7 @@ android {
     }
     signingConfigs {
 
-        create("release") {
+        release {
             //./gradlew assembleRelease
             if (keystorePropsFile.canRead()) {
                 def Properties keystoreProps = new Properties()
@@ -83,16 +83,17 @@ android {
 
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             debuggable false
             minifyEnabled true
             shrinkResources true
             ext.enableCrashlytics = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            getByName("release") {
+         /*   getByName("release") {
                 signingConfig = signingConfigs.getByName("release")
-            }
-            //signingConfig signingConfigs.release
+            }*/
+
         }
         debug {
             debuggable true
