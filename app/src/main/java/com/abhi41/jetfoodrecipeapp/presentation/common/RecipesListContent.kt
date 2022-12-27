@@ -3,9 +3,7 @@
 package com.abhi41.jetfoodrecipeapp.presentation.common
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -44,7 +42,7 @@ fun RecipesListContent(
 
     LazyColumn(
         modifier = Modifier
-            .fillMaxHeight()
+            .fillMaxWidth()
             .padding(bottom = EXTRA_LARGE_PADDING),
         contentPadding = PaddingValues(all = SMALL_PADDING),
         verticalArrangement = Arrangement.spacedBy(SMALL_PADDING) //its like space between item list

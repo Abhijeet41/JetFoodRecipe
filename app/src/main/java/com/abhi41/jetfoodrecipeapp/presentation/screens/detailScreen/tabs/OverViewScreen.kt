@@ -68,7 +68,8 @@ fun OverViewScreen(selectedHero: Result?) {
                 motionScene = MotionScene(content = motionScene),
                 progress = buttonAnimationProgress,
                 modifier = Modifier
-                    .fillMaxWidth().background(MaterialTheme.colors.motionLayoutBg)
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colors.motionLayoutBg)
             ) {
                 ImageSection(
                     recipeImg,
@@ -260,16 +261,17 @@ fun DescriptionSection(summary: String?) {
     Box(
         modifier = Modifier
             .background(MaterialTheme.colors.motionLayoutBg)
-            .verticalScroll(scroll)
+            //  .verticalScroll(rememberScrollState())
             .padding(
                 bottom = SMALL_PADDING,
                 start = SMALL_PADDING,
                 end = SMALL_PADDING
-            ).layoutId("description")
+            )
+            .layoutId("description")
     ) {
 
         Text(
-            modifier = Modifier.verticalScroll(scroll),
+            modifier = Modifier.verticalScroll(rememberScrollState()),
             text = summary
                 ?: stringResource(R.string.descriptionDemo),
             color = MaterialTheme.colors.descriptionColor,
