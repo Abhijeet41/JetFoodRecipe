@@ -226,8 +226,8 @@ dependencies {
     //Inapp update
     implementation 'com.google.android.play:core-ktx:1.8.1'
 
-    //constraint layout
-    implementation 'androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha05'
+    //constraint layout (do not update this until you find stable version)
+    implementation 'androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha03'
 
 }
 play {

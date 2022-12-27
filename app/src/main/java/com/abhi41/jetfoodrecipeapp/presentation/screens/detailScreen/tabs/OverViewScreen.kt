@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterialApi::class)
+@file:OptIn(ExperimentalMaterialApi::class, ExperimentalMotionApi::class)
 
 package com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs
 
@@ -34,7 +34,6 @@ import com.abhi41.jetfoodrecipeapp.model.Result
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
 import org.jsoup.Jsoup
 
-@OptIn(ExperimentalMotionApi::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun OverViewScreen(selectedHero: Result?) {
@@ -53,10 +52,14 @@ fun OverViewScreen(selectedHero: Result?) {
             targetValue = if (animateButton) 1f else 0f,
             animationSpec = tween(1000)
         )
-        Column(
+
+        MotionLayout(
+            motionScene = MotionScene(content = motionScene),
+            progress = buttonAnimationProgress,
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = MaterialTheme.colors.screenBackgroundColor)
+                .wrapContentHeight()
+                .background(MaterialTheme.colors.motionLayoutBg)
         ) {
             val imageUrl = selectedHero?.image
             val recipeImg = rememberImagePainter(imageUrl) {
@@ -64,25 +67,18 @@ fun OverViewScreen(selectedHero: Result?) {
                 error(R.drawable.ic_error_placeholder)
             }
 
-            MotionLayout(
-                motionScene = MotionScene(content = motionScene),
-                progress = buttonAnimationProgress,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colors.motionLayoutBg)
-            ) {
-                ImageSection(
-                    recipeImg,
-                    selectedHero?.aggregateLikes,
-                    selectedHero?.readyInMinutes
-                )
-                TitleAndCategoriesSection(selectedHero) {
-                    animateButton = !animateButton
-                }
-                DescriptionSection(selectedHero?.summary)
+            ImageSection(
+                recipeImg,
+                selectedHero?.aggregateLikes,
+                selectedHero?.readyInMinutes
+            )
+            TitleAndCategoriesSection(selectedHero) {
+                animateButton = !animateButton
             }
-
+            DescriptionSection(selectedHero?.summary)
         }
+
+
     }
 }
 
@@ -258,10 +254,11 @@ fun RowCategories(icon: Int, text: String, isVegetarian: Boolean) {
 fun DescriptionSection(summary: String?) {
     val scroll = rememberScrollState(0)
     val summary = Jsoup.parse(summary).text()
-    Box(
+    Column(
         modifier = Modifier
             .background(MaterialTheme.colors.motionLayoutBg)
-            //  .verticalScroll(rememberScrollState())
+            // .wrapContentSize(unbounded = true)
+            .verticalScroll(rememberScrollState(1))
             .padding(
                 bottom = SMALL_PADDING,
                 start = SMALL_PADDING,
@@ -271,7 +268,6 @@ fun DescriptionSection(summary: String?) {
     ) {
 
         Text(
-            modifier = Modifier.verticalScroll(rememberScrollState()),
             text = summary
                 ?: stringResource(R.string.descriptionDemo),
             color = MaterialTheme.colors.descriptionColor,
