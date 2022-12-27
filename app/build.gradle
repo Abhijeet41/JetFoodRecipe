@@ -84,7 +84,7 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
-            debuggable false
+            debuggable true
             minifyEnabled true
             shrinkResources true
             ext.enableCrashlytics = true
@@ -134,7 +134,7 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.8.0'
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
@@ -201,7 +201,7 @@ dependencies {
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
 
     //multidex support
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation "androidx.multidex:multidex:2.0.1"
 
     // Jsoup use to parse html tags to web browsers
     implementation 'org.jsoup:jsoup:1.13.1'
@@ -223,8 +223,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
 
+    //Inapp update
+    implementation 'com.google.android.play:core-ktx:1.8.1'
+
     //constraint layout
-    implementation 'androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha01'
+    implementation 'androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha05'
 
 }
 play {

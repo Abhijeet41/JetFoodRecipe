@@ -47,7 +47,10 @@
 -keepclassmembers,allowshrinking,allowobfuscation interface * {
     @retrofit2.http.* <methods>;
 }
-
+-keepclassmembers class * extends androidx.constraintlayout.compose.* {
+  public <init>();
+}
+-keep class androidx.core.app.CoreComponentFactory { *; }
 -assumenosideeffects class android.util.Log{*;}
 
 -keep class org.apache.http.** { *; }
