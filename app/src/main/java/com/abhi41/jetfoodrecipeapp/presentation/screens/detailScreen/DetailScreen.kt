@@ -158,7 +158,7 @@ private fun horizontalPager(
         state = pagerState
     ) { page ->
         when (page) {
-            0 -> { 
+            0 -> {
                 OverViewScreen(selectedHero)
             }
             1 -> {
