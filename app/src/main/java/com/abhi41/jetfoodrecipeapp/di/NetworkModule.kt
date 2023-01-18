@@ -12,6 +12,7 @@ import com.abhi41.jetfoodrecipeapp.domain.RecipesRepository
 import com.abhi41.jetfoodrecipeapp.utils.Constants
 import com.abhi41.jetfoodrecipeapp.utils.Constants.sh2561
 import com.abhi41.jetfoodrecipeapp.utils.Constants.sh2562
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,15 +39,18 @@ object NetworkModule {
             .build()
     }
 
+
     @Singleton
     @Provides
     fun provideOkhttp(
-        certificatePinner: CertificatePinner
+        certificatePinner: CertificatePinner,
+        @ApplicationContext context: Context
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .certificatePinner(certificatePinner) //ssl pinning
             .connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
+            .addInterceptor(ChuckerInterceptor(context))
             .build()
     }
 

@@ -24,6 +24,12 @@ object Constants {
     const val QUERY_ADD_RECIPE_INFO = "addRecipeInformation"
     const val QUERY_FILL_INGREDIENTS = "fillIngredients"
 
+    // channel id push notification
+    const val CHANNEL_ID = "RECIPES_PUSH_NOTIFICATION"
+    const val CHANNEL_NAME = "RECIPES_CHANNEL"
+
+    const val FCM_NOTIFICATION_ID = 1
+    const val ONESIGNAL_APP_ID = "acead8c6-b78d-4c08-bb75-a16d3b28f9c5"
 
     //ROOM Database
     const val DATABASE_NAME = "recipes_database"
