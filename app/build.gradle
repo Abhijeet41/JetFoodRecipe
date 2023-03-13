@@ -134,6 +134,8 @@ android {
 
 dependencies {
 
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
@@ -236,6 +238,11 @@ dependencies {
 
     //onesignle integration
     implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
+
+ /*   google play inapp review
+    we don't need this library because we already have play:core-ktx */
+    //implementation "com.google.android.play:review:2.0.1"
+    //implementation "com.google.android.play:review-ktx:2.0.1"
 
 }
 play {

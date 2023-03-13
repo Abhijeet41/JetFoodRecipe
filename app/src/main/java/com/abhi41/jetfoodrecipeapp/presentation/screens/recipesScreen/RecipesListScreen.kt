@@ -70,7 +70,7 @@ fun RecipesScreen(
     RecipeDesign(navigator = navigator)
 }
 
-@SuppressLint("CoroutineCreationDuringComposition")
+@SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RecipeDesign(

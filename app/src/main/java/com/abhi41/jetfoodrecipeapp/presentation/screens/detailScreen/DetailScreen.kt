@@ -42,9 +42,7 @@ fun DetailScreen(
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
     val favoriteRecipe = detailViewModel.readFavoriteRecipes.observeAsState()
-    val state = remember {
-        mutableStateOf(DetailState())
-    }
+    val state = remember { mutableStateOf(DetailState()) }
 
     Scaffold(
         topBar = {

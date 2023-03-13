@@ -1,5 +1,6 @@
 package com.abhi41.jetfoodrecipeapp.presentation.screens.favorite
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -36,6 +37,7 @@ import kotlinx.coroutines.launch
 private const val TAG = "FavoriteScreen"
 var selectedRecipes: MutableList<FavoriteEntity> = mutableListOf()
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Destination
 @Composable
 fun FavoriteScreen(

@@ -1,5 +1,6 @@
 package com.abhi41.jetfoodrecipeapp.presentation.screens.dashboardScreen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Destination()
 @Composable
 fun DashBoardScreen(

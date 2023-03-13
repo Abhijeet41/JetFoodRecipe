@@ -1,5 +1,7 @@
 package com.abhi41.jetfoodrecipeapp.presentation.screens.foodJoke
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.util.Log
@@ -9,10 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -23,10 +27,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.abhi41.jetfoodrecipeapp.R
 import com.abhi41.jetfoodrecipeapp.ui.theme.*
+import com.abhi41.jetfoodrecipeapp.utils.ShowFeedbackDialog
 import com.ramcosta.composedestinations.annotation.Destination
 
 private const val TAG = "FoodJokeScreen"
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Destination
 @Composable
 fun FoodJokeScreen(
@@ -43,8 +49,11 @@ fun FoodJokeScreen(
             )
         }
     ) {
+        val context = LocalContext.current
+        val activity = LocalContext.current as Activity
 
         val state = foodJokeViewModel.foodJokeState.value
+        ShowFeedbackDialog(context = context, activity = activity)
 
         if (state.foodJoke.isEmpty()) {
             foodJokeViewModel.getFoodJoke()
@@ -63,6 +72,7 @@ fun foodJokeDesign(jokes: String) {
         painterResource(id = R.drawable.ic_food_joke_background_dark)
     else painterResource(id = R.drawable.ic_food_joke_background)
 
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier.padding(bottom = EXTRA_LARGE_PADDING)
@@ -74,13 +84,13 @@ fun foodJokeDesign(jokes: String) {
         )
         Card(
             modifier = Modifier
-                    .padding(EXTRA_LARGE_PADDING)
-                    .background(Color.Transparent)
-                    .border(
-                        1.dp, Color.White, shape = RoundedCornerShape(
-                            size = MEDIUM_PADDING
-                        )
-                    ),
+                .padding(EXTRA_LARGE_PADDING)
+                .background(Color.Transparent)
+                .border(
+                    1.dp, Color.White, shape = RoundedCornerShape(
+                        size = MEDIUM_PADDING
+                    )
+                ),
             elevation = 4.dp,
         ) {
             Box(
