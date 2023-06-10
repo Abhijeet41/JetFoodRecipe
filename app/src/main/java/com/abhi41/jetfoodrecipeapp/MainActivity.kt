@@ -10,10 +10,9 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.core.content.ContextCompat
 import androidx.navigation.compose.rememberNavController
 import com.abhi41.jetfoodrecipeapp.presentation.NavGraphs
-import com.abhi41.jetfoodrecipeapp.ui.theme.JetFoodRecipeAppTheme
+import com.abhi41.ui.theme.JetFoodRecipeAppTheme
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.firebase.messaging.FirebaseMessaging

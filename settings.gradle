@@ -4,10 +4,13 @@ pluginManagement {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' } //-> Delete
-       //maven { url 'https://mvnrepository.com/artifact/com.github.gundy/semver4j'}
+        maven { url 'https://mvnrepository.com/artifact/com.github.gundy/semver4j'} //-> Add
+
+            //maven { url 'https://mvnrepository.com/artifact/com.github.gundy/semver4j'}
       //  maven { url 'repo1.maven.org/maven2/com/github/gundy/semver4j/0.16.4/semver4j-0.16.4-javadoc.jar' }
     }
 }
+enableFeaturePreview("VERSION_CATALOGS")
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -17,3 +20,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "JetFoodRecipeApp"
 include ':app'
+include ':core:ui'
+include ':core:util'
+include ':data:foodreceipe'
+include ':domain:repository'

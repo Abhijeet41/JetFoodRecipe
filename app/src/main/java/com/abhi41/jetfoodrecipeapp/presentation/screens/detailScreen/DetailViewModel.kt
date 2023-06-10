@@ -3,12 +3,9 @@ package com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.abhi41.jetfoodrecipeapp.data.local.dao.RecipesDao
-import com.abhi41.jetfoodrecipeapp.data.local.entity.FavoriteEntity
-import com.abhi41.jetfoodrecipeapp.data.local.entity.ResultEntity
-import com.abhi41.jetfoodrecipeapp.model.Result
+import com.abhi41.data.local.dao.RecipesDao
+import com.abhi41.data.local.entity.FavoriteEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

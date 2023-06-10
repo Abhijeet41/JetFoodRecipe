@@ -18,9 +18,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.abhi41.jetfoodrecipeapp.ui.theme.TOP_APP_BAR_HEIGHT
-import com.abhi41.jetfoodrecipeapp.ui.theme.topAppBarBackgroundColor
-import com.abhi41.jetfoodrecipeapp.ui.theme.topAppBarContentColor
+import com.abhi41.ui.theme.TOP_APP_BAR_HEIGHT
+import com.abhi41.ui.theme.topAppBarBackgroundColor
+import com.abhi41.ui.theme.topAppBarContentColor
 
 @Composable
 fun SearchTopBar(

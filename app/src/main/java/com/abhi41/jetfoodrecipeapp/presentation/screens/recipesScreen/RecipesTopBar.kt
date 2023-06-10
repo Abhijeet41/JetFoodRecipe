@@ -6,8 +6,8 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.abhi41.jetfoodrecipeapp.ui.theme.topAppBarBackgroundColor
-import com.abhi41.jetfoodrecipeapp.ui.theme.topAppBarContentColor
+import com.abhi41.ui.theme.topAppBarBackgroundColor
+import com.abhi41.ui.theme.topAppBarContentColor
 import com.ramcosta.composedestinations.annotation.Destination
 
 @Destination

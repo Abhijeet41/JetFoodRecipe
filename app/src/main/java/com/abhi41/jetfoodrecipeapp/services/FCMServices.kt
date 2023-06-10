@@ -6,7 +6,7 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.abhi41.jetfoodrecipeapp.utils.Constants.FCM_NOTIFICATION_ID
+import com.abhi41.ui.util.Constants.FCM_NOTIFICATION_ID
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import dagger.hilt.android.AndroidEntryPoint

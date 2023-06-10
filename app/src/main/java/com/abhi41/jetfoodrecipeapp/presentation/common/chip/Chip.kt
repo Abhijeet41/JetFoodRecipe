@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.abhi41.jetfoodrecipeapp.R
-import com.abhi41.jetfoodrecipeapp.ui.theme.SMALL_PADDING
+import com.abhi41.ui.theme.SMALL_PADDING
 
 @Preview(showBackground = true)
 @Composable

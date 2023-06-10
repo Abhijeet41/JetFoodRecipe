@@ -5,16 +5,13 @@ import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -22,23 +19,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
+import com.abhi41.data.repository.MealAndDietType
 import com.abhi41.jetfoodrecipeapp.R
-import com.abhi41.jetfoodrecipeapp.data.repository.MealAndDietType
-import com.abhi41.jetfoodrecipeapp.model.Result
-import com.abhi41.jetfoodrecipeapp.presentation.common.RecipesListContent
+import com.abhi41.ui.common.RecipesListContent
 import com.abhi41.jetfoodrecipeapp.presentation.common.chip.*
+import com.abhi41.jetfoodrecipeapp.presentation.destinations.DetailScreenDestination
 import com.abhi41.jetfoodrecipeapp.presentation.destinations.SearchScreenDestination
-import com.abhi41.jetfoodrecipeapp.ui.theme.*
-import com.abhi41.jetfoodrecipeapp.utils.AnimatedShimmer
-import com.abhi41.jetfoodrecipeapp.utils.newtwork_status.ConnectivityObserver
-import com.abhi41.jetfoodrecipeapp.utils.newtwork_status.NetworkConnectivityObserver
+import com.abhi41.ui.common.AnimatedShimmer
+import com.abhi41.ui.common.chip.Diet
+import com.abhi41.ui.theme.*
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.navigation.EmptyDestinationsNavigator
-import com.riegersan.composeexperiments.DietTypeChipGroup
-import com.riegersan.composeexperiments.MealTypeChipGroup
+import com.abhi41.ui.common.chip.DietTypeChipGroup
+import com.abhi41.ui.common.chip.Meal
+import com.abhi41.ui.common.chip.MealTypeChipGroup
+import com.abhi41.util.newtwork_status.NetworkConnectivityObserver
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -160,7 +156,10 @@ fun BottomSheet(
         if (!state.isLoading) {
             RecipesListContent(
                 foodRecipes = state.recipesItem,
-                navigator = navigator
+                navigator = navigator,
+                itemClick = {food->
+                     navigator.navigate(DetailScreenDestination(food))
+                }
             )
         } else {
             AnimatedShimmer()
@@ -271,7 +270,10 @@ private fun BottomSheetScreen(
 fun RecipeDesignPreview() {
     RecipesListContent(
         foodRecipes = emptyList(),
-        navigator = EmptyDestinationsNavigator
+        navigator = EmptyDestinationsNavigator,
+        itemClick = {food->
+            // navigator.navigate(DetailScreenDestination(food))
+        }
     )
 }
 

@@ -1,17 +1,16 @@
 package com.abhi41.jetfoodrecipeapp.di
 
 import android.content.Context
-import com.abhi41.jetfoodrecipeapp.data.local.dao.RecipesDao
-import com.abhi41.jetfoodrecipeapp.data.local.database.RecipesDatabase
-import com.abhi41.jetfoodrecipeapp.data.remote.FoodRecipesApi
-import com.abhi41.jetfoodrecipeapp.data.remote.RecipesRepositoryImpl
+import com.abhi41.data.local.dao.RecipesDao
+import com.abhi41.data.remote.FoodRecipesApi
+import com.abhi41.data.remote.RecipesRepositoryImpl
+import com.abhi41.domain.RecipesRepository
 import com.abhi41.jetfoodrecipeapp.data.usecase.FoodJokeUsecase
 import com.abhi41.jetfoodrecipeapp.data.usecase.RecipesUsecase
 import com.abhi41.jetfoodrecipeapp.data.usecase.SearchResultUseCase
-import com.abhi41.jetfoodrecipeapp.domain.RecipesRepository
-import com.abhi41.jetfoodrecipeapp.utils.Constants
-import com.abhi41.jetfoodrecipeapp.utils.Constants.sh2561
-import com.abhi41.jetfoodrecipeapp.utils.Constants.sh2562
+import com.abhi41.ui.util.Constants
+import com.abhi41.ui.util.Constants.sh2561
+import com.abhi41.ui.util.Constants.sh2562
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import dagger.Module
 import dagger.Provides
@@ -84,11 +83,11 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideRecipesRepository(
-        database:RecipesDao,
+        database: RecipesDao,
         api: FoodRecipesApi,
         @ApplicationContext context: Context
 
-    ): RecipesRepository{
+    ): RecipesRepository {
         return RecipesRepositoryImpl(
             api = api,
             dao = database,

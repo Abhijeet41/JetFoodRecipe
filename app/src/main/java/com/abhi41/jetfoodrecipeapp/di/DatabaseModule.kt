@@ -2,11 +2,11 @@ package com.abhi41.jetfoodrecipeapp.di
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.abhi41.jetfoodrecipeapp.data.local.Converters
-import com.abhi41.jetfoodrecipeapp.data.local.database.RecipesDatabase
+import com.abhi41.data.local.Converters
+import com.abhi41.data.local.database.RecipesDatabase
 import com.abhi41.jetfoodrecipeapp.data.local.util.GsonParser
-import com.abhi41.jetfoodrecipeapp.utils.Constants
+
+import com.abhi41.ui.util.Constants
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -22,8 +22,8 @@ import javax.inject.Singleton
 object DatabaseModule {
 
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideDatabase(
         @ApplicationContext context: Context, // dagger provide us context to use this for creation of builder
 
@@ -40,8 +40,8 @@ object DatabaseModule {
             .build()
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideDao(database: RecipesDatabase) = database.recipeDao()
 
 

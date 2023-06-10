@@ -14,10 +14,10 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.abhi41.jetfoodrecipeapp.ui.theme.EXTRA_SMALL_PADDING
-import com.abhi41.jetfoodrecipeapp.ui.theme.FoodRecipe_ITEM_HEIGHT
-import com.abhi41.jetfoodrecipeapp.ui.theme.MEDIUM_PADDING
-import com.abhi41.jetfoodrecipeapp.ui.theme.cardStrokeBorder
+import com.abhi41.ui.theme.EXTRA_SMALL_PADDING
+import com.abhi41.ui.theme.FoodRecipe_ITEM_HEIGHT
+import com.abhi41.ui.theme.MEDIUM_PADDING
+import com.abhi41.ui.theme.cardStrokeBorder
 
 @Composable
 fun AnimatedShimmer() {

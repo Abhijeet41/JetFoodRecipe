@@ -7,8 +7,8 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import com.abhi41.jetfoodrecipeapp.ui.theme.TXT_MEDIUM_SIZE
-import com.abhi41.jetfoodrecipeapp.ui.theme.topAppBarBackgroundColor
+import com.abhi41.ui.theme.TXT_MEDIUM_SIZE
+import com.abhi41.ui.theme.topAppBarBackgroundColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

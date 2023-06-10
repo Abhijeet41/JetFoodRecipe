@@ -16,14 +16,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.asLiveData
-import com.abhi41.jetfoodrecipeapp.data.local.entity.FavoriteEntity
-import com.abhi41.jetfoodrecipeapp.data.local.entity.ResultEntity
-import com.abhi41.jetfoodrecipeapp.model.Result
+import com.abhi41.data.local.entity.FavoriteEntity
+import com.abhi41.ui.model.Result
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs.IngredientScreen
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs.InstructionScreen
 import com.abhi41.jetfoodrecipeapp.presentation.screens.detailScreen.tabs.OverViewScreen
-import com.abhi41.jetfoodrecipeapp.ui.theme.tabBackgroundColor
+import com.abhi41.ui.theme.tabBackgroundColor
 import com.google.accompanist.pager.*
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator

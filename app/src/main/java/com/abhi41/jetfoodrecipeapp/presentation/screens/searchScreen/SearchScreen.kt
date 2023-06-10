@@ -1,14 +1,17 @@
 package com.abhi41.jetfoodrecipeapp.presentation.screens.searchScreen
 
+import android.annotation.SuppressLint
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.abhi41.jetfoodrecipeapp.presentation.common.RecipesListContent
-import com.abhi41.jetfoodrecipeapp.utils.AnimatedShimmer
+import com.abhi41.jetfoodrecipeapp.presentation.destinations.DetailScreenDestination
+import com.abhi41.ui.common.RecipesListContent
+import com.abhi41.ui.common.AnimatedShimmer
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Destination
 @Composable
 fun SearchScreen(
@@ -40,6 +43,9 @@ fun SearchScreen(
             RecipesListContent(
                 foodRecipes = searchRecipes,
                 navigator = navigator,
+                itemClick = {food->
+                    navigator.navigate(DetailScreenDestination(food))
+                }
             )
         }else{
             AnimatedShimmer()

@@ -24,12 +24,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
+import com.abhi41.data.local.entity.FavoriteEntity
 import com.abhi41.jetfoodrecipeapp.R.drawable
-import com.abhi41.jetfoodrecipeapp.data.local.entity.FavoriteEntity
-import com.abhi41.jetfoodrecipeapp.model.Result
-import com.abhi41.jetfoodrecipeapp.presentation.common.BackPressHandler
+import com.abhi41.ui.model.Result
+import com.abhi41.ui.common.BackPressHandler
 import com.abhi41.jetfoodrecipeapp.presentation.destinations.DetailScreenDestination
-import com.abhi41.jetfoodrecipeapp.ui.theme.*
+import com.abhi41.ui.theme.*
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch

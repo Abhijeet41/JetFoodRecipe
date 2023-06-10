@@ -1,17 +1,16 @@
 package com.riegersan.composeexperiments
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.abhi41.jetfoodrecipeapp.presentation.common.chip.*
-import com.abhi41.jetfoodrecipeapp.ui.theme.SMALL_PADDING
-import com.google.accompanist.flowlayout.FlowRow
+import com.abhi41.ui.common.chip.Diet
+import com.abhi41.ui.common.chip.Meal
+import com.abhi41.ui.theme.SMALL_PADDING
 
 @Preview(showBackground = true)
 @Composable

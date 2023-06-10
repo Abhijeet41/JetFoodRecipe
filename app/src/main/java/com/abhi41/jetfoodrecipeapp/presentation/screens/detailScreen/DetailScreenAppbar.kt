@@ -5,13 +5,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import com.abhi41.data.local.entity.FavoriteEntity
 import com.abhi41.jetfoodrecipeapp.R
-import com.abhi41.jetfoodrecipeapp.data.local.entity.FavoriteEntity
-import com.abhi41.jetfoodrecipeapp.data.local.entity.ResultEntity
-import com.abhi41.jetfoodrecipeapp.model.Result
-import com.abhi41.jetfoodrecipeapp.ui.theme.darkYello
-import com.abhi41.jetfoodrecipeapp.ui.theme.tabBackgroundColor
-import com.abhi41.jetfoodrecipeapp.utils.HexToJetpackColor
+import com.abhi41.ui.model.Result
+import com.abhi41.ui.theme.darkYello
+import com.abhi41.ui.theme.tabBackgroundColor
+import com.abhi41.ui.util.HexToJetpackColor
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Composable

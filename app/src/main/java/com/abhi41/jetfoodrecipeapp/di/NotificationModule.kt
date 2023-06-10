@@ -10,8 +10,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.VISIBILITY_PUBLIC
 import androidx.core.app.NotificationManagerCompat
 import com.abhi41.jetfoodrecipeapp.R
-import com.abhi41.jetfoodrecipeapp.utils.Constants.CHANNEL_ID
-import com.abhi41.jetfoodrecipeapp.utils.Constants.CHANNEL_NAME
+import com.abhi41.ui.util.Constants.CHANNEL_ID
+import com.abhi41.ui.util.Constants.CHANNEL_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

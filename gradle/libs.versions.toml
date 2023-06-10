@@ -1,0 +1,81 @@
+[versions]
+compose = "1.1.1"
+kotlin = "1.6.10"
+core-ktx = "1.8.0"
+material-compose = "1.1.0"
+lifecycle-runtime = "2.3.1"
+activity-compose = "1.3.1"
+junit = "4.13.2"
+junit-ext = "1.1.3"
+espresso = "3.4.0"
+compose-navigation = "2.5.0-rc01"
+room = "2.3.0"
+runtime-compose = "2.2.0"
+kotlin-coroutines-core = "1.3.9"
+dagger-hilt = "2.44.2"
+hilt-compiler = "1.0.0"
+hilt-navigation-compose = "1.0.0"
+coil = "1.3.2"
+accompanist = "0.21.2-beta"
+sqlcipher = "4.5.0"
+firebase-messaging = "23.0.3"
+retrofit = "2.9.0"
+retrofit-serialization-converter = "0.8.0"
+chucker-intercepter = "3.5.2"
+multidex = "2.0.1"
+jsoup = "1.13.1"
+raamcosta = "1.1.2-beta"
+raamcosta-animation = "0.26.3-beta"
+flowlayout = "0.17.0"
+oneSignal = "[4.0.0, 4.99.99]"
+constraintlayout = "1.1.0-alpha03"
+inapp-update = "1.8.1"
+datastore-preferences = "1.0.0"
+
+[libraries]
+core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
+lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime" }
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
+material-compose = { module = "androidx.compose.material:material", version.ref = "material-compose" }
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+junit = { module = "junit:junit", version.ref = "junit" }
+junit-ext = { module = "androidx.test.ext:junit", version.ref = "junit-ext" }
+espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
+compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
+
+
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "runtime-compose" }
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines-core" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger-hilt" }
+hilt-google-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger-hilt" }
+hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt-compiler" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
+coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "firebase-messaging" }
+horizontal-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
+horizontal-pager-indicator = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist" }
+system-ui-controller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit2-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+retrofit2-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit-serialization-converter" }
+chucker-intercepter = { module = "com.github.chuckerteam.chucker:library", version.ref = "chucker-intercepter" }
+chucker-intercepter-release = { module = "com.github.chuckerteam.chucker:library-no-op", version.ref = "chucker-intercepter" }
+multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
+jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
+sqlcipher = { module = "net.zetetic:android-database-sqlcipher", version.ref = "sqlcipher" }
+raamcosta = { module = "io.github.raamcosta.compose-destinations:core", version.ref = "raamcosta" }
+raamcosta-ksp = { module = "io.github.raamcosta.compose-destinations:ksp", version.ref = "raamcosta" }
+raamcosta-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "raamcosta-animation" }
+flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "flowlayout" }
+oneSignal = { module = "com.onesignal:OneSignal", version.ref = "oneSignal" }
+inapp-update = { module = "com.google.android.play:core-ktx", version.ref = "inapp-update" }
+constraintlayout = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayout" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore-preferences" }
+

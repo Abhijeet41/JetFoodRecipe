@@ -1,7 +1,7 @@
 package com.abhi41.jetfoodrecipeapp.presentation.common
 
-import com.abhi41.jetfoodrecipeapp.data.dto.FoodRecipeDto
-import com.abhi41.jetfoodrecipeapp.utils.Resource
+import com.abhi41.data.dto.FoodRecipeDto
+import com.abhi41.ui.util.Resource
 import retrofit2.Response
 
 class HandleResponse {

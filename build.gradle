@@ -1,12 +1,11 @@
-
 buildscript {
-    dependencies {
-        classpath 'com.android.tools:r8:3.3.75'
-        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.40.5'
-        classpath 'com.google.gms:google-services:4.3.14'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
-        //  classpath 'org.jetbrains.kotlin:kotlin-serialization:1.6.21'
-    }
+    /*   dependencies {
+           classpath 'com.android.tools:r8:3.3.75'
+           classpath 'com.google.dagger:hilt-android-gradle-plugin:2.40.5'
+           classpath 'com.google.gms:google-services:4.3.14'
+           classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
+             classpath 'org.jetbrains.kotlin:kotlin-serialization:1.6.21'
+       }*/
     ext {
         compose_version = '1.1.0'
         accompanist_version = '0.21.2-beta'
@@ -18,15 +17,20 @@ buildscript {
     }
     repositories {
         google()
-        mavenCentral()
         maven { url 'https://jitpack.io' }
-        maven { url 'https://mvnrepository.com/artifact/com.github.gundy/semver4j'}
+        mavenCentral()
+        maven { url 'https://mvnrepository.com/artifact/com.github.gundy/semver4j' }
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     id 'com.android.application' version '7.2.0' apply false
     id 'com.android.library' version '7.2.0' apply false
     id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
+    id 'com.google.gms.google-services' version '4.3.14' apply false
+//colon not support use dot instead
+    id 'com.google.dagger.hilt.android' version '2.44.2' apply false
+    id 'com.google.firebase.crashlytics' version '2.9.2' apply false
+    //id 'com.android.tools.r8' version '3.3.75' apply false
 
 }
 

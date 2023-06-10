@@ -24,12 +24,11 @@ import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.abhi41.jetfoodrecipeapp.R
-import com.abhi41.jetfoodrecipeapp.model.Result
+import com.abhi41.ui.model.Result
 import com.abhi41.jetfoodrecipeapp.presentation.destinations.DetailScreenDestination
-import com.abhi41.jetfoodrecipeapp.ui.theme.*
+import com.abhi41.ui.theme.*
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.spec.DestinationStyle
 import org.jsoup.Jsoup
 
 @Destination

@@ -30,8 +30,8 @@ import androidx.constraintlayout.compose.MotionScene
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.abhi41.jetfoodrecipeapp.R
-import com.abhi41.jetfoodrecipeapp.model.Result
-import com.abhi41.jetfoodrecipeapp.ui.theme.*
+import com.abhi41.ui.model.Result
+import com.abhi41.ui.theme.*
 import org.jsoup.Jsoup
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")

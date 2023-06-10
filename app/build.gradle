@@ -28,7 +28,7 @@ def keystorePropertiesFile = rootProject.file("/keystore.properties")
 android {
     def keystorePropsFile = file('keystore.properties')
 
-    compileSdk 33
+    compileSdk ProjectConfig.compileSdk
     def versionPropsFile = file('version.properties')
     if (versionPropsFile.canRead()) {
         def Properties versionProps = new Properties()
@@ -43,8 +43,8 @@ android {
             }
 
             applicationId "com.abhi41.jetfoodrecipeapp"
-            minSdk 24
-            targetSdk 32
+            minSdk ProjectConfig.minSdk
+            targetSdk ProjectConfig.targetSdk
             versionCode code
             versionName name
 
@@ -97,6 +97,8 @@ android {
         }
         debug {
             debuggable true
+            minifyEnabled false
+            signingConfig signingConfigs.debug
             /*     minifyEnabled true
                  shrinkResources true
                  ext.enableCrashlytics = true
@@ -114,7 +116,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerExtensionVersion ProjectConfig.extensionVersion
     }
     packagingOptions {
         resources {
@@ -122,9 +124,6 @@ android {
         }
     }
     namespace 'com.abhi41.jetfoodrecipeapp'
-    defaultConfig {
-        minSdk 21
-    }
 }
 //Add a configuration block after android block
 //after then try this command to check everythis is working ./gradlew bootstrapListing
@@ -167,9 +166,6 @@ dependencies {
     debugImplementation("com.github.chuckerteam.chucker:library:3.5.2")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:3.5.2")
 
-    // Paging 3.0
-    implementation 'androidx.paging:paging-compose:1.0.0-alpha14'
-
     // KotlinX Serialization
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2"
 
@@ -177,8 +173,8 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences:1.0.0"
 
     // Dagger - Hilt
-    implementation "com.google.dagger:hilt-android:2.39"
-    kapt "com.google.dagger:hilt-android-compiler:2.39"
+    implementation "com.google.dagger:hilt-android:2.44.2"
+    kapt "com.google.dagger:hilt-android-compiler:2.44.2"
     kapt 'androidx.hilt:hilt-compiler:1.0.0'
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
 
@@ -244,6 +240,11 @@ dependencies {
     //implementation "com.google.android.play:review:2.0.1"
     //implementation "com.google.android.play:review-ktx:2.0.1"
 
+
+    implementation(project(":core:ui"))
+    implementation(project(":core:util"))
+    implementation(project(":data:foodreceipe"))
+    implementation(project(":domain:repository"))
 }
 play {
     //val apiKeyFile = project.property("googlePlayApiKey").toString()

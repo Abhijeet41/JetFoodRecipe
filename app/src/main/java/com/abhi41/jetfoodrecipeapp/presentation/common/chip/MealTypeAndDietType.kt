@@ -1,7 +1,10 @@
 package com.abhi41.jetfoodrecipeapp.presentation.common.chip
 
-import com.abhi41.jetfoodrecipeapp.utils.Constants.DEFAULT_DIET_TYPE
-import com.abhi41.jetfoodrecipeapp.utils.Constants.DEFAULT_MEAL_TYPE
+
+import com.abhi41.ui.common.chip.Diet
+import com.abhi41.ui.common.chip.Meal
+import com.abhi41.ui.util.Constants.DEFAULT_DIET_TYPE
+import com.abhi41.ui.util.Constants.DEFAULT_MEAL_TYPE
 
 /*
 enum class MealType(var value: String) {
