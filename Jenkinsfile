@@ -11,13 +11,13 @@ pipeline {
                 git 'https://github.com/Abhijeet41/JetFoodRecipe.git'
             }
         }
-        stage('Compile'){
+        stage('compile'){
             steps{
                 echo 'Compilation of the source code'
                 bat 'mvn compile'
             }
         }
-        stage('Test'){
+        stage('test'){
             steps{
                  echo 'Testing of the source code'
                  bat 'mvn test'
