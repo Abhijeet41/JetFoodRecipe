@@ -5,7 +5,7 @@
     
     <groupId>com.abhi41.jetfoodrecipeapp</groupId>
     <artifactId>JetFoodRecipe</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>JetFoodRecipe-1.0-SNAPSHOT</version>
     
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
