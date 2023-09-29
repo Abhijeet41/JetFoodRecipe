@@ -96,7 +96,7 @@ android {
 
         }
         debug {
-            debuggable true
+            debuggable false
             /*     minifyEnabled true
                  shrinkResources true
                  ext.enableCrashlytics = true
