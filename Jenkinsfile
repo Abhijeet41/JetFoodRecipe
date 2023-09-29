@@ -8,7 +8,7 @@ pipeline {
         stage('Checkout The Sourcecode') {
             steps {
                 echo 'checkout the Source code form the github'
-                git 'https://github.com/niladrimondal/DevOpsClassCodes.git'
+                git 'https://github.com/Abhijeet41/JetFoodRecipe.git'
             }
         }
         stage('Compile'){
